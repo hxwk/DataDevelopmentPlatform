@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.devmanage.dataresource.mvc.dao.DataResourceAccessDao">
+
+    <resultMap id="resColumnMap" type="dataResourceAccessEntity">
+        <id property="dsAccessInfoId" column="ds_access_info_id"/>
+        <result property="parameterName" column="parameter_name"/>
+        <result property="parameterValue" column="parameter_value"/>
+        <result property="dsId" column="ds_id"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <resultMap id="accessMap" type="dataResourceAccessEntity">
+        <result property="key" column="parameter_name" />
+        <result property="value" column="parameter_value" />
+    </resultMap>
+
+    <delete id="delete">
+      BEGIN
+        UPDATE meta_dataresource_access_info set is_valid = 0 WHERE ds_id=#{dsId}
+      END
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO meta_dataresource_access_info(
+          ds_access_info_id,
+          parameter_name,
+          parameter_value,
+          ds_id,
+          is_valid,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{dsAccessInfoId,jdbcType=VARCHAR},
+          #{parameterName,jdbcType=VARCHAR},
+          #{parameterValue,jdbcType=VARCHAR},
+          #{dsId,jdbcType=VARCHAR},
+          #{isValid,jdbcType=VARCHAR},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertMutil" parameterType="java.util.List">
+        INSERT INTO meta_dataresource_access_info(
+        ds_access_info_id,
+        parameter_name,
+        parameter_value,
+        ds_id,
+        is_valid,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.dsAccessInfoId,jdbcType=VARCHAR},
+            #{item.parameterName,jdbcType=VARCHAR},
+            #{item.parameterValue,jdbcType=VARCHAR},
+            #{item.dsId,jdbcType=VARCHAR},
+            #{item.isValid,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.createUser,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
+
+    <select id="findList" resultMap="resColumnMap">
+        SELECT
+          ds_access_info_id,
+          parameter_name,
+          parameter_value,
+          ds_id,
+          is_valid,
+          DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+          create_user,
+          DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+          update_user
+        FROM
+          meta_dataresource_access_info where is_valid = '1'
+    </select>
+
+    <select id="findListByDsId" resultMap="resColumnMap" parameterType="String">
+        SELECT
+          parameter_name,
+          parameter_value
+        FROM
+          meta_dataresource_access_info where is_valid = '1' AND ds_id = #{dsId}
+    </select>
+
+
+</mapper>

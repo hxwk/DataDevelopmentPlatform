@@ -1,0 +1,26 @@
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="Join Test">
+    <start to="analysis-task-action"/>
+    <action name="analysis-task-action">
+        <spark xmlns="uri:oozie:spark-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                <delete path="${nameNode}/${sparkRootPath}/app/${appRelativePath}/tmp"/>
+                <delete path="${nameNode}/${sparkRootPath}/app/${appRelativePath}/output"/>
+            </prepare>
+            <master>${master}</master>
+            <name>Join Test</name>
+            <class>${offlineSparkActionClass}</class>
+            <jar>${nameNode}/${sparkRootPath}/lib/${sparkActionjar}</jar>
+            <spark-opts>${offlineSparkOpts}</spark-opts>
+            <arg>${nameNode}</arg>
+            <arg>${nameNode}/${sparkRootPath}/app/${appRelativePath}</arg>
+        </spark>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

@@ -1,0 +1,11 @@
+package com.bh.d406.bigdata.hbase.protobuf;
+
+option java_package = "com.bh.d406.bigdata.hbase.protobuf.generated";
+option java_outer_classname = "MultiColumnMatchFilterProto";
+
+message MultiColumnMatchFilter {
+  required bytes  columnFamily = 1;                    //版本过滤的列族
+  repeated bytes  mustMatchColumns = 2;                //必须包含的列名
+  repeated bytes  mayMatchColumns = 3;               //可能包含列名
+  optional sint32 minMatch = 4 [default = -1];         //至少包含多少个列
+}

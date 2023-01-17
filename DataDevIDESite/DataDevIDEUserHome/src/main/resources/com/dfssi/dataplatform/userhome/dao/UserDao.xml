@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="com.dfssi.dataplatform.userhome.entity.UserEntity" >
+    <id column="PK_ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="U_NAME" property="uName" jdbcType="VARCHAR" />
+    <result column="U_PSWORD" property="uPsword" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="IS_DELETED" property="isDelete" jdbcType="INTEGER" />
+    <result column="U_ROLE" property="uRole" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PK_ID, NAME, U_NAME, U_PSWORD, CREATE_TIME, IS_DELETED, U_ROLE
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dfssi.dataplatform.userhome.entity.UserEntity" >
+    select
+    DISTINCT
+    PK_ID,
+    NAME,
+    U_NAME,
+    DATE_FORMAT(CREATE_TIME,'%Y-%m-%d %T') as CREATE_TIME,
+    IS_DELETED,
+    U_ROLE
+    from dv_user
+    where
+    <if test="name!=null and name!=''">
+       NAME LIKE CONCAT(CONCAT('%', #{name}), '%')
+    </if>
+    <if test="uName!=null and uName!=''">
+      and U_NAME = #{uName}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dv_user
+    where PK_ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dv_user
+    where PK_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteByExample" parameterType="com.dfssi.dataplatform.userhome.entity.UserExampleEntity" >
+    delete from dv_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+  <insert id="insert" parameterType="com.dfssi.dataplatform.userhome.entity.UserEntity" >
+    insert into dv_user (PK_ID, NAME, U_NAME,
+      U_PSWORD, CREATE_TIME, IS_DELETED, 
+      U_ROLE)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{uName,jdbcType=VARCHAR}, 
+      #{uPsword,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 0,
+       #{uRole,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="countByExample" parameterType="com.dfssi.dataplatform.userhome.entity.UserExampleEntity" resultType="java.lang.Integer" >
+    select count(*) from dv_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <update id="updateByExample" parameterType="map" >
+    update dv_user
+    set PK_ID = #{record.id,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      U_NAME = #{record.uName,jdbcType=VARCHAR},
+      U_PSWORD = #{record.uPsword,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      IS_DELETED = 0,
+      U_ROLE = #{record.uRole,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="fakeDeleteByExample" >
+    update dv_user
+    set IS_DELETED = 1 where pk_id in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+
+  <select id="login" parameterType="String"  resultMap="BaseResultMap">
+select * from dv_user WHERE binary  U_NAME =#{uName,jdbcType=VARCHAR}  and U_PSWORD =#{uPsword,jdbcType=VARCHAR}  and IS_DELETED =0
+  </select>
+
+  <!--修改时判断用户名与其他角色名是否冲突-->
+  <select id="countByUpdate" resultType="int">
+        select count(*) from dv_user
+        where pk_id!=#{id}
+        and u_name=#{uName}
+    </select>
+</mapper>

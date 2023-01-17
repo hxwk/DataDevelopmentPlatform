@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <proto reqId="jts.8003" reqClass="com.yaxon.vn.nd.tbp.si.Req_8003" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--补传分包请求-->
+    <proto reqId="jts.8103" reqClass="com.yaxon.vn.nd.tbp.si.Req_8103" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--设置终端参数，收到终端通用应答-->
+    <proto reqId="jts.8104" reqClass="com.yaxon.vn.nd.tbp.si.Req_8104" resClass="com.yaxon.vn.nd.tbp.si.Res_0104"/> <!--查询终端参数-->
+    <proto reqId="jts.8105" reqClass="com.yaxon.vn.nd.tbp.si.Req_8105" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--终端控制-->
+    <proto reqId="jts.8106" reqClass="com.yaxon.vn.nd.tbp.si.Req_8106" resClass="com.yaxon.vn.nd.tbp.si.Res_0104"/> <!--查询指定终端参数-->
+    <proto reqId="jts.8107" reqClass="com.yaxon.vn.nd.tbp.si.Req_8107" resClass="com.yaxon.vn.nd.tbp.si.Res_0107"/> <!--查询终端属性-->
+    <proto reqId="jts.8108" reqClass="com.yaxon.vn.nd.tbp.si.Req_8108" resClass="com.yaxon.vn.nd.tbp.si.Res_0108"/> <!--下发终端升级包-->
+    <proto reqId="jts.8201" reqClass="com.yaxon.vn.nd.tbp.si.Req_8201" resClass="com.yaxon.vn.nd.tbp.si.Res_0201"/> <!--终端位置信息查询-->
+    <proto reqId="jts.8202" reqClass="com.yaxon.vn.nd.tbp.si.Req_8202" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--临时位置跟踪控制-->
+    <proto reqId="jts.8203" reqClass="com.yaxon.vn.nd.tbp.si.Req_8203" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--人工确认报警消息-->
+    <proto reqId="jts.8203X" reqClass="com.yaxon.vn.nd.tbp.si.Req_8203X" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--人工确认报警消息-->
+    <proto reqId="jts.8300" reqClass="com.yaxon.vn.nd.tbp.si.Req_8300" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--文本信息下发-->
+    <proto reqId="jts.8301" reqClass="com.yaxon.vn.nd.tbp.si.Req_8301" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--事件设置-->
+    <proto reqId="jts.8302" reqClass="com.yaxon.vn.nd.tbp.si.Req_8302" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--提问下发-->
+    <proto reqId="jts.8303" reqClass="com.yaxon.vn.nd.tbp.si.Req_8303" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--信息点播菜单设置-->
+    <proto reqId="jts.8304" reqClass="com.yaxon.vn.nd.tbp.si.Req_8304" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--信息服务-->
+    <proto reqId="jts.8400" reqClass="com.yaxon.vn.nd.tbp.si.Req_8400" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--电话回拨-->
+    <proto reqId="jts.8401" reqClass="com.yaxon.vn.nd.tbp.si.Req_8401" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--设置电话本-->
+    <proto reqId="jts.8500" reqClass="com.yaxon.vn.nd.tbp.si.Req_8500" resClass="com.yaxon.vn.nd.tbp.si.Res_0500"/> <!--车辆控制-->
+    <proto reqId="jts.8500X" reqClass="com.yaxon.vn.nd.tbp.si.Req_8500X" resClass="com.yaxon.vn.nd.tbp.si.Res_0500"/> <!--车辆控制-->
+    <proto reqId="jts.8600" reqClass="com.yaxon.vn.nd.tbp.si.Req_8600" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--设置圆形区域-->
+    <proto reqId="jts.8601" reqClass="com.yaxon.vn.nd.tbp.si.Req_8601" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--删除圆形区域-->
+    <proto reqId="jts.8602" reqClass="com.yaxon.vn.nd.tbp.si.Req_8602" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--设置矩形区域-->
+    <proto reqId="jts.8603" reqClass="com.yaxon.vn.nd.tbp.si.Req_8603" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--删除矩形区域-->
+    <proto reqId="jts.8604" reqClass="com.yaxon.vn.nd.tbp.si.Req_8604" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--设置多边形区域-->
+    <proto reqId="jts.8605" reqClass="com.yaxon.vn.nd.tbp.si.Req_8605" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--删除多边形区域-->
+    <proto reqId="jts.8606" reqClass="com.yaxon.vn.nd.tbp.si.Req_8606" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--设置路线-->
+    <proto reqId="jts.8607" reqClass="com.yaxon.vn.nd.tbp.si.Req_8607" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--删除路线-->
+    <proto reqId="jts.8700" reqClass="com.yaxon.vn.nd.tbp.si.Req_8700" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--行驶记录数据采集命令-->
+    <proto reqId="jts.8701" reqClass="com.yaxon.vn.nd.tbp.si.Req_8701" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--行驶记录参数下传命令-->
+    <proto reqId="jts.8700.v03" reqClass="com.yaxon.vn.nd.tbp.si.Req_8700_V03" resClass="com.yaxon.vn.nd.tbp.si.Res_0700_V03"/> <!--03版行驶记录数据采集命令-->
+    <proto reqId="jts.8701.v03" reqClass="com.yaxon.vn.nd.tbp.si.Req_8701_V03" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--行驶记录参数下传命令-->
+    <proto reqId="jts.8702" reqClass="com.yaxon.vn.nd.tbp.si.Req_8702" resClass="com.yaxon.vn.nd.tbp.si.Res_0702"/> <!--上报驾驶员身份信息请求-->
+    <proto reqId="jts.8801" reqClass="com.yaxon.vn.nd.tbp.si.Req_8801" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--摄像头立即拍摄命令-->
+    <proto reqId="jts.8802" reqClass="com.yaxon.vn.nd.tbp.si.Req_8802" resClass="com.yaxon.vn.nd.tbp.si.Res_0802"/> <!--存储多媒体数据检索-->
+    <proto reqId="jts.8803" reqClass="com.yaxon.vn.nd.tbp.si.Req_8803" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--存储多媒体数据上传命令-->
+    <proto reqId="jts.8804" reqClass="com.yaxon.vn.nd.tbp.si.Req_8804" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--录音开始命令-->
+    <proto reqId="jts.8805" reqClass="com.yaxon.vn.nd.tbp.si.Req_8805" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--单条存储多媒体数据检索上传命令-->
+    <proto reqId="jts.8900" reqClass="com.yaxon.vn.nd.tbp.si.Req_8900" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--数据下行透传-->
+    <proto reqId="jts.8A00" reqClass="com.yaxon.vn.nd.tbp.si.Req_8A00" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--平台RSA公钥-->
+
+
+    <!-- 采集驾驶记录仪数据 -->
+    <proto reqId="jts.8700.2012" reqClass="com.yaxon.vn.nd.tbp.si.Req_8700_2012" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/>
+    <proto reqId="jts.8701.2012" reqClass="com.yaxon.vn.nd.tbp.si.Req_8701_2012" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/>
+
+    <proto reqId="jts.8B10" reqClass="com.yaxon.vn.nd.tbp.si.Req_8B10" resClass="com.yaxon.vn.nd.t  bp.si.Res_0001"/> <!--下发透传LED显示屏-->
+
+    <proto reqId="jts.8B00" reqClass="com.yaxon.vn.nd.tbp.si.Req_8B00" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--下发召车指令-->
+    <proto reqId="jts.8B01" reqClass="com.yaxon.vn.nd.tbp.si.Req_8B01" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--下发乘客电召信息-->
+    <proto reqId="jts.8B09" reqClass="com.yaxon.vn.nd.tbp.si.Req_8B09" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--乘客取消召车-->
+
+    <proto reqId="jts.8607.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_8607_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--南斗删除路线-->
+    <proto reqId="jts.8606.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_8606_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/> <!--南斗设置路线-->
+
+    <proto reqId="jts.F001.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_F001_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/><!--南斗定义的锁车控制指令下发-->
+    <proto reqId="jts.F003.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_F003_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_F003_nd"/><!--南斗定义的查询锁车相关状态-->
+    <proto reqId="jts.8106.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_8106_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_8106_nd"/><!--南斗定义的查询IP锁定状态-->
+
+    <!-- 视频传输和控制数据-->
+    <proto reqId="jts.9101.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_9101_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/><!--音视频传输指令下发-->
+    <proto reqId="jts.9102.nd" reqClass="com.yaxon.vn.nd.tbp.si.Req_9102_nd" resClass="com.yaxon.vn.nd.tbp.si.Res_0001"/><!--音视频控制指令下发-->
+
+
+</config>

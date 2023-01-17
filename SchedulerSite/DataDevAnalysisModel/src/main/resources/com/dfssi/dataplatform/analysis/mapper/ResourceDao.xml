@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.ResourceDao">
+
+    <select id="listAllSources" resultType="com.dfssi.dataplatform.analysis.entity.AnalysisResourceEntity">
+        SELECT
+        *
+        FROM server_datasource
+    </select>
+
+    <insert id="insert">
+        INSERT INTO server_datasource(
+        resource_id,
+        model_id,
+        model_step_id,
+        datares_name,
+        datares_description,
+        datares_type,
+        create_date,
+        create_user,
+        update_date,
+        update_user,
+        is_valid,
+        shared_status
+        )
+        VALUES (
+        #{resourceId},
+        #{modelId},
+        #{modelStepId},
+        #{dataresName},
+        #{dataresDescription},
+        #{dataresType},
+        #{createDate},
+        #{createUser},
+        #{updateDate},
+        #{updateUser},
+        #{isValid},
+        #{sharedStatus}
+        )
+    </insert>
+
+    <delete id="deleteByResourceId">
+        DELETE FROM server_datasource WHERE resource_id = #{resourceId}
+    </delete>
+
+    <select id="listResource" resultType="com.dfssi.dataplatform.analysis.entity.AnalysisResourceEntity">
+        SELECT
+        *
+        FROM server_datasource am
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="resourceId != null and resourceId != ''">
+                AND am.resource_id like CONCAT('%', #{resourceId}, '%')
+            </if>
+            <if test="modelId != null and modelId != ''">
+                AND am.model_id like CONCAT('%', #{modelId}, '%')
+            </if>
+            <if test="modelStepId != null and modelStepId != ''">
+                AND am.model_step_id like CONCAT('%', #{modelStepId}, '%')
+            </if>
+            <if test="dataresName != null and dataresName != ''">
+                AND am.datares_name like CONCAT('%', #{dataresName}, '%')
+            </if>
+            <if test="dataresType != null and dataresType != ''">
+                AND amt.datares_type = #{dataresType}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(am.create_date) >= #{startTime}]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(am.create_date) <= #{endTime}]]>
+            </if>
+            <if test="sharedStatus != null and sharedStatus != ''">
+                AND am.shared_status = #{sharedStatus}
+            </if>
+            <if test="is_valid != null and is_valid != ''">
+                AND am.is_valid = #{isValid}
+            </if>
+            ORDER BY create_date desc
+        </trim>
+    </select>
+
+</mapper>

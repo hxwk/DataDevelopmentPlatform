@@ -1,0 +1,36 @@
+用kafkasource 将数据从kafka取出来（不是kafkaChannel的数据，而是kafkasink输出的数据）存到hbase
+
+{
+	"taskId": "taskhbase",
+	"clientId": "client1",
+	"taskType": "FLUME",
+	"taskAction": "START",
+	"channelType": "com.dfssi.dataplatform.datasync.flume.agent.channel.MemoryChannel",
+	"taskDataSource": {
+		"srcId": "service_1_6_tcpnesource_01",
+		"type": "com.dfssi.dataplatform.datasync.plugin.source.tcpsource.server.KafkaSource",
+		"config": {
+			"bootstrap.servers": "192.168.1.199:9092,192.168.1.37:9092",
+			"group.id": "3521",
+			"batchDurationMillis":"",
+			"enable.auto.commit": "true",
+            "auto.commit.interval.ms", "1000",
+            "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
+            "value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer"
+		}
+	},
+	"taskDataDestinations": [{
+		"destId": "service_1_6_neKafka_03",
+		"type": "com.dfssi.dataplatform.datasync.plugin.sink.hbase.kk.HbaseSink",
+		"config": {
+			"hbase.zookeeper.quorum": "172.16.1.210:2181,172.16.1.211:2181,172.16.1.212:2181",
+			"event_batch_size":"1000",
+			"namespace":"dev",
+			"tableName": "terminal_0200",
+			"prefixLength":"4",
+			"flushSize":"100",
+			"serices": "f",
+			"rowkey": {"rule":"inverted","ruleParam":"","field":"sim","rowkeyConcat":["receiveMsgTime"],"separator":""}
+		}
+	}]
+}

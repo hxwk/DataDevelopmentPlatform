@@ -1,0 +1,52 @@
+{
+  "id": "20180306131536000001",
+  "name": "DEV Coordinator Demo",
+  "modelTypeId": "20171123152036000001",
+  "cronExp": "*/5 * * * *",
+  "coordStart":"2018-03-07T08:35+0800",
+  "coordEnd":"2018-03-07T09:35+0800",
+  "description": "Coordinator Demo",
+  "steps": [
+    {
+      "id": "20180306131536000002",
+      "name": "countInHive",
+      "stepTypeId": "20171120152037000002",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "sql": {
+            "valueStr": "select count(*) count from prod_analysis.terminal_0200"
+          }
+        }
+      ]
+    },
+    {
+      "id": "20180306131536000003",
+      "name": "show",
+      "stepTypeId": "20180306152039000110",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "lines": {
+            "valueStr": "10"
+          }
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "id": "20180306112036000009",
+      "modelStepFrom": {
+        "id": "20180306131536000002",
+        "pos": "Top|Bottom|Right|Left"
+      },
+      "modelStepTo": {
+        "id": "20180306131536000003",
+        "pos": "Top|Bottom|Right|Left"
+      }
+    }
+  ]
+}

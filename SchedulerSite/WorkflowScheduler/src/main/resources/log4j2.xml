@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="CONTEXT_BASE">/var/log/bigdata</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="analysis-gui"
+                     fileName="${CONTEXT_BASE}/analysis/analysis-gui.log"
+                     filePattern="${CONTEXT_BASE}/analysis/$${date:yyyy-MM}/analysis-gui%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <Pattern>%d %p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="warn">
+            <AppenderRef ref="analysis-gui"/>
+        </Root>
+        <Logger name="analysis-gui" level="debug" additivity="false">
+            <AppenderRef ref="analysis-gui"/>
+        </Logger>
+        <Logger name="org.springframework" level="info">
+            <AppenderRef ref="analysis-gui"/>
+            <AppenderRef ref="Console" level="INFO" />
+        </Logger>
+        <Logger name="com.dfssi" level="info">
+            <AppenderRef ref="analysis-gui"/>
+            <AppenderRef ref="Console" level="INFO" />
+        </Logger>
+
+    </Loggers>
+</Configuration>

@@ -1,0 +1,81 @@
+{
+  id: '20170101112036123451',
+  name: 'analysis',
+  modelTypeId: '20171123152036000001',
+  description: 'Test Model',
+  steps: [
+    {
+      id: '20170101112036123452',
+      name: 'datasource',
+      stepTypeId: '20171123152037000002',
+      guiX: 0,
+      guiY: 0,
+      params: [
+        {
+          d1: {
+            valueStr: 'a'
+          },
+          d2: {
+            valueNum: 5
+          },
+          d3: {
+            valueStr: 'b'
+          },
+          d4: {
+            valueNum: 6
+          }
+        },
+        {
+          d1: {
+            valueStr: 'e'
+          },
+          d2: {
+            valueNum: '10.0'
+          },
+          d3: {
+            valueNum: '12.9'
+          },
+          d4: {
+            valueStr: 'ty'
+          }
+        }
+      ]
+    },
+    {
+      id: '20170101112036123453',
+      name: 'preprocess',
+      stepTypeId: '20171123152039000003',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          pre1: {
+            valueNum: 34
+          },
+          pre2: {
+            valueStr: 'lll'
+          },
+          pre3: {
+            valueStr: 'bbb'
+          },
+          pre4: {
+            valueStr: 'ccc'
+          }
+        }
+      ]
+    }
+  ],
+  links: [
+    {
+      id: '20170101112036123454',
+      modelStepFrom: {
+        id: '20170101112036123452',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepEnd: {
+        id: '20170101112036123453',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    }
+  ]
+}

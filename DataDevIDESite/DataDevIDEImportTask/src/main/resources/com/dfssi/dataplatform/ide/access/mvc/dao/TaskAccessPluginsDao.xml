@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.access.mvc.dao.TaskAccessPluginsDao">
+    <select id="getAllPluginEntities" resultType="com.dfssi.dataplatform.ide.access.mvc.entity.TaskAccessPluginsEntity">
+        SELECT
+          pk_id id,
+          step_type_name stepTypeName,
+          step_type_code stepTypeCode,
+          step_type_parentcode stepTypePcode,
+          description description,
+          is_deleted isDeleted,
+          create_date createDate,
+          create_user createUser,
+          update_date updateDate,
+          update_user updateUser
+        FROM dv_accesstask_plugins
+    </select>
+
+</mapper>

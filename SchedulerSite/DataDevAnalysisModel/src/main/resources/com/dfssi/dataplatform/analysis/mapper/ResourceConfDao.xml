@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.ResourceConfDao">
+
+    <select id="getResourceConf" resultType="com.dfssi.dataplatform.analysis.entity.AnalysisResourceConfEntity">
+        SELECT
+        *
+        FROM
+        server_datasource_attr am
+        WHERE
+        am.resource_id = #{resourceId}
+    </select>
+
+    <delete id="deleteByResourceId">
+        DELETE FROM server_datasource_attr WHERE resource_id = #{resourceId}
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO server_datasource_attr(
+        attr_id,
+        resource_id,
+        param_name,
+        param_value,
+        param_description,
+        create_date
+        )
+        VALUES (
+        #{attrId},
+        #{resourceId},
+        #{paramName},
+        #{paramValue},
+        #{paramDescription},
+        #{createDate}
+        )
+    </insert>
+
+</mapper>

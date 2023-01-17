@@ -1,0 +1,65 @@
+<evs id="0" name="EvsDataDetectStatsFromKafka" interval="30">
+
+    <spark-confs>
+        <spark-conf name="es.nodes.discovery" value="true"/>
+        <spark-conf name="es.batch.size.bytes" value="300000"/>
+        <spark-conf name="es.batch.size.entries" value="10000"/>
+        <spark-conf name="es.batch.write.refresh" value="false"/>
+        <spark-conf name="es.batch.write.retry.count" value="50"/>
+        <spark-conf name="es.batch.write.retry.wait" value="500"/>
+        <spark-conf name="es.http.timeout" value="5m"/>
+        <spark-conf name="es.http.retries" value="50"/>
+        <spark-conf name="es.http.enabled" value="true"/>
+        <spark-conf name="es.action.heart.beat.lead" value="50"/>
+        <spark-conf name="spark.streaming.concurrentJobs" value="1"/>
+        <spark-conf name="spark.driver.allowMultipleContexts" value="false"/>
+    </spark-confs>
+
+    <kafka-input id="1" type="kafka" topics="NE_VECHILE_DATA_TOPIC">
+        <params>
+            <param name="auto.offset.reset" value="smallest"/>
+            <param name="metadata.broker.list" value="172.16.1.121:9092,172.16.1.122:9092,172.16.1.121:9092"/>
+            <param name="group.id" value="EvsDataDetectStatsFromKafka"/>
+            <param name="refresh.leader.backoff.ms" value="2000"/>
+            <param name="num.consumer.fetchers" value="1"/>
+        </params>
+    </kafka-input>
+
+    <databases>
+       <database id="gp-detect"
+                 type="postgresql"
+                 url="jdbc:postgresql://172.16.1.156:5432/analysis"
+                 user="dbdream"
+                 password="dbdream"
+                 driver="org.postgresql.Driver"/>
+    </databases>
+
+    <detect>
+        <rules-database id="gp-detect" table="evs_detect_detail"/>
+    </detect>
+
+    <count>
+        <count-databse id="gp-detect"/>
+        <count-tables errday="evs_err_day" errtotal="evs_err_total" dataday="evs_driving_day" datatotal="evs_driving_total"/>
+        <count-redis master="mymaster" sentinels="172.16.1.201:26379,172.16.1.201:26380" password="112233" dbNum="6" timeout="5000"/>
+        <vehicle-field vin="vin" enterprise="enterprise" hatchback="hatchback" time="collectTime"/>
+        <count-es index="evs_err_detail" type="evs_err_detail" createRule="day">
+            <settings>
+                <setting  name="index.analysis.analyzer.default.type" value="keyword"/>
+                <setting  name="index.number_of_shards" value="1"/>
+                <setting  name="index.refresh_interval" value="30s"/>
+                <setting  name="index.translog.durability" value="ASYNC"/>
+                <setting  name="index.translog.flush_threshold_size" value="2g"/>
+                <setting  name="index.translog.sync_interval" value="120s"/>
+            </settings>
+            <params>
+                <param name="es.nodes" value="172.16.1.221,172.16.1.222,172.16.1.223"/>
+                <param name="es.port" value="9200"/>
+                <param name="es.clustername" value="elk"/>
+                <param name="es.mapping.id" value="id"/>
+                <param name="es.batch.size.entries" value="5000"/>
+            </params>
+        </count-es>
+    </count>
+
+</evs>

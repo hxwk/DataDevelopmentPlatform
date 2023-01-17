@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.dataresource.mvc.dao.DataResourceDao">
+    <resultMap id="dataResource" type="com.dfssi.dataplatform.ide.dataresource.mvc.entity.DataResourceEntity">
+        <id property="dataresourceId" column="pk_dataresource_id"/>
+        <result property="dataresourceName" column="dataresource_name"/>
+        <result property="dataresourceDesc" column="dataresource_desc"/>
+        <result property="dataresourceType" column="dataresource_type"/>
+        <result property="isShared" column="is_shared"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+   <!--删除-->
+    <delete id="deleteById">
+        UPDATE  dv_dataresource
+        SET is_deleted='1'
+        WHERE pk_dataresource_id=#{dataresourceId}
+        AND is_deleted='0'
+    </delete>
+
+    <!--新增修改-->
+    <insert id="insert">
+        INSERT INTO dv_dataresource(
+          pk_dataresource_id,
+          dataresource_name,
+          dataresource_desc,
+          dataresource_type,
+          is_deleted,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{dataresourceId,jdbcType=VARCHAR},
+          #{dataresourceName,jdbcType=VARCHAR},
+          #{dataresourceDesc,jdbcType=VARCHAR},
+          #{dataresourceType,jdbcType=VARCHAR},
+          0,
+          now(),
+          #{createUser,jdbcType=VARCHAR},
+          now(),
+          #{updateUser,jdbcType=VARCHAR}
+        )
+        ON DUPLICATE KEY UPDATE
+        dataresource_name =  VALUES(dataresource_name),
+        dataresource_desc = VALUES(dataresource_desc),
+        dataresource_type = VALUES(dataresource_type),
+        update_date = now(),
+        update_user = VALUES(update_user)
+    </insert>
+
+
+    <!--查找大数据库数据资源表-->
+    <select id="findBigdataEntityList" resultMap="dataResource">
+        SELECT
+        dv_dataresource.pk_dataresource_id,
+        dv_dataresource.dataresource_name,
+        dv_dataresource.dataresource_desc,
+        dv_dataresource.dataresource_type,
+        dv_dataresource.is_shared,
+        dv_dataresource.is_deleted,
+        DATE_FORMAT(dv_dataresource.create_date,'%Y-%m-%d %T') as create_date,
+        dv_dataresource.create_user,
+        DATE_FORMAT(dv_dataresource.update_date,'%Y-%m-%d %T') as update_date,
+        dv_dataresource.update_user
+        FROM
+        dv_dataresource
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            dv_dataresource.is_deleted='0' and dv_dataresource.dataresource_type in ('hdfs','hive','hbase','impala','kafka')
+            <if test="dataresourceName!=null and dataresourceName!=''">
+                and dv_dataresource.dataresource_name LIKE '%${dataresourceName}%'
+            </if>
+            <if test="dataresourceType!=null and dataresourceType!=''">
+                and dv_dataresource.dataresource_type = #{dataresourceType}
+            </if>
+            <if test="startCreateTime!=null and startCreateTime!=''">
+                <![CDATA[AND create_date >= #{startCreateTime} ]]>
+            </if>
+            <if test="endCreateTime!=null and endCreateTime!=''">
+                <![CDATA[AND create_date <= #{endCreateTime} ]]>
+            </if>
+        </trim>
+    </select>
+
+    <!--查找关系数据库数据资源表-->
+    <select id="findDBEntityList" resultMap="dataResource">
+        SELECT
+        dv_dataresource.pk_dataresource_id,
+        dv_dataresource.dataresource_name,
+        dv_dataresource.dataresource_desc,
+        dv_dataresource.dataresource_type,
+        dv_dataresource.is_shared,
+        dv_dataresource.is_deleted,
+        DATE_FORMAT(dv_dataresource.create_date,'%Y-%m-%d %T') as create_date,
+        dv_dataresource.create_user,
+        DATE_FORMAT(dv_dataresource.update_date,'%Y-%m-%d %T') as update_date,
+        dv_dataresource.update_user
+        FROM
+        dv_dataresource
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            dv_dataresource.is_deleted='0'
+            and dv_dataresource.dataresource_type in ('mysql','oracle','sqlserver','db2')
+            <if test="dataresourceName!=null and dataresourceName!=''">
+                and dv_dataresource.dataresource_name LIKE '%${dataresourceName}%'
+            </if>
+            <if test="dataresourceType!=null and dataresourceType!=''">
+                and dv_dataresource.dataresource_type = #{dataresourceType}
+            </if>
+            <if test="startCreateTime!=null and startCreateTime!=''">
+                <![CDATA[AND create_date >= #{startCreateTime} ]]>
+            </if>
+            <if test="endCreateTime!=null and endCreateTime!=''">
+                <![CDATA[AND create_date <= #{endCreateTime} ]]>
+            </if>
+        </trim>
+    </select>
+
+    <!--查找私有数据库数据资源表-->
+    <select id="findPrivateResourcesEntityList" resultMap="dataResource">
+        SELECT
+        dv_dataresource.pk_dataresource_id,
+        dv_dataresource.dataresource_name,
+        dv_dataresource.dataresource_desc,
+        dv_dataresource.dataresource_type,
+        dv_dataresource.is_shared,
+        dv_dataresource.is_deleted,
+        DATE_FORMAT(dv_dataresource.create_date,'%Y-%m-%d %T') as create_date,
+        dv_dataresource.create_user,
+        DATE_FORMAT(dv_dataresource.update_date,'%Y-%m-%d %T') as update_date,
+        dv_dataresource.update_user
+        FROM
+        dv_dataresource
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            dv_dataresource.is_deleted='0' and dv_dataresource.is_shared = 0
+            <if test="dataresourceName!=null and dataresourceName!=''">
+                and dv_dataresource.dataresource_name LIKE '%${dataresourceName}%'
+            </if>
+            <if test="dataresourceType!=null and dataresourceType!=''">
+                and dv_dataresource.dataresource_type = #{dataresourceType}
+            </if>
+            <if test="startCreateTime!=null and startCreateTime!=''">
+                <![CDATA[AND create_date >= #{startCreateTime} ]]>
+            </if>
+            <if test="endCreateTime!=null and endCreateTime!=''">
+                <![CDATA[AND create_date <= #{endCreateTime} ]]>
+            </if>
+        </trim>
+    </select>
+
+    <!--查找共享数据库数据资源表-->
+    <select id="findSharedResourcesEntityList" resultMap="dataResource">
+        SELECT
+        dv_dataresource.pk_dataresource_id,
+        dv_dataresource.dataresource_name,
+        dv_dataresource.dataresource_desc,
+        dv_dataresource.dataresource_type,
+        dv_dataresource.is_shared,
+        dv_dataresource.is_deleted,
+        DATE_FORMAT(dv_dataresource.create_date,'%Y-%m-%d %T') as create_date,
+        dv_dataresource.create_user,
+        DATE_FORMAT(dv_dataresource.update_date,'%Y-%m-%d %T') as update_date,
+        dv_dataresource.update_user
+        FROM
+        dv_dataresource
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            dv_dataresource.is_deleted='0' and dv_dataresource.is_shared = 1
+            <if test="dataresourceName!=null and dataresourceName!=''">
+                and dv_dataresource.dataresource_name LIKE '%${dataresourceName}%'
+            </if>
+            <if test="dataresourceType!=null and dataresourceType!=''">
+                and dv_dataresource.dataresource_type = #{dataresourceType}
+            </if>
+            <if test="startCreateTime!=null and startCreateTime!=''">
+                <![CDATA[AND create_date >= #{startCreateTime} ]]>
+            </if>
+            <if test="endCreateTime!=null and endCreateTime!=''">
+                <![CDATA[AND create_date <= #{endCreateTime} ]]>
+            </if>
+        </trim>
+    </select>
+
+
+    <!--统计数据资源数量-->
+    <select id="countRtotal" resultType="java.util.Map">
+    SELECT
+     (SELECT COUNT(dataresource_type)  FROM dv_dataresource WHERE dataresource_type IN('mysql','oracle','sqlserver','db2') AND is_deleted='0')  'rdbTotal',
+     (SELECT COUNT(dataresource_type)  FROM dv_dataresource WHERE dataresource_type IN('hdfs','hive','hbase','impala','kafka') AND is_deleted='0')  'rbigdataTotal'
+    </select>
+
+    <!--改变数据私有化属性-->
+    <update id="changePrivateStatus">
+        UPDATE  dv_dataresource
+        SET is_shared='1'
+        WHERE pk_dataresource_id=#{dataresourceId}
+        AND is_shared='0'
+    </update>
+
+    <!--改变数据公有化属性-->
+    <update id="changeSharedStatus">
+        UPDATE  dv_dataresource
+        SET is_shared='0'
+        WHERE pk_dataresource_id=#{dataresourceId}
+        AND is_shared='1'
+    </update>
+
+    <!--检查数据资源名称是否重复-->
+    <select id="countByName" resultType="int">
+        select count(*) from dv_dataresource
+        where dataresource_name=#{dataresourceName}
+        and is_deleted='0'
+    </select>
+
+   <!--判断是否为修改-->
+    <select id="countById" resultType="int">
+       select count(*) from dv_dataresource
+        where pk_dataresource_id=#{dataresourceId}
+        and is_deleted='0'
+    </select>
+
+    <!--修改数据资源名称时判断与其他数据资源名称是否冲突-->
+    <select id="countByUpdate" resultType="int">
+        select count(*) from dv_dataresource
+        where pk_dataresource_id!=#{dataresourceId}
+        and dataresource_name=#{dataresourceName}
+        and is_deleted='0'
+    </select>
+</mapper>

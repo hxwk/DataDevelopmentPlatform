@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.chargingPile.dao.ChargeEquipmentInfoDao">
+
+    <sql id="equipmentColumns">
+        equipment_id, manufacturer_id, equipment_model, equipment_name, production_date, construction_time,
+        equipment_type, equipment_status, equipment_power, new_national_standard, connector_infos, equipment_lng,
+        equipment_lag, station_id, power
+    </sql>
+
+    <resultMap id="chargingDeviceTypeMap" type="com.dfssi.dataplatform.chargingPile.entity.TwoValueResultEntity" >
+        <result column="connectorType" property="strValue"></result>
+        <result column="totalNum" property="longValue"></result>
+    </resultMap>
+
+    <delete id="deleteAllFromStation">
+        delete from charge_equipment_info where station_id=#{id}
+    </delete>
+
+    <insert id="insertAllFromStation">
+        INSERT INTO charge_equipment_info(equipment_id, manufacturer_id, equipment_model, equipment_name,
+        production_date,construction_time,equipment_type,equipment_status,equipment_power,
+        new_national_standard,equipment_lng,equipment_lag,station_id)
+        values
+        <foreach collection="arg0" item="link" index="index" separator=",">
+            (#{link.EquipmentID}, #{link.ManufacturerID}, #{link.EquipmentModel},
+            #{link.EquipmentName}, #{link.ProductionDate}, #{link.ConstructionTime},
+            #{link.EquipmentType}, #{link.EquipmentStatus}, #{link.EquipmentPower},
+            #{link.NewNationalStandard}, #{link.EquipmentLng},#{link.EquipmentLat},#{arg1}
+            )
+        </foreach>
+
+    </insert>
+
+    <select id="selectChargingDeviceType" resultMap="chargingDeviceTypeMap">
+        SELECT equipment_type AS connectorType, count(equipment_id) AS totalNum FROM charge_equipment_info
+        GROUP BY equipment_type ORDER BY equipment_type
+    </select>
+
+    <select id="totalNumberOfChargingPiles" resultType="java.lang.Long">
+        select count(equipment_id) as totalNum from charge_equipment_info
+    </select>
+
+</mapper>

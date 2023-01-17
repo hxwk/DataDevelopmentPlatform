@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.chargingPile.dao.ChargeOperatorInfoDao">
+
+    <update id="updateOperatorInfo" parameterType="com.dfssi.dataplatform.chargingPile.entity.ChargeOperatorInfoEntity">
+        UPDATE charge_operator_info SET
+        <if test="#{OperatorTel1} != null">
+            operator_tel1 = #{OperatorTel1},
+        </if>
+        <if test="#{OperatorTel2} != null">
+            operator_tel2 = #{OperatorTel2},
+        </if>
+        <if test="#{OperatorRegAddress} != null">
+            operator_reg_address = #{OperatorRegAddress},
+        </if>
+        <if test="#{OperatorNote} != null">
+            operator_note = #{OperatorNote},
+        </if>
+        <if test="#{Url} != null">
+            url = #{Url},
+        </if>
+        <if test="#{PassWord} != null">
+            pass_word = #{PassWord},
+        </if>
+        <if test="#{PassWord2} != null">
+            pass_word2 = #{PassWord2},
+        </if>
+        <if test="#{PassWord3} != null">
+            pass_word3 = #{PassWord3},
+        </if>
+        <if test="#{PassWord4} != null">
+            pass_word4 = #{PassWord4}
+        </if>
+        <if test="#{OperatorID} != null">
+            WHERE operator_id = #{OperatorID};
+        </if>
+    </update>
+
+    <insert id="insert" parameterType="com.dfssi.dataplatform.chargingPile.entity.ChargeOperatorInfoEntity">
+        INSERT INTO charge_operator_info(operator_id, operator_name, operator_tel1,operator_tel2,
+        operator_reg_address,operator_note,url,pass_word,pass_word2,pass_word3,pass_word4
+        )
+        values
+        (#{OperatorID},#{OperatorName},#{OperatorTel1},#{OperatorTel2},#{OperatorRegAddress},
+        #{OperatorNote},#{Url},#{PassWord},#{PassWord2},#{PassWord3},#{PassWord4})
+    </insert>
+
+    <select id="seleteOperator" resultType="com.dfssi.dataplatform.chargingPile.entity.ChargeOperatorInfoEntity">
+        select operator_id as OperatorID,pass_word as passWord ,url as Url from charge_operator_info where operator_id=#{OperatorID}
+    </select>
+
+    <select id="chargePileOperatorTopN" resultType="com.dfssi.dataplatform.chargingPile.entity.TopOperatorEntity">
+        select oi.operator_name as operatorName, count(si.operator_id) as stationNum from charge_operator_info oi
+        LEFT JOIN charge_station_info si on  si.operator_id = oi.operator_id GROUP BY operatorName
+        ORDER BY stationNum DESC limit #{topN}
+    </select>
+
+    <select id="selectPassWord" resultType="com.dfssi.dataplatform.chargingPile.entity.PassWordEntity">
+      SELECT pass_word as passWord, pass_word2 as passWord2, pass_word3 as passWord3, pass_word4 as passWord4 FROM charge_operator_info WHERE operator_id = #{operatorID}
+    </select>
+
+    <select id="totalNumberOfAccessOperators" resultType="java.lang.Integer">
+      select count(operator_id) as totalNum from charge_operator_info
+    </select>
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.RoleDao" >
+  <resultMap id="BaseResultMap" type="com.dfssi.dataplatform.userhome.entity.RoleEntity" >
+    <id column="PK_ID" property="id" jdbcType="VARCHAR" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="IS_DELETED" property="valid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PK_ID, ROLE_NAME, REMARK,CREATE_USER,CREATE_TIME,UPDATE_USER,UPDATE_TIME,IS_DELETED
+  </sql>
+
+  <select id="selectByRoleName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    DISTINCT
+    PK_ID,
+    ROLE_NAME,
+    REMARK,
+    CREATE_USER,
+    DATE_FORMAT(CREATE_TIME,'%Y-%m-%d %T') as CREATE_TIME,
+    UPDATE_USER,
+    DATE_FORMAT(UPDATE_TIME,'%Y-%m-%d %T') as UPDATE_TIME,
+    IS_DELETED
+    from dv_role
+    <if test="roleName!=null and roleName!=''">
+       ROLE_NAME LIKE CONCAT(CONCAT('%', #{roleName}), '%')
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dv_role
+    where PK_ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dv_role
+    where PK_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <update id="deleteByExample" parameterType="com.dfssi.dataplatform.userhome.entity.RoleExampleEntity" >
+    update dv_role
+    set IS_DELETED=1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+
+  <insert id="insert" parameterType="com.dfssi.dataplatform.userhome.entity.RoleEntity" >
+    insert into dv_role (PK_ID, ROLE_NAME, REMARK, CREATE_USER,CREATE_TIME,UPDATE_USER,UPDATE_TIME,
+      IS_DELETED)
+    values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{createUser,jdbcType=VARCHAR},
+      now(),
+      #{updateUser,jdbcType=VARCHAR},
+      now(),
+       0
+          )
+  </insert>
+
+  <update id="updateByExample" parameterType="map" >
+    update dv_role
+    set PK_ID = #{record.id,jdbcType=VARCHAR},
+      ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+    IS_DELETED = 0,
+    UPDATE_USER = #{record.updateTime,jdbcType=VARCHAR},
+    UPDATE_TIME = now()
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!--检查角色名是否重复-->
+  <select id="countByName" resultType="int">
+        select count(*) from dv_role
+        where role_name=#{roleName}
+    </select>
+
+  <!--修改时判断角色名与其他角色名是否冲突-->
+  <select id="countByUpdate" resultType="int">
+        select count(*) from dv_role
+        where pk_id!=#{id}
+        and role_name=#{roleName}
+    </select>
+</mapper>

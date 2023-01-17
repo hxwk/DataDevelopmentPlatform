@@ -1,0 +1,10 @@
+#spring boot \u9ED8\u8BA4\u914D\u7F6E\u6587\u4EF6
+spring.profiles.active=dev
+server.port=8090
+spring.application.name=ide-securityAuth
+#server.context-path=/DataDevIDESecurityAuth
+
+
+info.appname=\u8BA4\u8BC1\u7BA1\u7406
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8

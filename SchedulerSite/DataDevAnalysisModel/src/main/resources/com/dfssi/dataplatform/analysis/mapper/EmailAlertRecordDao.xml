@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.EmailAlertRecordDao">
+
+    <insert id="insert">
+        INSERT INTO email_alert_record(record_id, model_id, is_email, is_phone, is_dispose, message, create_date, update_date)
+        VALUES ( #{recordId}, #{modelId}, #{isEmail}, #{isPhone}, #{isDispose}, #{message}, #{createDate}, #{updateDate})
+    </insert>
+
+    <select id="getRecordByModelId" resultType="com.dfssi.dataplatform.analysis.entity.EmailAlertRecordEntity">
+        SELECT *
+        FROM email_alert_record
+        WHERE model_id = #{modelId}
+    </select>
+
+    <!--<update id="updateStatusByModelId">-->
+        <!--update email_alert_user-->
+        <!--set-->
+        <!--status = #{status},-->
+        <!--start_time = #{startTime},-->
+        <!--finish_time = #{finishTime},-->
+        <!--run_containers = #{runContainers},-->
+        <!--memory = #{memory},-->
+        <!--virtual_cores = #{virtualCores},-->
+        <!--progress = #{progress}-->
+        <!--WHERE model_id = #{modelId}-->
+    <!--</update>-->
+
+    <delete id="deleteByModelId">
+        DELETE FROM email_alert_record WHERE model_id = #{model_id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,115 @@
+{
+	"terminal_0200" : {
+		"settings" : {
+			"index.analysis.analyzer.default.type" : "keyword",
+			"index.number_of_shards" : "3",
+			"index.refresh_interval" : "30s",
+			"index.translog.durability" : "ASYNC",
+			"index.translog.flush_threshold_size" : "2g",
+			"index.translog.sync_interval" : "120s"
+		},
+		"_all": {
+			"enabled": false
+		},
+		"properties": {
+			"id": {
+				"type": "keyword"
+			},
+			"alarm": {
+				"type": "long"
+			},
+			"location": {
+				"type": "geo_point"
+			},
+			"analog": {
+				"type": "long"
+			},
+			"artificialConfirmedAlarm": {
+				"type": "long"
+			},
+			"gpsTime": {
+				"type": "long"
+			},
+			"content": {
+				"type": "keyword"
+			},
+			"cumulativeOilConsumption": {
+				"type": "double"
+			},
+			"lon": {
+				"type": "double"
+			},
+			"lat": {
+				"type": "double"
+			},
+			"fuel": {
+				"type": "double"
+			},
+			"totalFuelConsumption": {
+				"type": "double"
+			},
+			"dir": {
+				"type": "integer"
+			},
+			"fromQly": {
+				"type": "integer"
+			},
+			"ioState": {
+				"type": "integer"
+			},
+			"mile": {
+				"type": "double"
+			},
+			"positioningSatelliteNumber": {
+				"type": "long"
+			},
+			"signalStrength": {
+				"type": "long"
+			},
+			"batteryVoltage": {
+				"type": "long"
+			},
+			"hydraulicTank": {
+				"type": "long"
+			},
+			"canAndHydraulicTankStatus": {
+				"type": "long"
+			},
+			"receiveMsgTime": {
+				"type": "long"
+			},
+			"vid": {
+				"type": "keyword"
+			},
+			"sim": {
+				"type": "keyword"
+			},
+			"signalState": {
+				"type": "keyword"
+			},
+			"vehicleWeight": {
+				"type": "double"
+			},
+			"speed": {
+				"type": "double"
+			},
+			"speed1": {
+				"type": "double"
+			},
+			"state": {
+				"type": "long"
+			},
+			"supplyVoltage": {
+				"type": "double"
+			},
+			"table": {
+				"index": false,
+				"type": "keyword"
+			},
+			"index": {
+				"index": false,
+				"type": "keyword"
+			}
+		}
+	}
+}

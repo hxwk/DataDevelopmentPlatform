@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <skipPackMergeProtos>0801,1003,1005</skipPackMergeProtos>
+
+    <protoMaps>
+        <upProto msgIds="0000" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.ExtendedProtocolPH"/>
+        <upProto msgIds="0002,0003,0100,0102" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.TerminalManagementPH"/>
+        <upProto msgIds="0200,0704" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.PositionAndAlarmPH"/>
+        <upProto msgIds="D004" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.PositionAndCanPH"/>
+        <upProto msgIds="0705" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.CanInformationPH"/>
+        <upProto msgIds="0800,0801,0805" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.MultimediaPH"/>
+        <upProto msgIds="0301,0302,0303,0701,0702" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.TelAndInfoPH"/>
+        <upProto msgIds="0900,0901,0A00,0B10" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.OtherProtocolPH"/>
+        <upProto msgIds="0B01,0B07,0B08"  handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.TaxiCallControlPH"/>
+        <!--南斗定义的锁车相关协议-->
+        <upProto msgIds="F101,F002,F102,F103,F106"  handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.LockVehicleControlPH"/>
+        <!--终端上传音视频资源列表格式-->
+        <upProto msgIds="1205,1003,1005,0107" handler="com.dfssi.dataplatform.datasync.plugin.source.tcpsource.handler.AudioVideoResListPH"/>
+    </protoMaps>
+</config>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.task.mapper.MonitorYarnDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.analysis.task.entity.MonitorYarnEntity">
+        <id property="applicationId" column="applicationId"/>
+        <result property="modelId" column="model_id"/>
+        <result property="oozieTaskId" column="oozie_task_id"/>
+        <result property="name" column="name"/>
+        <result property="status" column="status"/>
+        <result property="startTime" column="start_time"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="runContainers" column="run_containers"/>
+        <result property="memory" column="memory"/>
+        <result property="virtualCores" column="virtual_cores"/>
+        <result property="progress" column="progress"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO monitor_yarn_job(application_id, model_id, oozie_task_id, name, status, start_time, finish_time, run_containers, memory, virtual_cores, progress)
+        VALUES ( #{applicationId}, #{modelId}, #{oozieTaskId}, #{name}, #{status}, #{startTime}, #{finishTime}, #{runContainers}, #{memory}, #{virtualCores}, #{progress})
+    </insert>
+
+    <select id="getByOozieId" resultMap="resultMap" parameterType="com.dfssi.dataplatform.analysis.task.entity.MonitorYarnEntity">
+        SELECT *
+        FROM monitor_yarn_job
+        WHERE oozie_task_id = #{oozieTaskId}
+    </select>
+
+    <select id="getByStatus" resultMap="resultMap" parameterType="com.dfssi.dataplatform.analysis.task.entity.MonitorYarnEntity">
+        SELECT *
+        FROM monitor_yarn_job
+        WHERE status = #{status}
+    </select>
+
+    <select id="getOozieIdByModelId" resultType="java.lang.String">
+        SELECT oozie_task_id
+        FROM monitor_yarn_job
+        WHERE model_id = #{modelId}
+    </select>
+
+    <select id="getApplicationIdByOozieId" resultType="java.lang.String">
+        SELECT application_id
+        FROM monitor_yarn_job
+        WHERE oozie_task_id = #{oozieTaskId}
+    </select>
+
+    <select id="getLastJobId" resultType="java.lang.String">
+        select oozie_task_id from monitor_yarn_job WHERE model_id = #{modelId} ORDER BY start_time desc limit 1
+    </select>
+
+    <update id="updateStatusByModelId">
+        update monitor_yarn_job
+        set
+        status = #{status},
+        start_time = #{startTime},
+        finish_time = #{finishTime},
+        run_containers = #{runContainers},
+        memory = #{memory},
+        virtual_cores = #{virtualCores},
+        progress = #{progress}
+        WHERE model_id = #{modelId}
+    </update>
+
+    <update id="updateStatusByOozieTaskId">
+        update monitor_yarn_job
+        set
+        status = #{status},
+        start_time = #{startTime},
+        finish_time = #{finishTime},
+        run_containers = #{runContainers},
+        memory = #{memory},
+        virtual_cores = #{virtualCores},
+        progress = #{progress}
+        WHERE oozie_task_id = #{oozieTaskId}
+    </update>
+
+    <update id="updateStatusByApplicationId">
+        update monitor_yarn_job
+        set
+        status = #{status},
+        start_time = #{startTime},
+        finish_time = #{finishTime},
+        run_containers = #{runContainers},
+        memory = #{memory},
+        virtual_cores = #{virtualCores},
+        progress = #{progress}
+        WHERE application_id = #{applicationId}
+    </update>
+
+    <update id="updateStatusWhenKillByModelId">
+        update monitor_yarn_job
+        set
+        status = 'KILLED'
+        where model_id = #{modelId}
+        order by start_time desc limit 1
+    </update>
+
+    <update id="updateWhenStart">
+        update monitor_yarn_job
+        set
+        oozie_task_id = #{oozieTaskId},
+        status = #{status},
+        start_time = #{startTime},
+        finish_time = #{finishTime},
+        run_containers = #{runContainers},
+        memory = #{memory},
+        virtual_cores = #{virtualCores},
+        progress = #{progress}
+        WHERE model_id = #{modelId}
+    </update>
+
+    <delete id="deleteByModelId">
+		DELETE FROM monitor_yarn_job WHERE model_id = #{modelId}
+	</delete>
+
+    <select id="listRunningApplicationIdsByOozieId" resultType="java.lang.String">
+        SELECT
+        application_id
+        FROM monitor_yarn_job
+        WHERE status != 'SUCCEEDED'
+        AND status != 'FAILED'
+        AND status != 'KILLED'
+        AND oozie_task_id = #{oozieTaskId}
+    </select>
+    
+    <select id="listFailedModelIdByYarnStatus" resultType="java.lang.String">
+        SELECT model_id From monitor_yarn_job WHERE status = 'FAILED'
+    </select>
+
+</mapper>

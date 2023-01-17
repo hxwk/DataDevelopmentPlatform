@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.service.mapper.ServiceModelDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.analysis.service.entity.ServiceModelEntity">
+        <id property="modelId" column="model_id"/>
+        <result property="name" column="name"/>
+        <result property="modelType" column="model_type"/>
+        <result property="description" column="description"/>
+        <result property="modelConf" column="model_conf"/>
+        <result property="status" column="status"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="isValid" column="is_valid"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO service_model(
+        model_id,
+        name,
+        model_type,
+        description,
+        model_conf,
+        status,
+        create_user,
+        create_date,
+        update_user,
+        update_date,
+        is_valid)
+        VALUES(
+        #{modelId},
+        #{name},
+        #{modelType},
+        #{description},
+        #{modelConf},
+        #{status},
+        #{createUser},
+        #{createDate},
+        #{updateUser},
+        #{updateDate},
+        #{isValid})
+    </insert>
+
+    <select id="listModels" resultMap="resultMap" parameterType="com.dfssi.dataplatform.analysis.service.entity.ServiceModelEntity">
+        SELECT
+        *
+        FROM  service_model am
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="modelName != null and modelName != ''">
+                AND am.name like CONCAT('%', #{modelName}, '%')
+            </if>
+            <if test="startTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(am.create_date) >= #{startTime}]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(am.create_date) <= #{endTime}]]>
+            </if>
+            <if test="status != null and status != ''">
+                AND am.status = #{status}
+            </if>
+        </trim>
+        <if test="field != null and field != ''">
+            ORDER BY ${field} ${orderType}
+        </if>
+    </select>
+
+    <select id="getModelConf" resultType="java.lang.String">
+        SELECT
+        model_conf
+        FROM service_model
+        WHERE model_id = #{modelId}
+    </select>
+
+    <delete id="delect">
+        DELECT FROM
+        service_model
+        WHERE
+        model_id = #{modelId}
+    </delete>
+
+</mapper>

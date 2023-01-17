@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.abs.mapper.AbsVehicleStatusMapper">
+
+    <insert id="insert">
+        INSERT INTO abs_vehicle_status(
+        vid,
+        status,
+        last_modified_time
+        )
+        VALUES
+        (
+        #{vid},
+        #{status},
+        #{lastModifiedTime}
+        )
+    </insert>
+
+    <update id="update">
+        update abs_vehicle_status
+        set
+        status = #{status},
+        last_modified_time = #{lastModifiedTime}
+        WHERE vid = #{vid}
+    </update>
+
+    <delete id="delect">
+        delete from abs_vehicle_status where vid = #{vid}
+    </delete>
+
+    <select id="listStatus" resultType="com.dfssi.dataplatform.abs.entity.AbsVehicleStatusEntity">
+        SELECT
+        vid,
+        status
+        FROM
+        abs_vehicle_status
+        WHERE
+        <if test="#{vidList != null and vidList.size() > 0}">
+            `vid` IN
+            <foreach collection="vidList" open="(" close=")" separator="," item="vid">
+                #{vid}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

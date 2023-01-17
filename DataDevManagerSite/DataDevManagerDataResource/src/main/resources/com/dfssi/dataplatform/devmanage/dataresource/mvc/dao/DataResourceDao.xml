@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.devmanage.dataresource.mvc.dao.DataResourceDao">
+
+    <resultMap id="resourceMap" type="dataResourceEntity">
+        <id property="dataresId" column="datares_id"/>
+        <result property="dataresName" column="datares_name"/>
+        <result property="dataresDesc" column="datares_desc"/>
+        <result property="dataresType" column="datares_type"/>
+        <result property="status" column="status"/>
+        <result property="sharedStatus" column="shared_status"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+        <collection property="accessEntities" ofType="dataResourceAccessEntity">
+            <id property="dsAccessInfoId" column="ds_access_info_id"/>
+            <result property="parameterName" column="parameter_name"/>
+            <result property="parameterValue" column="parameter_value"/>
+            <result property="dsId" column="ds_id"/>
+            <result property="isValid" column="is_valid"/>
+        </collection>
+    </resultMap>
+
+    <delete id="delete">
+      BEGIN
+        DELETE FROM meta_dataresource_conf_t WHERE datares_id=#{id}
+        DELETE FROM meta_dataresource_tablecolumn_conf_t WHERE datares_id=#{id}
+      END
+    </delete>
+
+    <insert id="insertCol">
+        INSERT INTO meta_dataresource_tablecolumn_conf_t(
+        datares_table_column_id,
+        datares_table_column_name,
+        datares_table_column_type,
+        datares_id,
+        is_valid,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="columnEntities" item="col">
+            (
+            #{col.dataresTableColumnId,jdbcType=VARCHAR},
+            #{col.dataresTableColumnName,jdbcType=VARCHAR},
+            #{col.dataresTableColumnType,jdbcType=VARCHAR},
+            #{dataresId,jdbcType=VARCHAR},
+            #{col.isValid,jdbcType=VARCHAR},
+            STR_TO_DATE(#{col.createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{col.createUser,jdbcType=VARCHAR},
+            STR_TO_DATE(#{col.updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{col.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
+
+    <update id="insertStatus" >
+        update meta_dataresource_conf_t
+        set status = 1,
+        shared_status = 2
+        where datares_id = #{dataresId}
+    </update>
+
+    <insert id="insert">
+        INSERT INTO meta_dataresource_conf_t(
+          datares_id,
+          datares_name,
+          datares_desc,
+          datares_type,
+          status,
+          is_valid,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{dataresId,jdbcType=VARCHAR},
+          #{dataresName,jdbcType=VARCHAR},
+          #{dataresDesc,jdbcType=VARCHAR},
+          #{dataresType,jdbcType=VARCHAR},
+          #{status,jdbcType=VARCHAR},
+          #{isValid,jdbcType=VARCHAR},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR}
+        );
+
+    </insert>
+
+    <select id="findList" resultMap="resourceMap" parameterType="com.dfssi.dataplatform.devmanage.dataresource.mvc.entity.DataResourceEntity">
+        SELECT
+        meta_dataresource_conf_t.datares_id,
+        meta_dataresource_conf_t.datares_name,
+        meta_dataresource_conf_t.datares_desc,
+        meta_dataresource_conf_t.datares_type,
+        meta_dataresource_conf_t.status,
+        meta_dataresource_conf_t.shared_status,
+        meta_dataresource_conf_t.is_valid,
+        DATE_FORMAT(meta_dataresource_conf_t.create_date,'%Y-%m-%d %T') as create_date,
+        meta_dataresource_conf_t.create_user,
+        DATE_FORMAT(meta_dataresource_conf_t.update_date,'%Y-%m-%d %T') as update_date,
+        meta_dataresource_conf_t.update_user,
+        meta_dataresource_access_info.ds_access_info_id,
+        meta_dataresource_access_info.parameter_name,
+        meta_dataresource_access_info.parameter_value,
+        meta_dataresource_access_info.ds_id
+        FROM
+        meta_dataresource_conf_t, meta_dataresource_access_info
+          where meta_dataresource_conf_t.is_valid = 1
+        <if test="dataresName != null">
+            and meta_dataresource_conf_t.datares_name LIKE '%${dataresName}%'
+        </if>
+        <if test="dataresId != null">
+            and meta_dataresource_conf_t.datares_id = #{dataresId}
+        </if>
+        <if test="createUser != null">
+            and meta_dataresource_conf_t.create_user LIKE '%${createUser}%'
+        </if>
+
+        order by meta_dataresource_conf_t.create_date desc
+    </select>
+
+    <select id="get" resultMap="resourceMap">
+        SELECT
+            t.datares_id,
+            t.datares_name,
+            t.datares_desc,
+            t.datares_type,
+            t. STATUS,
+            t.is_valid,
+            DATE_FORMAT(
+                t.create_date,
+                '%Y-%m-%d %T'
+            ),
+            t.create_user,
+            DATE_FORMAT(
+                t.update_date,
+                '%Y-%m-%d %T'
+            ),
+            t.update_user,
+            col.datares_table_column_id,
+            col.datares_table_column_name,
+            col.datares_table_column_type,
+            col.datares_id,
+            col.is_valid,
+            DATE_FORMAT(
+                col.create_date,
+                '%Y-%m-%d %T'
+            ),
+            col.create_user,
+            DATE_FORMAT(
+                col.update_date,
+                '%Y-%m-%d %T'
+            ),
+            col.update_user
+        FROM
+            meta_dataresource_conf_t t
+        LEFT JOIN meta_dataresource_tablecolumn_conf_t col ON t.datares_id = col.datares_id
+        WHERE
+            t.datares_id = #{dataresId} and  t.is_valid = 1
+    </select>
+
+
+</mapper>

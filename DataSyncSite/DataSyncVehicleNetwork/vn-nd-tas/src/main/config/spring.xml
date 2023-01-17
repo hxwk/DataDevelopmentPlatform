@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.yaxon.vn.nd.tas"/>
+
+    <bean id="springContextUtil" class="com.yaxon.vndp.common.util.SpringContextUtil"/>
+
+
+    <import resource="classpath:spring-redis.xml"/>
+
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:app.properties</value>
+                <value>classpath:redis.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties" />
+    </bean>
+
+    <!--[[  TCP 接入通道配置  -->
+    <bean id="tcpChannelConfig" class="com.yaxon.vn.nd.tas.net.tcp.TcpChannelConfig">
+        <property name="nodeId" value="${dms.nodeId}"/>
+        <property name="host" value="${tas.host}"/>
+        <!--监听主机ip-->
+        <property name="port" value="${tas.tcp.port}"/><!--监听端口-->
+        <property name="terminalMaxIdleTimeMillis" value="${terminal.maxidletimemillis}"/>
+        <property name="configFile" value="classpath:proto-routing.xml"/>
+    </bean>
+    <!--]]TCP 接入服务配置  -->
+
+    <!--[[ DMS 配置  -->
+    <bean id="dmsSystemFactory" class="com.yaxon.vndp.dms.util.DmsSystemFactory">
+        <property name="dmsConfig">
+            <bean class="com.yaxon.vndp.dms.DmsConfig">
+                <property name="zkConnectString" value="${dms.zk.address}"/>
+                <property name="zkSessionTimeoutMillis" value="20000"/>
+                <property name="clusterId" value="${dms.clusterId}"/>
+                <property name="nodeId" value="${dms.nodeId}"/>
+                <property name="maxWorkThreads" value="${dms.maxWorkThreads}"/>
+            </bean>
+        </property>
+        <property name="configFile" value="classpath:dms.xml"/>
+    </bean>
+
+    <bean id="dmsSystem" factory-bean="dmsSystemFactory" factory-method="createDmsSystem"
+          init-method="start" destroy-method="stop"/>
+
+    <bean id="tbp" class="com.yaxon.vn.nd.tas.util.TbpNodeGroup">
+        <property name="groupName" value="tbp"/>
+        <property name="nodeIds" value="tbp-1,tbp-2"/>
+        <property name="dmsSystem" ref="dmsSystem"/>
+    </bean>
+    <!--]] DMS 配置  -->
+
+    <!--[[  UDP 接入通道配置  -->
+    <bean id="udpChannelConfig" class="com.yaxon.vn.nd.tas.net.udp.UdpChannelConfig">
+        <property name="nodeId" value="${dms.nodeId}"/>
+        <property name="host" value="${tas.host}"/>
+        <!--监听主机ip-->
+        <property name="port" value="${tas.udp.port}"/><!--监听端口-->
+        <property name="configFile" value="classpath:proto-routing.xml"/>
+    </bean>
+    <!--]]UDP 接入服务配置  -->
+
+    <!--[[ 视频服务器配置  -->
+<!--    <bean id="avs" class="com.yaxon.vn.nd.tas.avs.AvsLink"
+          init-method="start" destroy-method="stop">
+        <property name="host" value="${avs.host}"/>
+        <property name="port" value="${avs.port}"/>
+    </bean>-->
+    <!--]] 视频服务器配置  -->
+
+</beans>

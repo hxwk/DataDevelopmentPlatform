@@ -1,0 +1,5 @@
+#\u6D4B\u8BD5\u73AF\u5883
+server.port=8024
+
+##eureka ЗўЮёзЂВс
+eureka.client.serviceUrl.defaultZone=http://192.168.91.229:6666/eureka/

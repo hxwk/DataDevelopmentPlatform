@@ -1,0 +1,166 @@
+[
+  {
+    "name": "数据源",
+    "id": 1,
+    "icon": "./css/zTreeStyle/img/diy/8.png",
+    "children": [
+      {
+        "name": "MySQL",
+        "id": 11,
+        "children": [
+          {
+            "name": "MySQLtest1",
+            "id": 111
+          },
+          {
+            "name": "MySQLtest2",
+            "id": 112
+          }
+        ]
+      },
+      {
+        "name": "Hive",
+        "id": 12,
+        "children": [
+          {
+            "name": "Hivetest1",
+            "id": 121
+          },
+          {
+            "name": "Hivetest2",
+            "id": 122
+          }
+        ]
+      },
+      {
+        "name": "HBase",
+        "id": 13,
+        "children": [
+          {
+            "name": "HBasetest1",
+            "id": 131
+          },
+          {
+            "name": "HBasetest2",
+            "id": 132
+          }
+        ]
+      },
+      {
+        "name": "TCP",
+        "id": 14,
+        "children": [
+          {
+            "name": "TCPconn1",
+            "id": 141
+          },
+          {
+            "name": "TCPconn2",
+            "id": 142
+          }
+        ]
+      },
+      {
+        "name": "UDP",
+        "id": 15,
+        "children": [
+          {
+            "name": "UDPconn1",
+            "id": 151
+          },
+          {
+            "name": "UDPconn2",
+            "id": 152
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "通道",
+    "id": 2,
+    "icon": "./css/zTreeStyle/img/diy/8.png",
+    "children": [
+      {
+        "name": "Memory channel",
+        "id": 21,
+        "open": true
+      },
+      {
+        "name": "kafka channel",
+        "id": 22,
+        "open": true
+      }
+    ]
+  },
+  {
+    "name": "清洗转换",
+    "id": 3,
+    "icon": "./css/zTreeStyle/img/diy/8.png",
+    "children": [
+      {
+        "name": "数据清洗",
+        "id": 31,
+        "children": [
+          {
+            "name": "数据过滤",
+            "id": 311
+          },
+          {
+            "name": "脱敏",
+            "id": 312
+          }
+        ]
+      },
+      {
+        "name": "数据转换",
+        "id": 32,
+        "children": [
+          {
+            "name": "字段映射",
+            "id": 321
+          },
+          {
+            "name": "协议解析",
+            "id": 322
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "数据资源",
+    "id": 4,
+    "icon": "./css/zTreeStyle/img/diy/8.png",
+    "children": [
+      {
+        "name": "Hive",
+        "id": 41,
+        "children": [
+          {
+            "name": "Hivetest1",
+            "id": 411
+          },
+          {
+            "name": "Hivetest2",
+            "id": 412
+          }
+        ]
+      },
+      {
+        "name": "kafka",
+        "id": 42,
+        "children": [
+          {
+            "name": "kafkatest1",
+            "id": 421
+          },
+          {
+            "name": "kafkatest2",
+            "id": 422
+          }
+        ]
+      }
+    ]
+  }
+]

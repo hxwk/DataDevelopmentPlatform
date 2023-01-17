@@ -1,0 +1,49 @@
+{
+	"terminal_0705" : {
+		"settings" : {
+			"index.analysis.analyzer.default.type" : "keyword",
+			"index.number_of_shards" : "3",
+			"index.refresh_interval" : "30s",
+			"index.translog.durability" : "ASYNC",
+			"index.translog.flush_threshold_size" : "2g",
+			"index.translog.sync_interval" : "120s"
+		},
+		"_all": {
+			"enabled": false
+		},
+		"properties": {
+			"id": {
+				"type": "keyword"
+			},
+			"receiveTime": {
+				"type": "long"
+			},
+			"vid": {
+				"type": "keyword"
+			},
+			"sim": {
+				"type": "keyword"
+			},
+			"dbcType": {
+				"type": "keyword"
+			},
+			"signal_name": {
+				"type": "keyword"
+			},
+			"unit": {
+				"type": "keyword"
+			},
+			"value": {
+				"type": "double"
+			},
+			"table": {
+				"index": false,
+				"type": "keyword"
+			},
+			"index": {
+				"index": false,
+				"type": "keyword"
+			}
+		}
+	}
+}

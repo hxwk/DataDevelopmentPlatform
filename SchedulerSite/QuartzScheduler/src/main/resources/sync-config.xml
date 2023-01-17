@@ -1,0 +1,29 @@
+<sync >
+    <databases>
+       <database id="gp-detect"/>
+    </databases>
+
+    <rediss>
+        <redis id="evs-redis"
+               dbNum="6"
+               timeout="5000"/>
+
+        <redis id="ccv-redis"
+               dbNum="9"
+               timeout="5000"/>
+    </rediss>
+
+    <!-- 油耗相关同步 -->
+    <sync-fuel>
+        <database id="gp-detect" total="demo_vehicle_total_fuel" trip="demo_vehicle_trip"/>
+        <redis id="ccv-redis" partitions="20" batch="500"/>
+    </sync-fuel>
+
+    <!-- 新能源相关同步 -->
+    <sync-evs>
+        <rules-database id="gp-detect" table="evs_detect_detail"/>
+        <database id="gp-detect" errday="evs_err_day" errtotal="evs_err_total" dataday="evs_driving_day" datatotal="evs_driving_total"/>
+        <redis id="evs-redis" partitions="50" batch="500"/>
+    </sync-evs>
+
+</sync>

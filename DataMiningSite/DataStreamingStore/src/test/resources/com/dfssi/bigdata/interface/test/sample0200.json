@@ -1,0 +1,56 @@
+{
+  "alarm": 0,
+  "alarms": [],
+  "alt": 0,
+  "batteryVoltage": 0,
+  "canAndHydraulicTankStatus": 0,
+  "cumulativeOilConsumption": 0.0,
+  "dir": 0,
+  "extraInfoItems": [
+    {
+      "data": "AAAM4Q==",
+      "id": 43
+    },
+    {
+      "data": "Dw==",
+      "id": 48
+    },
+    {
+      "data": "Aw==",
+      "id": 49
+    },
+    {
+      "data": "APE=",
+      "id": -31
+    },
+    {
+      "data": "AKunWw==",
+      "id": -30
+    }
+  ],
+  "fromQly": 0,
+  "fuel": 0.0,
+  "gpsTime": 1516870513000,
+  "hydraulicTank": 0,
+  "id": 0,
+  "ioState": 0,
+  "lat": 30762405,
+  "lon": 114034303,
+  "mile": 9411,
+  "msgId": "0200",
+  "receiveMsgTime": 1516870519437,
+  "signalState": 0,
+  "speed": 0,
+  "speed1": 0,
+  "state": 811009,
+  "totalFuelConsumption": 0,
+  "vehicleStatus": [
+    "近光灯信号",
+    "加热器工作",
+    "离合器状态",
+    "保留",
+    "保留"
+  ],
+  "vehicleWeight": 0.0,
+  "vid": "7c4c631ef0bc444684d4d406be17668e"
+}

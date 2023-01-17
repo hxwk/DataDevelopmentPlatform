@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.DicDao" >
+    <resultMap id="dic" type="com.dfssi.dataplatform.userhome.entity.DicEntity">
+        <id property="id" column="pk_id"/>
+        <result property="dicType" column="dic_type"/>
+        <result property="name" column="dic_name"/>
+        <result property="description" column="description"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="orderNum" column="order_num"/>
+    </resultMap>
+    <!--显示字典主表-->
+    <select id="listGetDic" resultMap="dic">
+        select
+        pk_id,
+        dic_type,
+        dic_name,
+        description,
+        is_valid,
+        order_num
+        from dv_dic
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test="dicType!=null and dicType!=''">
+            and dic_type LIKE CONCAT(CONCAT('%', #{dicType}), '%')
+        </if>
+        <if test="name!=null and name!=''">
+            and dic_name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="isValid!=null and isValid!=''">
+            and is_valid LIKE CONCAT(CONCAT('%', #{isValid}), '%')
+        </if>
+        </trim>
+        order by order_num
+    </select>
+
+    <!--新增/修改主表信息-->
+    <insert id="insert">
+      insert into dv_dic(
+      pk_id,
+      dic_type,
+      dic_name,
+      description,
+      is_valid,
+      order_num
+    )
+   values (
+      #{id},
+      #{dicType},
+      #{name},
+      #{description},
+      #{isValid},
+      #{orderNum}
+    )
+    ON DUPLICATE KEY UPDATE
+     dic_type=values(dic_type),
+     dic_name=values(dic_name),
+     description=values(description),
+     is_valid=values(is_valid),
+     order_num=values(order_num);
+    </insert>
+
+    <!--删除-->
+    <delete id="deleteByType">
+    delete
+    from dv_dic
+    where dic_type=#{dicType};
+    </delete>
+
+    <!--新增时判断字典是否重复-->
+    <select id="countByDicType" resultType="int">
+     select count(*) from dv_dic
+        where dic_type=#{dicType}
+    </select>
+
+    <!--修改字典类型名称时判断与其他类型名称是否重复-->
+    <select id="countByUpdate" resultType="int">
+        select count(*) from dv_dic
+        where pk_id!=#{id}
+        and dic_type=#{dicType}
+    </select>
+    
+    <!--判断是否为修改-->
+    <select id="countById" resultType="int">
+        select count(*) from dv_dic
+        where pk_id=#{id}
+    </select>
+
+    <!--有效字典信息-->
+    <select id="listGetDicType" resultMap="dic">
+    select
+        pk_id,
+        dic_type,
+        dic_name,
+        description,
+        is_valid,
+        order_num
+        from dv_dic
+        where is_valid=1
+        order by order_num
+    </select>
+
+    <update id="set0">
+        set foreign_key_checks = 0
+    </update>
+
+    <update id="set1">
+        set foreign_key_checks = 1
+    </update>
+</mapper>

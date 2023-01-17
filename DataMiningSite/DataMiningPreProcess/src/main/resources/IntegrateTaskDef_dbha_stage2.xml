@@ -1,0 +1,65 @@
+<spark-task-def id="" name="dbha_stage_two" description="驾驶行为分析第二阶段：驾驶行为指标指标统计数据">
+    <inits>
+        <init id="" type="InitHiveContext" >
+            <!-- 获取Resource中的配置并广播 -->
+            <params>
+                <param name="BroadcastConfigLoader" value="IndicatorsConfig" />
+                <param name="sparkMaster" value="yarn-cluster"/>
+            </params>
+        </init>
+    </inits>
+    <inputs>
+        <input id="12" type="InputMysqlTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.241"/>
+                <param name="jdbcPort" value="3306"/>
+                <param name="jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="dbtable" value="dbha_trip_indicators"/>
+                <param name="user" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </input>
+        <input id="13" type="InputMysqlTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.241"/>
+                <param name="jdbcPort" value="3306"/>
+                <param name="jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="dbtable" value="dbha_trip_detail"/>
+                <param name="user" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </input>
+        <input id="14" type="InputMysqlTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.241"/>
+                <param name="jdbcPort" value="3306"/>
+                <param name="jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="dbtable" value="dbha_stat_indicators"/>
+                <param name="user" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </input>
+    </inputs>
+    <preprocess>
+        <process id="22" type="PreprocessIndicatorStat" inputIds="12,13,14" description="全局指标统计分析">
+            <params>
+                <param name="groupType" value="NONE" />
+                <!--<param name="updateMode" value="INCREMENTAL" />-->
+            </params>
+        </process>
+    </preprocess>
+
+    <outputs>
+        <output id="31" type="OutputJDBC" inputIds="22">
+            <params>
+                <param name="outputMode" value="Overwrite"/>
+                <!-- MySql 中驾驶行为分析表所在的SSI_MOTORCADE库连接配置 -->
+                <param name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                <param name="url" value="jdbc:mysql://172.16.1.241:3306/SSI_MOTORCADE?useSSL=false"/>
+                <param name="tableName" value="dbha_stat_indicators"/>
+                <param name="username" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </output>
+    </outputs>
+</spark-task-def>

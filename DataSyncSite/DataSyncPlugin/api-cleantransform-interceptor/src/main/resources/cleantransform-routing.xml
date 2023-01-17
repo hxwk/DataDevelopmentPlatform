@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <protoMaps>
+        <cleanProto handlerName="searchreplace" handler="com.dfssi.dataplatform.datasync.plugin.interceptor.factory.SearchAndReplaceHandler"/>
+        <cleanProto handlerName="numberhandle" handler="com.dfssi.dataplatform.datasync.plugin.interceptor.factory.NumberHandler"/>
+        <cleanProto handlerName="maskhandler" handler="com.dfssi.dataplatform.datasync.plugin.interceptor.factory.MaskHandler" />
+    </protoMaps>
+</config>

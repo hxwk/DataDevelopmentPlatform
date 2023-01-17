@@ -1,0 +1,51 @@
+{
+  "id": "20180110154319000000",
+  "name": "324",
+  "description": "432432",
+  "modelTypeId": "20171123152036000001",
+  "links": [
+    {
+      "modelStepFrom": {
+        "id": "20180110153447000005",
+        "pos": "Top"
+      },
+      "modelStepTo": {
+        "id": "20180110153450000006",
+        "pos": "Top"
+      }
+    },
+    {
+      "modelStepFrom": {
+        "id": "20180110153450000006",
+        "pos": "Top"
+      },
+      "modelStepTo": {
+        "id": "20180110153453000007",
+        "pos": "Top"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "20180110153447000005",
+      "stepTypeId": "12",
+      "name": "Hive",
+      "guiX": 26,
+      "guiY": 31
+    },
+    {
+      "id": "20180110153450000006",
+      "stepTypeId": "20171120152040001002",
+      "name": "AlgorithmKMeans",
+      "guiX": 37,
+      "guiY": 157
+    },
+    {
+      "id": "20180110153453000007",
+      "stepTypeId": "20171120152040002001",
+      "name": "OutputHiveTable",
+      "guiX": 50,
+      "guiY": 288
+    }
+  ]
+}

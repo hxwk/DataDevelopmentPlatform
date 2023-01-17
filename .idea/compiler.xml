@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="api-crawler-source" />
+        <module name="VehicleInfoModel" />
+        <module name="DataDevIDEDataResource" />
+        <module name="DataCloudRegister" />
+        <module name="DataCommonSpark" />
+        <module name="ABSAutamationCheck" />
+        <module name="DataCommonResources" />
+        <module name="DataCommonElasticsearch" />
+        <module name="api-jdbc-sink" />
+        <module name="DataCloudAdmin" />
+        <module name="DataDevIDECleanTransform" />
+        <module name="DataCommonService" />
+        <module name="DataSyncCommon" />
+        <module name="DataDevManagerAnalysisTask" />
+        <module name="DataCloudZuul" />
+        <module name="VehicleNetworkBasicInfo" />
+        <module name="DataCLoudScheduling" />
+        <module name="DataDevIDEAnalysisTask" />
+        <module name="api-cleantransform-interceptor" />
+        <module name="DataCommonRpc" />
+        <module name="DataDevManagerImportTask" />
+        <module name="DataSyncService" />
+        <module name="DataCloudCommon" />
+        <module name="api-tcp-cv-source" />
+        <module name="api-http-source" />
+        <module name="api-tcp-source" />
+        <module name="api-jdbc-source" />
+        <module name="CVVehicleModel" />
+        <module name="vnnd-tbpsi" />
+        <module name="api-elasticsearch-sink" />
+        <module name="DataDevManagerSecurityAuth" />
+        <module name="DataCommonFlume" />
+        <module name="DataDevManager" />
+        <module name="DataDevManagerDataResource" />
+        <module name="DataDevManagerUserHome" />
+        <module name="api-tcp-road-source" />
+        <module name="DataStreamingStore" />
+        <module name="QuartzScheduler" />
+        <module name="api-tcp-source-data-dispense" />
+        <module name="VehicleRoad" />
+        <module name="DataMiningAlgorithm" />
+        <module name="DataCommonHBase" />
+        <module name="DataTrans" />
+        <module name="DataCommonRedis" />
+        <module name="DataDevIDEImportTask" />
+        <module name="api-kafka-sink" />
+        <module name="DataSyncFlume" />
+        <module name="api-hdfs-sink" />
+        <module name="DataCommonKafka" />
+        <module name="DataDevIDEUserHome" />
+        <module name="RoadVehicleModel" />
+        <module name="DataCommonBase" />
+        <module name="DataMiningAnalysis" />
+        <module name="CVVehicleNetworkBasicInfo" />
+        <module name="DataMiningPreProcess" />
+        <module name="DataDevManagerMonitor" />
+        <module name="api-tcp-ne-source" />
+        <module name="DataDevIDEDataSource" />
+        <module name="api-text-interceptor" />
+        <module name="DataDevManagerService" />
+        <module name="api-numeric-interceptor" />
+        <module name="NewEnVehicleModel" />
+        <module name="DataCommonHive" />
+        <module name="api-808-interceptor" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="DataDevAnalysisCommon" target="1.8" />
+      <module name="DataDevAnalysisModel" target="1.8" />
+      <module name="DataDevIDE" target="1.8" />
+      <module name="DataDevIDELogManager" target="1.8" />
+      <module name="DataDevIDESecurityAuth" target="1.8" />
+      <module name="DataDevIDEService" target="1.8" />
+      <module name="DataDevIDEUI" target="1.8" />
+      <module name="DataDevIDEVideoManage" target="1.8" />
+      <module name="vn-nd-redis" target="1.7" />
+      <module name="vn-nd-tas" target="1.7" />
+      <module name="vn-nd-tas-ne" target="1.7" />
+      <module name="vn-nd-tbp-si" target="1.7" />
+      <module name="vnnd-tbpnesource" target="1.8" />
+      <module name="vnnd-tbpsource" target="1.8" />
+      <module name="WorkflowScheduler" target="1.8" />
+      <module name="yx-vn-nd" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CVVehicleNetworkBasicInfo" options="-parameters" />
+      <module name="DataCLoudScheduling" options="-parameters" />
+      <module name="DataCloudAdmin" options="-parameters" />
+      <module name="DataCloudRegister" options="-parameters" />
+      <module name="DataCloudZuul" options="-parameters" />
+      <module name="DataDevIDECleanTransform" options="-parameters" />
+      <module name="DataDevIDEDataResource" options="-parameters" />
+      <module name="DataDevIDEDataSource" options="-parameters" />
+      <module name="DataDevIDEImportTask" options="-parameters" />
+      <module name="DataDevIDEUserHome" options="-parameters" />
+      <module name="DataDevManagerUserHome" options="-parameters" />
+      <module name="VehicleNetworkBasicInfo" options="-parameters" />
+      <module name="VehicleRoad" options="-parameters" />
+    </option>
+  </component>
+</project>

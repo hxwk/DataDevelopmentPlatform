@@ -1,0 +1,21 @@
+oozie.oozieUrl=http://devmaster:11000/oozie
+oozie.yarnHistoryServer=http://devmaster:18088
+oozie.nameNode=hdfs://devmaster:8020
+oozie.jobTracker=devmaster:8032
+oozie.offlineSparkActionClass=com.dfssi.dataplatform.analysis.preprocess.offline.OfflineAnalysisService
+oozie.streamingSparkActionClass=com.dfssi.dataplatform.analysis.preprocess.streaming.StreamingAnalysisService
+oozie.externalSparkActionClass=com.dfssi.dataplatform.analysis.preprocess.external.ExternalAnalysisService
+oozie.sparkActionjar=DataMiningPreProcess-1.0-SNAPSHOT.jar
+oozie.libpath=/user/hdfs/bigdata/dev/ext
+oozie.sparkRootPath=/user/hdfs/bigdata/dev
+
+oozie.defaultSparkOpts=--driver-memory 1g --executor-memory 1g --num-executors 2  --conf spark.yarn.historyServer.address=${oozie.yarnHistoryServer} \
+  --conf spark.eventLog.dir=${oozie.nameNode}/user/spark/applicationHistory --conf spark.eventLog.enabled=true \
+  --conf spark.yarn.jar=${oozie.nameNode}${oozie.sparkRootPath}/lib/spark-assembly.jar --conf spark.eventLog.overwrite=true
+
+oozie.sparkOpts=--conf spark.yarn.historyServer.address=${oozie.yarnHistoryServer} \
+  --conf spark.eventLog.dir=${oozie.nameNode}/user/spark/applicationHistory --conf spark.eventLog.enabled=true \
+  --conf spark.yarn.jar=${oozie.nameNode}${oozie.sparkRootPath}/lib/spark-assembly.jar --conf spark.eventLog.overwrite=true
+
+oozie.hdfsUserName=hdfs
+oozie.yarnRestUrl=http://172.16.1.210:8088/ws/v1/cluster/metrics

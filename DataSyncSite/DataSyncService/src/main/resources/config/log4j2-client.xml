@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<configuration monitorInterval="60">
+    <properties>
+        <!--logDir的两个属性分别对应服务器和本地，这个%c{1.}代表缩写类的包路径名用首字母来缩写，如果需要找对应的源码，可去掉{1.}重新生成日志-->
+        <property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %c{1.} [%p] %msg%n</property>
+        <!--<Property name="logDir">./../../logs</Property>-->
+        <Property name="logDir">D:\develop\workspace\IDEAworkspace\DataDevelopmentPlatform\DataSyncSite\DataSyncService\logs</Property>
+    </properties>
+
+    <Appenders>
+        <!--必须在这里定义控制台打印的name,否则控制台无法打印日志-->
+        <Console name="consolePrint" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+
+        <RollingFile name="clientAll"
+                     fileName="${logDir}/clientAll/clientAll.log"
+                     filePattern="${logDir}/clientAll/clientAll%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+
+        <RollingFile name="client"
+                     fileName="${logDir}/client/client.log"
+                     filePattern="${logDir}/client/client%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+
+        <RollingFile name="message"
+                     fileName="${logDir}/message/tcpMessage.log"
+                     filePattern="${logDir}/message/tcpMessage%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+
+        <RollingFile name="kafka"
+                     fileName="${logDir}/kafka/sendToKafka.log"
+                     filePattern="${logDir}/kafka/sendToKafka%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+
+        <RollingFile name="can"
+                     fileName="${logDir}/can/can0705.log"
+                     filePattern="${logDir}/can/can0705%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+
+        <!-- 用于盛装接入平台引用其他大数据体系内组件的日志，如curator、zookeeper、kafka、geode,其中有些日志无用且循环打印-->
+        <RollingFile name="other"
+                     fileName="${logDir}/other/other.log"
+                     filePattern="${logDir}/other/other%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <!-- 控制台日志级别,建议INFO,如果是日志按包分层，则一个包里的日志不会出现两次，此时需要将深层的包日志，追加到根模块下的日志，才能形成完整的日志，且包路径越深，优先级越高,additivity属性以包追加的为准-->
+        <!-- <Logger name="com.dfssi.dataplatform.datasync" level="INFO" additivity="false">
+             <AppenderRef ref="consolePrint" />
+         </Logger>-->
+
+        <!-- client端的所有日志,刷写非常快，平台上线后不建议查看该日志，日志等级建议INFO 如果additivity属性为true，则会将日志追加到下面的root中-->
+        <Logger name="com.dfssi.dataplatform" level="INFO" additivity="true">
+            <AppenderRef ref="clientAll" />
+        </Logger>
+
+
+        <!-- client端的重要日志日志,记录平台上线后的重要日志，不应包括报文日志，kafka日志，日志等级建议INFO，
+        该日志包层级最深，此块的日志被client.log占据，如果additivity属性必须为false，日志不能打印到下面的root模块也不能打印到该包的外包clientAll下 ,只有additivity属性必须为ture，才能打印到consolePrint和clientAll-->
+        <Logger name="com.dfssi.dataplatform.datasync.service" level="INFO" additivity="true">
+            <AppenderRef ref="client" />
+        </Logger>
+
+        <!-- 道路试验车的tcpsource日志，其他如商用车，新能源也是一样配置，重要的业务日志，加载到client端日志里，client端再加载到clientAll里-->
+        <Logger name="com.dfssi.dataplatform.datasync.plugin.source.roadtcpsource" level="INFO" additivity="true">
+            <AppenderRef ref="client" />
+        </Logger>
+
+        <!--道路试验车的tcpsource的工具类日志，不加载到client端日志里，只加载到clientAll里-->
+        <Logger name="com.dfssi.dataplatform.datasync.plugin.source.roadtcpsource.util" level="INFO" additivity="false">
+            <AppenderRef ref="clientAll" />
+            <AppenderRef ref="consolePrint"/>
+        </Logger>
+
+        <!-- kafkaSink的日志，其他如商用车，新能源也是一样配置，重要的业务日志，加载到client端日志里，client端再加载到clientAll里-->
+        <Logger name="com.dfssi.dataplatform.datasync.plugin.sink.km" level="INFO" additivity="true">
+            <AppenderRef ref="kafka" />
+        </Logger>
+
+        <!--message目录下的日志专门用于存储进入和出去的报文日志(用于和终端日志做比对)，不在client.log中显示(以免刷写量巨大)，
+        protolog名字来源于class中定义的名字  平时等级置为info,如果不想要原生报文，可以置为warn-->
+        <Logger name="protolog" level="WARN" additivity="true">
+            <AppenderRef ref="message" />
+            <AppenderRef ref="clientAll" />
+        </Logger>
+
+        <!-- 实车的监控信息，内容比较重要，加载到client端日志里-->
+        <Logger name="terminalconnLogger" level="INFO" additivity="true">
+            <AppenderRef ref="client" />
+        </Logger>
+
+        <!-- processKafka日志，当高频指令下发时数量特别多，放到clientAll里不放到client里-->
+        <Logger name="processKafka" level="INFO" additivity="false">
+            <AppenderRef ref="clientAll" />
+            <AppenderRef ref="kafka" />
+        </Logger>
+
+        <!-- canInformationPH的报文日志，数量特别多，单独放到一个目录里-->
+        <Logger name="canInformationPH" level="INFO" additivity="false">
+            <AppenderRef ref="can" />
+        </Logger>
+
+        <!-- 用于盛装接入平台引用其他大数据体系内组件的日志，如curator、zookeeper、kafka、geode,其中有些日志无用且循环打印,后期发现这块日志确实无用，可将日志级别调成WARN或者删除other-->
+        <Logger name="org.apache.curator.framework" level="INFO" additivity="false">
+            <AppenderRef ref="other" />
+        </Logger>
+        <Logger name="org.apache.zookeeper" level="INFO" additivity="false">
+            <AppenderRef ref="other" />
+        </Logger>
+        <Logger name="org.apache.kafka" level="INFO" additivity="false">
+            <AppenderRef ref="other" />
+        </Logger>
+        <Logger name="org.apache.geode" level="INFO" additivity="false">
+            <AppenderRef ref="other" />
+        </Logger>
+        <Logger name="io.github.xdiamond.client" level="INFO" additivity="false">
+            <AppenderRef ref="other" />
+        </Logger>
+
+        <Root level="ALL">
+            <!-- 根目录模块，上面模块的additivity如果为true，则会将日志追加到下面的内容中-->
+            <!--必须在这里引用控制台的name,否则控制台无法打印日志-->
+            <AppenderRef ref="consolePrint" level="INFO"/>
+        </Root>
+    </Loggers>
+</configuration>
+

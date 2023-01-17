@@ -1,0 +1,43 @@
+{
+  "total": 2,
+  "data": [
+    {
+      "id": "20161202112036000001",
+      "name": "DEV Offline Join Test",
+      "modelType": {
+        "id": "20171123152036000001",
+        "name": "OfflineAnalysis",
+        "group": null,
+        "description": "Offline Analysis Model",
+        "lastModifiedDate": "2018-01-06 03:09:08"
+      },
+      "description": "Join Model",
+      "cronExp": null,
+      "createUser": null,
+      "updateUser": null,
+      "createTime": "2018-01-03 10:59:51",
+      "lastModifiedDate": "2018-01-08 09:17:08",
+      "status": null
+    },
+    {
+      "id": "20171202112036000001",
+      "name": "Join Test",
+      "modelType": {
+        "id": "20171123152036000001",
+        "name": "OfflineAnalysis",
+        "group": null,
+        "description": "Offline Analysis Model",
+        "lastModifiedDate": "2018-01-06 03:09:08"
+      },
+      "description": "Join Model",
+      "cronExp": null,
+      "createUser": null,
+      "updateUser": null,
+      "createTime": "2017-12-06 05:29:09",
+      "lastModifiedDate": "2018-01-08 09:17:16",
+      "status": null
+    }
+  ],
+  "code": 0,
+  "errMsg": "查询成功"
+}

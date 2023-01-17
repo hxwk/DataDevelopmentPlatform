@@ -1,0 +1,72 @@
+#spring boot \u9ED8\u8BA4\u914D\u7F6E\u6587\u4EF6
+#\u8FD9\u91CC\u9762\u7ED9\u5176\u4ED6\u5927\u90E8\u5206\u7684\u7EC4\u4EF6\uFF0C\u63D0\u4F9B\u4E86\u4E00\u4E2A\u53EF\u96C6\u4E2D\u7BA1\u7406\u548C\u914D\u7F6E\u7684\u4E2D\u5FC3\uFF0C
+#\u5305\u62EC\u5B89\u5168\u63A7\u5236\uFF0Credis\uFF0Csolr\uFF0Cmangodb\u7684\u8FDE\u63A5\u4FE1\u606F\uFF0C\u4EE5\u53CA\u6570\u636E\u5E93\u8FDE\u63A5\u6C60\uFF0C\u5BB9\u5668\u7AEF\u53E3\u53F7\uFF0Cjmx\uFF0Cjava mail\uFF0C\u52A8\u6001\u6A21\u677F\u7B49
+#\u4E3B\u914D\u7F6E\u6587\u4EF6\uFF0C\u914D\u7F6E\u4E86\u8FD9\u4E2A\u4F1A\u4F18\u5148\u8BFB\u53D6\u91CC\u9762\u7684\u5C5E\u6027\u8986\u76D6\u4E3B\u914D\u7F6E\u6587\u4EF6\u7684\u5C5E\u6027
+spring.profiles.active=dev
+
+spring.application.name=ide-service
+
+info.appname=\u5206\u6790\u670D\u52A1
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8
+
+
+#server.context-path=/DataDevIDEService
+
+server.port=8090
+#MySQL
+#spring.datasource.initialize=false
+#spring.datasource.analysis.initialize=false
+#spring.datasource.metadata.initialize=false
+
+
+#spring.datasource.metadata.url=jdbc:mysql://172.16.1.241:3306/metadata?useSSL=false
+#spring.datasource.metadata.username=ssiuser
+#spring.datasource.metadata.password=112233
+#spring.datasource.metadata.driver-class-name=com.mysql.jdbc.Driver
+
+#http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
+#mybatis.config-location=classpath:mybatis-config.xml
+#mybatis.configuration.mapUnderscoreToCamelCase=true
+#mybatis.type-aliases-package=com.dfssi.dataplatform.analysis.entity
+#mybatis.mapper-locations=com/dfssi/dataplatform/analysis/mapper/*.xml
+#logging.level.sample.mybatis.mapper=TRACE
+#\u65F6\u95F4\u683C\u5F0F\u5316
+spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+#\u65F6\u533A\u8BBE\u7F6E
+spring.jackson.time-zone=Asia/Shanghai
+##\u81EA\u5B9A\u4E49\u5C5E\u6027
+#32\u4F4D\u968F\u673A\u5B57\u7B26\u4E32
+jerome.random.value=${random.value}
+#int\u7C7B\u578B\u7684\u968F\u673A\u6570\u5B57
+#jerome.bignumber=${random.long}
+#jerome.number.less.than.ten=${random.int(10)}
+#jerome.number.in.range=${random.int[1024,65536]}
+jerome.random.int=${random.int[1024,65536]}
+#\u81EA\u5B9A\u4E49\u540D\u5B57
+jerome.name=www.jerome.com
+#\u5C5E\u6027\u5360\u4F4D\u7B26\u5C5E\u6027
+jerome.desc=${jerome.name} is a domain name
+##\u6587\u4EF6\u4E0A\u4F20\u76F8\u5173\u914D\u7F6E
+#\u9ED8\u8BA4\u652F\u6301\u6587\u4EF6\u4E0A\u4F20
+#spring.http.multipart.enabled=true
+#\u652F\u6301\u6587\u4EF6\u5199\u5165\u78C1\u76D8
+#spring.http.multipart.file-size-threshold=0
+#\u4E0A\u4F20\u6587\u4EF6\u7684\u4E34\u65F6\u76EE\u5F55
+#spring.http.multipart.location=
+#\u6700\u5927\u652F\u6301\u6587\u4EF6\u5927\u5C0F
+spring.http.multipart.max-file-size=10Mb
+#\u6700\u5927\u652F\u6301\u8BF7\u6C42\u5927\u5C0F
+spring.http.multipart.max-request-size=10Mb
+bet.game.timeOut=1000 * 6
+
+#-----------mybatis---------------
+db.mybatis.analysis.mapperLocations=classpath*:/com/dfssi/dataplatform/analysis/mapper/*.xml;\
+  classpath*:/com/dfssi/dataplatform/metadata/mapper/*.xml
+db.mybatis.analysis.typeAliasesPackage=com.dfssi.dataplatform.analysis.entity;com.dfssi.dataplatform.metadata.entity
+#db.mybatis.analysis.basePackages=com.dfssi.dataplatform.analysis
+
+#db.mybatis.metadata.mapperLocations=classpath*:/com/dfssi/dataplatform/metadata/mapper/*.xml
+#db.mybatis.metadata.typeAliasesPackage=com.dfssi.dataplatform.metadata.entity
+#db.mybatis.metadata.basePackages=com.dfssi.dataplatform.metadata
+#-----------mybatis---------------

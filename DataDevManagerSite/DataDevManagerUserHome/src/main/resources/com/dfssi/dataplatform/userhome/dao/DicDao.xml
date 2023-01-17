@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.DicDao" >
+    <resultMap id="dic" type="com.dfssi.dataplatform.userhome.Entity.DicEntity">
+        <id property="id" column="pk_id"/>
+        <result property="dicType" column="dic_type"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+</mapper>

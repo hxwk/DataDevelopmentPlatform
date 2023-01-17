@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dfssi.dataplatform</groupId>
+    <artifactId>SchedulerSite</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>QuartzScheduler</module>
+    </modules>
+ <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--maven properties -->
+        <maven.test.skip>true</maven.test.skip>
+        <maven.jdoc.skip>true</maven.jdoc.skip>
+        <downloadSources>true</downloadSources>
+        <!-- compiler settings properties -->
+        <java_source_version>1.8</java_source_version>
+        <java_target_version>1.8</java_target_version>
+        <file_encoding>UTF-8</file_encoding>
+
+        <mysql.connector.version>5.1.21</mysql.connector.version>
+        <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+        <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+        <jdbc.driver.version>5.1.21</jdbc.driver.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <source>${java_source_version}</source>
+                    <target>${java_target_version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <charset>UTF-8</charset>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <repositories>
+        <!--<repository>-->
+            <!--<id>nexus</id>-->
+            <!--<name>central-Repository</name>-->
+            <!--<url>http://192.168.1.229:8081/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>jboss-cache</id>-->
+            <!--<name>jboss-cache</name>-->
+            <!--<url>http://repository.sonatype.org/content/groups/public/</url>-->
+        <!--</repository>-->
+    </repositories>
+
+</project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <skipPackMergeProtos>0801,1003,1005,1205,1206</skipPackMergeProtos>
+
+    <protoMaps>
+        <upProto msgIds="02,03" handler="com.dfssi.dataplatform.plugin.tcpnesource.handler.InformationHandler"/>
+        <upProto msgIds="01,04,05,06" handler="com.dfssi.dataplatform.plugin.tcpnesource.handler.TerminalHandler"/>
+    </protoMaps>
+</config>

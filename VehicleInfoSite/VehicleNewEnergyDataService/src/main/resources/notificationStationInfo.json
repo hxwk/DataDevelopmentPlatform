@@ -1,0 +1,46 @@
+{
+  "StationInfo": {
+    "StationID": "000000000000001",
+    "OperatorID": "123456789",
+    "EquipmentOwnerID": "123456789",
+    "StationName": "\u5145\u7535\u7ad9\u540d\u79f0",
+    "CountryCode": "CN",
+    "AreaCode": "310107",
+    "Address": "\u5730\u5740",
+    "StationTel": "123456789",
+    "ServiceTel": "123456789",
+    "StationType": 1,
+    "StationStatus": 50,
+    "ParkNums": 3,
+    "StationLng": 119.97049,
+    "StationLat": 31.717877,
+    "SiteGuide": "111111",
+    "OpenAllDay": 1,
+    "MinElectricityPrice": 5.5,
+    "Construction": 0,
+    "ParkFree": 1,
+    "Pictures": ["http:\/\/www.xxx.com\/uploads\/plugs\/e5\/eb\/cd\/f0469308d9bbd99496618d6d87",   "http:\/\/www.xxx.com\/uploads\/plugs\/7c\/0c\/81\/a8ed867ffdfb597abaf9982b2c"],
+    "Payment": "1",
+    "SupportOrder": 1,
+    "EquipmentInfos": [{
+      "EquipmentID": "10000000000000000000003",
+      "EquipmentName": "电桩 001",
+      "ManufacturerID": "123456789",
+      "EquipmentModel": "p3",
+      "ProductionDate": "2016-04-26",
+      "EquipmentType": 3,
+      "EquipmentStatus ": 50,
+      "EquipmentPower ": 3.3,
+      "NewNationalStandard": 1,
+      "ConnectorInfos": [{
+        "ConnectorID": "1",
+        "ConnectorName": "枪 1",
+        "ConnectorType": 1,
+        "VoltageUpperLimits": 220,
+        "VoltageLowerLimits": 220,
+        "Current": 15,
+        "Power": 3.3
+      }]
+    }]
+  }
+}

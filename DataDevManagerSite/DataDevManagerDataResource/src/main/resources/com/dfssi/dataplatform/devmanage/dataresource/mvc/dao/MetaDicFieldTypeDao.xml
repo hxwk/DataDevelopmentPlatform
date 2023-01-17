@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.devmanage.dataresource.mvc.dao.MetaDicFieldTypeDao">
+
+    <resultMap id="resourceMap" type="metaDicFieldTypeEntity">
+        <id property="fieldType" column="fieldtype"/>
+        <result property="fieldName" column="fieldname"/>
+        <result property="descritpion" column="descritpion"/>
+    </resultMap>
+
+    <resultMap id="typeMap" type="HashMap">
+        <result property="key" column="fieldtype" />
+        <result property="value" column="fieldname" />
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO Meta_Dic_FIELDType(
+          fieldtype,
+          fieldname,
+          descritpion
+        )
+        VALUES
+        (
+          #{fieldType,jdbcType=NUMERIC},
+          #{fieldName,jdbcType=VARCHAR},
+          #{descritpion,jdbcType=VARCHAR}
+        );
+
+    </insert>
+
+    <select id="findList" resultMap="resourceMap" parameterType="com.dfssi.dataplatform.devmanage.dataresource.mvc.entity.MetaDicFieldTypeEntity">
+        SELECT
+         fieldtype,
+          fieldname,
+          descritpion
+        FROM
+          Meta_Dic_FIELDType
+    </select>
+
+    <select id="findAllList" resultMap="resourceMap" parameterType="com.dfssi.dataplatform.devmanage.dataresource.mvc.entity.MetaDicFieldTypeEntity">
+        SELECT
+        fieldtype,
+        fieldname,
+        descritpion
+        FROM
+        Meta_Dic_FIELDType
+    </select>
+
+    <select id="findMapList" resultMap="resourceMap">
+        SELECT
+        fieldtype,
+        fieldname
+        FROM
+        Meta_Dic_FIELDType
+    </select>
+
+</mapper>

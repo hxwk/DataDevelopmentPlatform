@@ -1,0 +1,9 @@
+redishostname=172.16.1.201
+redisport=6379
+maxtotal=1000
+maxidle=20
+maxwaitmillis=100000
+testonborrow=true
+testonreturn=true
+redis.password=112233
+redis.database=1

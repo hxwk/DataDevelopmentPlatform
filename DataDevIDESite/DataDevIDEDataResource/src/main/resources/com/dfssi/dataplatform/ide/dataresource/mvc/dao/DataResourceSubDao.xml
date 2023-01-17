@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.dataresource.mvc.dao.DataResourceSubDao">
+    <resultMap id="dataResourceSub" type="com.dfssi.dataplatform.ide.dataresource.mvc.entity.DataResourceSubEntity">
+        <id property="drsSubId" column="pk_dataresource_sub_id"/>
+        <result property="dataresourceId" column="dataresource_id"/>
+        <result property="parameterName" column="parameter_name"/>
+        <result property="parameterValue" column="parameter_value"/>
+        <result property="parameterDesc" column="parameter_desc"/>
+    </resultMap>
+
+    <!--删除-->
+    <delete id="deleteSubInfo">
+         UPDATE dv_dataresource_sub
+         SET is_deleted = '1'
+         WHERE dataresource_id=#{dataresourceId}
+         AND is_deleted = '0'
+    </delete>
+
+    <!--新增修改-->
+    <insert id="insertSub" parameterType="java.util.List">
+        INSERT INTO dv_dataresource_sub(
+        pk_dataresource_sub_id,
+        dataresource_id,
+        parameter_name,
+        parameter_value,
+        parameter_desc,
+        is_deleted ,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="dataResourceSubEntity" item="item" separator="," >
+            (
+            #{item.drsSubId,jdbcType=VARCHAR},
+            #{dataresourceId,jdbcType=VARCHAR},
+            #{item.parameterName,jdbcType=VARCHAR},
+            #{item.parameterValue,jdbcType=VARCHAR},
+            #{item.parameterDesc,jdbcType=VARCHAR},
+            0,
+            now(),
+            #{item.createUser,jdbcType=VARCHAR},
+            now(),
+            #{item.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        parameter_name = VALUES(parameter_name),
+        parameter_value = VALUES(parameter_value),
+        parameter_desc = VALUES(parameter_desc),
+        update_date = now(),
+        update_user = VALUES(update_user)
+    </insert>
+
+    <!--根据id查询DataresourceSub-->
+    <select id="findDataresourceSubInfo"  resultMap="dataResourceSub" >
+         SELECT
+        pk_dataresource_sub_id,
+        dataresource_id,
+        parameter_name,
+        parameter_value,
+        parameter_desc
+        FROM dv_dataresource_sub
+        where dv_dataresource_sub.is_deleted = '0'
+             and dataresource_id=#{dataresource_id}
+            order by create_date desc
+    </select>
+
+    <!--接入里的微服务调用-->
+    <select id="getResourceSubInfoByResId" resultMap="dataResourceSub">
+        SELECT * FROM dv_dataresource_sub
+         WHERE dataresource_id = #{resId}
+         AND is_deleted = '0'
+    </select>
+</mapper>

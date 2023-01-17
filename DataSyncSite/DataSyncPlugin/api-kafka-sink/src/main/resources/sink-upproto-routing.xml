@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <skipPackMergeProtos>0801</skipPackMergeProtos>
+
+    <protoMaps>
+        <upProto msgIds="02,03" handler="com.dfssi.dataplatform.datasync.plugin.sink.ne.kafkasink.analyze.InformationPH"/>
+        <upProto msgIds="01,04,05,06" handler="com.dfssi.dataplatform.datasync.plugin.sink.ne.kafkasink.analyze.TerminalHandler"/>
+
+    </protoMaps>
+</config>

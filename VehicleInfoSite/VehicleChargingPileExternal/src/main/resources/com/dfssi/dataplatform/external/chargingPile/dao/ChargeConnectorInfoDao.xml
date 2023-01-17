@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.external.chargingPile.dao.ChargeConnectorInfoDao">
+
+    <delete id="deleteAllFromStation" >
+        delete from charge_connector_info
+        where equipment_id in (
+            select
+                b.equipment_id
+            from
+                charge_station_info a,
+                charge_equipment_info b
+            where a.station_id = b.station_id
+            and a.station_id = #{id}
+        )
+    </delete>
+
+
+    <insert id="insertAllFromStation" >
+        INSERT INTO charge_connector_info(connector_id, connector_name, connector_type, voltage_upper_limits,
+            voltage_lower_limits,current,power,park_no,equipment_id)
+        values
+        <foreach collection="arg0" item="link" index="index" separator=",">
+            (#{link.ConnectorID}, #{link.ConnectorName}, #{link.ConnectorType},
+            #{link.VoltageUpperLimits}, #{link.VoltageLowerLimits}, #{link.Current},
+            #{link.Power}, #{link.ParkNo},#{arg1}
+            )
+        </foreach>
+
+    </insert>
+
+    <select id="queryTwoPower" resultType="com.dfssi.dataplatform.external.chargingPile.entity.TwoPowerEntity">
+        select power,create_hour createHour, (current_a * voltage_a + current_b * voltage_b + current_c * voltage_c) as currentPower from charge_connector_info ci
+        LEFT JOIN charge_connector_status_info si on ci.connector_id = si.connector_id
+    </select>
+</mapper>

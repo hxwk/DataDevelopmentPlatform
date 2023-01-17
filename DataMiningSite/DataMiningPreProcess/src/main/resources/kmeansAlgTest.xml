@@ -1,0 +1,36 @@
+<spark-task-def id="">
+    <inputs>
+        <input id="11" type="InputHiveSql" inputIds="">
+            <params>
+                <param name="sql" value="select * from prod_analysis.kmeans"/>
+            </params>
+        </input>
+    </inputs>
+    <preprocess>
+        <process id="21" type="PreprocessSelect" inputIds="11">
+            <params>
+                <param name="colNames" value="x,y,z"/>
+            </params>
+        </process>
+    </preprocess>
+    <algorithms>
+        <algorithm name="name" type="AlgorithmKMeans" action="" inputIds="21">
+            <params>
+                <param name="k" value="2"/>
+                <param name="maxIter" value="20"/>
+                <param name="saveTo" value="model/kmeans"/>
+                <param name="action" value="AUTO_TRAINING"/>
+                <param name="seed" value="100"/>
+                <param name="tol" value="1e-3"/>
+                <param name="featureCols" value="x,y,z"/>
+            </params>
+        </algorithm>
+        <algorithm name="name" type="AlgorithmKMeans" action="" inputIds="21">
+            <params>
+                <param name="saveTo" value="model/kmeans"/>
+                <param name="action" value="PREDICTING"/>
+                <param name="featureCols" value="x,y,z"/>
+            </params>
+        </algorithm>
+    </algorithms>
+</spark-task-def>

@@ -1,0 +1,307 @@
+VERSION "20170616110730"
+
+NS_ :
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+
+BS_:
+
+BO_ 202506022 VCU_BCA_1: 8 Vector__XXX
+ SG_ 257◎车辆状态 : 0|8@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ 268◎加速踏板开度 : 8|8@0+ (0.4,0) [0|255] "%" Vector__XXX
+ SG_ 259◎运行模式 : 16|8@0+ (1,0) [0|3] "" Vector__XXX
+ SG_ 266◎档位 : 24|6@0+ (1,0) [0|63] "" Vector__XXX
+ SG_ 265◎DC_DC : 30|2@0+ (1,0) [0|3] "" Vector__XXX
+BO_ 203620134 VCU_BCA_2: 8 Vector__XXX
+ SG_ 260◎车速 : 0|16@0+ (0.1,0) [0|65535] "km/h" Vector__XXX
+ SG_ 530◎驱动电机状态 : 32|8@0+ (1,0) [0|4] "" Vector__XXX
+ SG_ 531◎驱动电机控制器温度 : 40|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 534◎驱动电机温度 : 48|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+BO_ 204734246 VCU_BCA_3_: 8 Vector__XXX
+ SG_ 532◎驱动电机转速 : 0|16@0+ (1,-20000) [0|65535] "rpm" Vector__XXX
+ SG_ 533◎驱动电机转矩 : 16|16@0+ (0.1,-2000) [0|6553.5] "Num" Vector__XXX
+ SG_ 535◎驱动电机母线电压 : 32|16@0+ (0.1,0) [0|65535] "V" Vector__XXX
+ SG_ 536◎驱动电机母线电流 : 48|16@0+ (0.1,-100) [-500|6053.5] "A" Vector__XXX
+BO_ 205848358 VCU_BCA_4: 8 Vector__XXX
+ SG_ 269◎制动踏板开度 : 0|8@0+ (1,0) [0|255] "%" Vector__XXX
+ SG_ 1793◎最高报警等级 : 8|8@0+ (1,0) [0|255] "" Vector__XXX
+BO_ 404825844 BMS_VCU_1_: 8 Vector__XXX
+ SG_ 264◎剩余SOC : 0|8@0+ (0.4,0) [0|255] "%" Vector__XXX
+ SG_ 263◎总电流 : 8|16@0+ (0.1,-500) [0|65535] "A" Vector__XXX
+BO_ 402784023 DBD_Tbox_1: 8 Vector__XXX
+ SG_ 261◎累计里程 : 16|32@0+ (0.125,0) [0|1000000] "km" Vector__XXX
+BO_ 404891380 BMS_VCU_2: 8 Vector__XXX
+ SG_ 262◎总电压 : 0|16@0+ (0.1,0) [0|65535] "V" Vector__XXX
+BO_ 405022452 BMS_VCU_4: 8 Vector__XXX
+ SG_ 267◎正极绝缘值 : 32|16@0+ (1,0) [0|65535] "kΩ" Vector__XXX
+ SG_ 270◎负极绝缘值 : 48|16@0+ (1,0) [0|65535] "kΩ" Vector__XXX
+BO_ 402784244 BMS_BCA_1: 8 Vector__XXX
+ SG_ 258◎充电状态 : 44|4@0+ (1,0) [0|4] "" Vector__XXX
+BO_ 402849780 BMS_BCA_2: 8 Vector__XXX
+ SG_ 2071◎模块1电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2072◎模块2电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2073◎模块3电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2074◎模块4电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 402915316 BMS_BCA_3: 8 Vector__XXX
+ SG_ 2075◎模块5电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2076◎模块6电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2077◎模块7电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2078◎模块8电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 402980852 BMS_BCA_4: 8 Vector__XXX
+ SG_ 2079◎模块9电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2080◎模块10电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2081◎模块11电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2082◎模块12电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403046388 BMS_BCA_5: 8 Vector__XXX
+ SG_ 2083◎模块13电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2084◎模块14电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2085◎模块15电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2086◎模块16电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403111924 BMS_BCA_6: 8 Vector__XXX
+ SG_ 2087◎模块17电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2088◎模块18电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2089◎模块19电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2090◎模块20电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403177460 BMS_BCA_7: 8 Vector__XXX
+ SG_ 2091◎模块21电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2092◎模块22电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2093◎模块23电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2094◎模块24电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403242996 BMS_BCA_8: 8 Vector__XXX
+ SG_ 2095◎模块25电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2096◎模块26电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2097◎模块27电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2098◎模块28电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403308532 BMS_BCA_9: 8 Vector__XXX
+ SG_ 2099◎模块29电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2100◎模块30电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2101◎模块31电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2102◎模块32电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403374068 BMS_BCA_10: 8 Vector__XXX
+ SG_ 2103◎模块33电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2104◎模块34电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2105◎模块35电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2106◎模块36电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403439604 BMS_BCA_11: 8 Vector__XXX
+ SG_ 2107◎模块37电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2108◎模块38电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2109◎模块39电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2110◎模块40电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403505140 BMS_BCA_12: 8 Vector__XXX
+ SG_ 2111◎模块41电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2112◎模块42电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2113◎模块43电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2114◎模块44电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403570676 BMS_BCA_13: 8 Vector__XXX
+ SG_ 2115◎模块45电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2116◎模块46电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2117◎模块47电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2118◎模块48电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403636212 BMS_BCA_14: 8 Vector__XXX
+ SG_ 2119◎模块49电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2120◎模块50电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2121◎模块51电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2122◎模块52电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403701748 BMS_BCA_15: 8 Vector__XXX
+ SG_ 2123◎模块53电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2124◎模块54电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2125◎模块55电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2126◎模块56电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403767284 BMS_BCA_16: 8 Vector__XXX
+ SG_ 2127◎模块57电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2128◎模块58电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2129◎模块59电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2130◎模块60电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403832820 BMS_BCA_17: 8 Vector__XXX
+ SG_ 2131◎模块61电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2132◎模块62电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2133◎模块63电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2134◎模块64电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403898356 BMS_BCA_18: 8 Vector__XXX
+ SG_ 2135◎模块65电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2136◎模块66电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2137◎模块67电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2138◎模块68电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 403963892 BMS_BCA_19: 8 Vector__XXX
+ SG_ 2139◎模块69电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2140◎模块70电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2141◎模块71电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2142◎模块72电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404029428 BMS_BCA_20: 8 Vector__XXX
+ SG_ 2143◎模块73电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2144◎模块74电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2145◎模块75电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2146◎模块76电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404094964 BMS_BCA_21: 8 Vector__XXX
+ SG_ 2147◎模块77电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2148◎模块78电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2149◎模块79电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2150◎模块80电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404160500 BMS_BCA_22: 8 Vector__XXX
+ SG_ 2151◎模块81电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2152◎模块82电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2153◎模块83电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2154◎模块84电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404226036 BMS_BCA_23: 8 Vector__XXX
+ SG_ 2155◎模块85电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2156◎模块86电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2157◎模块87电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2158◎模块88电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404291572 BMS_BCA_24: 8 Vector__XXX
+ SG_ 2159◎模块89电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2160◎模块90电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2161◎模块91电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2162◎模块92电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404357108 BMS_BCA_25: 8 Vector__XXX
+ SG_ 2163◎模块93电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2164◎模块94电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2165◎模块95电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2166◎模块96电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404422644 BMS_BCA_26: 8 Vector__XXX
+ SG_ 2167◎模块97电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2168◎模块98电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2169◎模块99电压 : 32|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2170◎模块100电压 : 48|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 404488180 BMS_BCA_27: 8 Vector__XXX
+ SG_ 2171◎模块101电压 : 0|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+ SG_ 2172◎模块102电压 : 16|13@0+ (0.001,0) [0|15] "V" Vector__XXX
+BO_ 407961588 BMS_BCA_80: 8 Vector__XXX
+ SG_ 2323◎动力电池温度1 : 0|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2324◎动力电池温度2 : 8|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2325◎动力电池温度3 : 16|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2326◎动力电池温度4 : 24|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2327◎动力电池温度5 : 32|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2328◎动力电池温度6 : 40|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2329◎动力电池温度7 : 48|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2330◎动力电池温度8 : 56|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+BO_ 408027124 BMS_BCA_81: 8 Vector__XXX
+ SG_ 2331◎动力电池温度9 : 0|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2332◎动力电池温度10 : 8|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2333◎动力电池温度11 : 16|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2334◎动力电池温度12 : 24|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2335◎动力电池温度13 : 32|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2336◎动力电池温度14 : 40|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2337◎动力电池温度15 : 48|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2338◎动力电池温度16 : 56|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+BO_ 408092660 BMS_BCA_82: 8 Vector__XXX
+ SG_ 2339◎动力电池温度17 : 0|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2340◎动力电池温度18 : 8|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2341◎动力电池温度19 : 16|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2342◎动力电池温度20 : 24|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2343◎动力电池温度21 : 32|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2344◎动力电池温度22 : 40|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2345◎动力电池温度23 : 48|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2346◎动力电池温度24 : 56|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+BO_ 408158196 BMS_BCA_83: 8 Vector__XXX
+ SG_ 2347◎动力电池温度25 : 0|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+ SG_ 2348◎动力电池温度26 : 8|8@0+ (1,-40) [0|255] "℃" Vector__XXX
+
+
+BA_DEF_  "HSBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_  "MSBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_  "ESBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_  "LSBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_ BO_  "VFrameChannel" ENUM  "HSCAN","MSCAN","LSCAN","ESCAN";
+
+
+BA_ "HSBaudrate" 3;
+BA_ "MSBaudrate" 3;
+BA_ "LSBaudrate" 6;
+BA_ "ESBaudrate" 6;
+BA_ "VFrameFormat" BO_ 202506022 1;
+BA_ "VFrameFormat" BO_ 203620134 1;
+BA_ "VFrameFormat" BO_ 204734246 1;
+BA_ "VFrameFormat" BO_ 205848358 1;
+BA_ "VFrameFormat" BO_ 404825844 1;
+BA_ "VFrameFormat" BO_ 402784023 1;
+BA_ "VFrameFormat" BO_ 404891380 1;
+BA_ "VFrameFormat" BO_ 405022452 1;
+BA_ "VFrameFormat" BO_ 402784244 1;
+BA_ "VFrameFormat" BO_ 402849780 1;
+BA_ "VFrameFormat" BO_ 402915316 1;
+BA_ "VFrameFormat" BO_ 402980852 1;
+BA_ "VFrameFormat" BO_ 403046388 1;
+BA_ "VFrameFormat" BO_ 403111924 1;
+BA_ "VFrameFormat" BO_ 403177460 1;
+BA_ "VFrameFormat" BO_ 403242996 1;
+BA_ "VFrameFormat" BO_ 403308532 1;
+BA_ "VFrameFormat" BO_ 403374068 1;
+BA_ "VFrameFormat" BO_ 403439604 1;
+BA_ "VFrameFormat" BO_ 403505140 1;
+BA_ "VFrameFormat" BO_ 403570676 1;
+BA_ "VFrameFormat" BO_ 403636212 1;
+BA_ "VFrameFormat" BO_ 403701748 1;
+BA_ "VFrameFormat" BO_ 403767284 1;
+BA_ "VFrameFormat" BO_ 403832820 1;
+BA_ "VFrameFormat" BO_ 403898356 1;
+BA_ "VFrameFormat" BO_ 403963892 1;
+BA_ "VFrameFormat" BO_ 404029428 1;
+BA_ "VFrameFormat" BO_ 404094964 1;
+BA_ "VFrameFormat" BO_ 404160500 1;
+BA_ "VFrameFormat" BO_ 404226036 1;
+BA_ "VFrameFormat" BO_ 404291572 1;
+BA_ "VFrameFormat" BO_ 404357108 1;
+BA_ "VFrameFormat" BO_ 404422644 1;
+BA_ "VFrameFormat" BO_ 404488180 1;
+BA_ "VFrameFormat" BO_ 407961588 1;
+BA_ "VFrameFormat" BO_ 408027124 1;
+BA_ "VFrameFormat" BO_ 408092660 1;
+BA_ "VFrameFormat" BO_ 408158196 1;
+BA_ "VFrameChannel" BO_ 202506022 0;
+BA_ "VFrameChannel" BO_ 203620134 0;
+BA_ "VFrameChannel" BO_ 204734246 0;
+BA_ "VFrameChannel" BO_ 205848358 0;
+BA_ "VFrameChannel" BO_ 404825844 0;
+BA_ "VFrameChannel" BO_ 402784023 0;
+BA_ "VFrameChannel" BO_ 404891380 0;
+BA_ "VFrameChannel" BO_ 405022452 0;
+BA_ "VFrameChannel" BO_ 402784244 0;
+BA_ "VFrameChannel" BO_ 402849780 0;
+BA_ "VFrameChannel" BO_ 402915316 0;
+BA_ "VFrameChannel" BO_ 402980852 0;
+BA_ "VFrameChannel" BO_ 403046388 0;
+BA_ "VFrameChannel" BO_ 403111924 0;
+BA_ "VFrameChannel" BO_ 403177460 0;
+BA_ "VFrameChannel" BO_ 403242996 0;
+BA_ "VFrameChannel" BO_ 403308532 0;
+BA_ "VFrameChannel" BO_ 403374068 0;
+BA_ "VFrameChannel" BO_ 403439604 0;
+BA_ "VFrameChannel" BO_ 403505140 0;
+BA_ "VFrameChannel" BO_ 403570676 0;
+BA_ "VFrameChannel" BO_ 403636212 0;
+BA_ "VFrameChannel" BO_ 403701748 0;
+BA_ "VFrameChannel" BO_ 403767284 0;
+BA_ "VFrameChannel" BO_ 403832820 0;
+BA_ "VFrameChannel" BO_ 403898356 0;
+BA_ "VFrameChannel" BO_ 403963892 0;
+BA_ "VFrameChannel" BO_ 404029428 0;
+BA_ "VFrameChannel" BO_ 404094964 0;
+BA_ "VFrameChannel" BO_ 404160500 0;
+BA_ "VFrameChannel" BO_ 404226036 0;
+BA_ "VFrameChannel" BO_ 404291572 0;
+BA_ "VFrameChannel" BO_ 404357108 0;
+BA_ "VFrameChannel" BO_ 404422644 0;
+BA_ "VFrameChannel" BO_ 404488180 0;
+BA_ "VFrameChannel" BO_ 407961588 0;
+BA_ "VFrameChannel" BO_ 408027124 0;
+BA_ "VFrameChannel" BO_ 408092660 0;
+BA_ "VFrameChannel" BO_ 408158196 0;

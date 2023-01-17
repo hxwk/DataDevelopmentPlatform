@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.external.chargingPile.dao.ChargeConnectorStatusInfoDao">
+
+    <delete id="delete">
+        delete from charge_connector_status_info where connector_id=#{id}
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO charge_connector_status_info(connector_id, status, current_a,current_b,
+        current_c,voltage_a,voltage_b,voltage_c,park_status,lock_status,soc
+        )
+        values
+        (#{ConnectorID},#{Status},#{CurrentA},#{CurrentB},#{CurrentC},
+        #{VoltageA},#{VoltageB},#{VoltageC},#{ParkStatus},#{LockStatus},
+        #{SOC}
+        )
+    </insert>
+
+    <delete id="deleteAllFromStation">
+        delete from charge_connector_status_info where connector_id in (
+        <foreach collection="list" item="link" index="index" separator=",">
+            '${link.ConnectorID}'
+        </foreach>
+        ''
+        )
+    </delete>
+
+    <insert id="insertAllFromStation">
+        INSERT INTO charge_connector_status_info(connector_id, status, current_a,current_b,
+        current_c,voltage_a,voltage_b,voltage_c,park_status,lock_status,soc
+        )
+        values
+        <foreach collection="list" item="link" index="index" separator=",">
+            (
+            #{link.ConnectorID},#{link.Status},#{link.CurrentA},#{link.CurrentB},#{link.CurrentC},
+            #{link.VoltageA},#{link.VoltageB},#{link.VoltageC},#{link.ParkStatus},#{link.LockStatus},
+            #{link.SOC}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryConnectorNum" resultType="java.lang.Long" >
+        select count(1) from charge_connector_status_info where status = #{status}
+    </select>
+
+    <select id="getChargePileTotal" resultType="com.dfssi.dataplatform.external.chargingPile.entity.ChargePileEntity">
+        select status, count(1) as total from charge_connector_status_info group by status
+    </select>
+</mapper>

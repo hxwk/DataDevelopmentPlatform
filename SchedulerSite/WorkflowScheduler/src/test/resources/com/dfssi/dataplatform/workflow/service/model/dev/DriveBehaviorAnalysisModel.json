@@ -1,0 +1,78 @@
+{
+  id: '20161212112036000001',
+  name: 'DEV Offline Drive Behavior Analysis Test',
+  modelTypeId: '20171123152036000001',
+  description: 'Drive Behavior Analysis Model',
+  steps: [
+    {
+      id: '20161212112036000002',
+      name: 'Greenplum table Input',
+      stepTypeId: '20171120152037000004',
+      guiX: 0,
+      guiY: 0,
+      params: [
+        {
+          jdbcHostname: {
+            valueStr: '172.16.1.221'
+          },
+          jdbcPort: { valueStr: '5432' },
+          jdbcDatabase: { valueStr: 'analysis' },
+          dbtable: { valueStr: 'vehicle_trip' },
+          user: { valueStr: 'analysis' },
+          password: { valueStr: '112233' },
+          condition: { valueStr: 'isprocessed=0 AND isover=1 AND isvalid=1' }
+        }
+      ]
+    },
+    {
+      id: '20161212112036000003',
+      name: 'Preprocess Trips',
+      stepTypeId: '20181120152039000101',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          0200CaptureTimesPerSec: { valueStr: '0.5' },
+          0705CaptureTimesPerSec: { valueStr: '0.5' },
+          maxIntervalPerEvent: { valueStr: '4' },
+
+          latLngUrl: { valueStr: 'http://gc.ditu.aliyun.com/regeocoding' },
+
+          AnalysisDB_jdbcDatabase: { valueStr: 'analysis' },
+          AnalysisDB_jdbcHostname: { valueStr: '172.16.1.221' },
+          AnalysisDB_jdbcPort: { valueStr: '5432' },
+          AnalysisDB_driver: { valueStr: 'com.pivotal.jdbc.GreenplumDriver' },
+          AnalysisDB_user: { valueStr: 'analysis' },
+          AnalysisDB_password: { valueStr: '112233' },
+
+          ServiceDB_jdbcDatabase: { valueStr: 'SSI_SERVICE_PLATFORM' },
+          ServiceDB_jdbcHostname: { valueStr: '172.16.1.241' },
+          ServiceDB_jdbcPort: { valueStr: '3306' },
+          ServiceDB_driver: { valueStr: 'com.mysql.jdbc.Driver' },
+          ServiceDB_user: { valueStr: 'ssiuser' },
+          ServiceDB_password: { valueStr: '112233' },
+
+          MotocadeDB_jdbcDatabase: { valueStr: 'SSI_MOTORCADE' },
+          MotocadeDB_jdbcHostname: { valueStr: '172.16.1.241' },
+          MotocadeDB_jdbcPort: { valueStr: '3306' },
+          MotocadeDB_driver: { valueStr: 'com.mysql.jdbc.Driver' },
+          MotocadeDB_user: { valueStr: 'ssiuser' },
+          MotocadeDB_password: { valueStr: '112233' }
+        }
+      ]
+    }
+  ],
+  links: [
+    {
+      id: '20161213112036100001',
+      modelStepFrom: {
+        id: '20161212112036000002',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepTo: {
+        id: '20161212112036000003',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    }
+  ]
+}

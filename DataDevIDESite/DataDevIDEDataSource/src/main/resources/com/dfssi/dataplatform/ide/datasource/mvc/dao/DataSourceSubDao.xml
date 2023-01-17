@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfssi.dataplatform.ide.datasource.mvc.dao.DataSourceSubDao">
+    <resultMap id="dataSourceSub" type="com.dfssi.dataplatform.ide.datasource.mvc.entity.DataSourceSubEntity">
+        <id property="dsSubId" column="pk_datasource_sub_id"/>
+        <result property="datasourceId" column="datasource_id"/>
+        <result property="parameterName" column="parameter_name"/>
+        <result property="parameterValue" column="parameter_value"/>
+        <result property="parameterDesc" column="parameter_desc"/>
+    </resultMap>
+
+    <!--新增、修改-->
+    <insert id="insertSub" parameterType="java.util.List">
+        INSERT INTO dv_datasource_sub(
+        pk_datasource_sub_id,
+        datasource_id,
+        parameter_name,
+        parameter_value,
+        parameter_desc,
+        is_deleted,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="dataSourceSubEntity" item="item" separator="," >
+            (
+            #{item.dsSubId,jdbcType=VARCHAR},
+            #{datasourceId,jdbcType=VARCHAR},
+            #{item.parameterName,jdbcType=VARCHAR},
+            #{item.parameterValue,jdbcType=VARCHAR},
+            #{item.parameterDesc,jdbcType=VARCHAR},
+            0,
+            now(),
+            #{item.createUser,jdbcType=VARCHAR},
+            now(),
+            #{item.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        parameter_name = VALUES(parameter_name),
+        parameter_value = VALUES(parameter_value),
+        parameter_desc = VALUES(parameter_desc),
+        update_date = now(),
+        update_user = VALUES(update_user)
+    </insert>
+
+    <!--预览查询-->
+    <select id="findDatasourceInfo"  resultMap="dataSourceSub" >
+         SELECT
+        pk_datasource_sub_id,
+        datasource_id,
+        parameter_name,
+        parameter_value,
+        parameter_desc
+        FROM dv_datasource_sub
+        where dv_datasource_sub.is_deleted='0'
+             and datasource_id=#{datasource_id}
+            order by create_date desc
+    </select>
+
+    <!--删除-->
+    <delete id="deleteSubInfo">
+        UPDATE  dv_datasource_sub
+        SET is_deleted=1
+        WHERE datasource_id=#{datasourceId}
+        AND is_deleted=0
+    </delete>
+
+    <!--接入调微服务查询-->
+    <select id="getSubinfoById" resultMap="dataSourceSub">
+        select * from dv_datasource_sub
+        WHERE datasource_id = #{srcId}
+        AND is_deleted=0
+    </select>
+</mapper>

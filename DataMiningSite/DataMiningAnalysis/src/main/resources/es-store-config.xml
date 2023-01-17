@@ -1,0 +1,207 @@
+<es-store id="0" name="TerminalDataToEsFromKafka" interval="30">
+
+    <spark-confs>
+        <spark-conf name="es.nodes.discovery" value="true"/>
+        <spark-conf name="es.batch.size.bytes" value="300000"/>
+        <spark-conf name="es.batch.size.entries" value="10000"/>
+        <spark-conf name="es.batch.write.refresh" value="false"/>
+        <spark-conf name="es.batch.write.retry.count" value="50"/>
+        <spark-conf name="es.batch.write.retry.wait" value="500"/>
+        <spark-conf name="es.http.timeout" value="5m"/>
+        <spark-conf name="es.http.retries" value="50"/>
+        <spark-conf name="es.http.enabled" value="true"/>
+        <spark-conf name="es.action.heart.beat.lead" value="50"/>
+        <spark-conf name="spark.streaming.concurrentJobs" value="1"/>
+        <spark-conf name="spark.driver.allowMultipleContexts" value="false"/>
+    </spark-confs>
+
+    <kafka-input id="1" type="kafka" topics="GPSANDCANINFORMATIC_TOPIC,POSITIONINFORMATION_0200_TOPIC,POSITIONINFORMATION_0704_TOPIC,CANINFORMATION_0705_TOPIC">
+        <params>
+            <param name="auto.offset.reset" value="smallest"/>
+            <param name="metadata.broker.list" value="172.16.1.121:9092,172.16.1.122:9092,172.16.1.121:9092"/>
+            <param name="group.id" value="TerminalDataToEsFromKafka"/>
+            <param name="refresh.leader.backoff.ms" value="2000"/>
+            <param name="num.consumer.fetchers" value="1"/>
+        </params>
+    </kafka-input>
+
+    <es-index-defs>
+        <!--
+        <es-index name="terminal_0702" createRule="month">
+            <settings>
+                <setting  name="index.analysis.analyzer.default.type" value="keyword"/>
+                <setting  name="index.number_of_shards" value="3"/>
+                <setting  name="index.refresh_interval" value="30s"/>
+                <setting  name="index.translog.durability" value="ASYNC"/>
+                <setting  name="index.translog.flush_threshold_size" value="2g"/>
+                <setting  name="index.translog.sync_interval" value="120s"/>
+            </settings>
+            <es-type name="terminal_0702">
+                <identification field="msgId" value="0702"/>
+                <timefield field="workDate" pattern="long"/>
+                <convertor id="0702" class=""/>
+                <columns>
+                    <column name="id" type="keyword" analyzer="" index="" store=""/>
+                    <column name="name" type="keyword" analyzer="" index="" store=""/>
+                    <column name="vid" type="keyword" analyzer="" index="" store=""/>
+                    <column name="workDate" type="long" analyzer="" index="" store=""/>
+                    <column name="ptfReceiveTime" type="long" analyzer="" index="" store=""/>
+                    <column name="validPeriod" type="long" analyzer="" index="" store=""/>
+                    <column name="status" type="integer" analyzer="" index="" store=""/>
+                    <column name="icResult" type="integer" analyzer="" index="" store=""/>
+                    <column name="iDCard" type="keyword" analyzer="" index="" store=""/>
+                    <column name="msgId" type="keyword" analyzer="" index="" store=""/>
+                    <column name="practitionerIdCardInstitution" type="keyword" analyzer="" index="" store=""/>
+                    <column name="practitionerIdCard" type="keyword" analyzer="" index="" store=""/>
+                    <column name="icResultReason" type="keyword" analyzer="" index="" store=""/>
+                </columns>
+            </es-type>
+        </es-index>
+        -->
+        <es-index name="terminal_0705" createRule="day">
+            <settings>
+                <setting  name="index.analysis.analyzer.default.type" value="keyword"/>
+                <setting  name="index.number_of_shards" value="2"/>
+                <setting  name="index.refresh_interval" value="30s"/>
+                <setting  name="index.translog.durability" value="ASYNC"/>
+                <setting  name="index.translog.flush_threshold_size" value="2g"/>
+                <setting  name="index.translog.sync_interval" value="120s"/>
+            </settings>
+            <es-type name="terminal_0705">
+                <identification field="msgId" value="0705"/>
+                <timefield field="receiveTime" pattern="long"/>
+                <convertor id="0705" class=""/>
+                <columns>
+                    <column name="id" type="keyword" analyzer="" index="" store=""/>
+                    <column name="vid" type="keyword" analyzer="" index="" store=""/>
+                    <column name="receiveTime" type="long" analyzer="" index="" store=""/>
+                    <column name="sim" type="keyword" analyzer="" index="" store=""/>
+                    <column name="msgId" type="keyword" analyzer="" index="" store=""/>
+                    <column name="dbcType" type="keyword" analyzer="" index="" store=""/>
+                    <column name="signal_name" type="keyword" analyzer="" index="" store=""/>
+                    <column name="unit" type="keyword" analyzer="" index="" store=""/>
+                    <column name="unit" type="keyword" analyzer="" index="" store=""/>
+                    <column name="value" type="double" analyzer="" index="" store=""/>
+                </columns>
+            </es-type>
+        </es-index>
+
+        <es-index name="terminal_0200" createRule="day">
+            <settings>
+                <setting  name="index.analysis.analyzer.default.type" value="keyword"/>
+                <setting  name="index.number_of_shards" value="1"/>
+                <setting  name="index.refresh_interval" value="30s"/>
+                <setting  name="index.translog.durability" value="ASYNC"/>
+                <setting  name="index.translog.flush_threshold_size" value="2g"/>
+                <setting  name="index.translog.sync_interval" value="120s"/>
+            </settings>
+            <es-type name="terminal_0200">
+                <identification field="msgId" value="0200,0704"/>
+                <timefield field="gpsTime" pattern="long" min="1520870400000"/>
+                <convertor id="0200" class=""/>
+                <columns>
+                    <column name="id" type="keyword" analyzer="" index="" store=""/>
+                    <column name="alarm" type="long" analyzer="" index="" store=""/>
+                    <column name="location" type="geo_point" analyzer="" index="" store=""/>
+                    <column name="analog" type="long" analyzer="" index="" store=""/>
+                    <column name="artificialConfirmedAlarm" type="long" analyzer="" index="" store=""/>
+                    <column name="gpsTime" type="long" analyzer="" index="" store=""/>
+                    <column name="content" type="keyword" analyzer="" index="" store=""/>
+                    <column name="cumulativeOilConsumption" type="double" analyzer="" index="" store=""/>
+                    <column name="lon" type="double" analyzer="" index="" store=""/>
+                    <column name="lat" type="double" analyzer="" index="" store=""/>
+                    <column name="fuel" type="double" analyzer="" index="" store=""/>
+                    <column name="totalFuelConsumption" type="double" analyzer="" index="" store=""/>
+                    <column name="dir" type="integer" analyzer="" index="" store=""/>
+                    <column name="fromQly" type="integer" analyzer="" index="" store=""/>
+                    <column name="ioState" type="integer" analyzer="" index="" store=""/>
+                    <column name="mile" type="double" analyzer="" index="" store=""/>
+                    <column name="positioningSatelliteNumber" type="long" analyzer="" index="" store=""/>
+                    <column name="signalStrength" type="long" analyzer="" index="" store=""/>
+                    <column name="batteryVoltage" type="long" analyzer="" index="" store=""/>
+                    <column name="hydraulicTank" type="long" analyzer="" index="" store=""/>
+                    <column name="canAndHydraulicTankStatus" type="long" analyzer="" index="" store=""/>
+                    <column name="receiveMsgTime" type="long" analyzer="" index="" store=""/>
+                    <column name="vid" type="keyword" analyzer="" index="" store=""/>
+                    <column name="sim" type="keyword" analyzer="" index="" store=""/>
+                    <column name="msgId" type="keyword" analyzer="" index="" store=""/>
+                    <column name="signalState" type="keyword" analyzer="" index="" store=""/>
+                    <column name="vehicleWeight" type="double" analyzer="" index="" store=""/>
+                    <column name="speed" type="double" analyzer="" index="" store=""/>
+                    <column name="speed1" type="double" analyzer="" index="" store=""/>
+                    <column name="state" type="long" analyzer="" index="" store=""/>
+                    <column name="supplyVoltage" type="double" analyzer="" index="" store=""/>
+                </columns>
+            </es-type>
+        </es-index>
+
+        <es-index name="terminal_d004" createRule="day">
+            <settings>
+                <setting  name="index.analysis.analyzer.default.type" value="keyword"/>
+                <setting  name="index.number_of_shards" value="5"/>
+                <setting  name="index.refresh_interval" value="30s"/>
+                <setting  name="index.translog.durability" value="ASYNC"/>
+                <setting  name="index.translog.flush_threshold_size" value="2g"/>
+                <setting  name="index.translog.sync_interval" value="120s"/>
+            </settings>
+            <es-type name="terminal_d004">
+                <identification field="msgId" value="D004"/>
+                <timefield field="dataTime" pattern="long" min="1520870400000"/>
+                <convertor id="D004" class=""/>
+                <columns>
+                    <column name="id" type="keyword" analyzer="" index="" store=""/>
+                    <column name="direction" type="integer" analyzer="" index="" store=""/>
+                    <column name="location" type="geo_point" analyzer="" index="" store=""/>
+                    <column name="height" type="integer" analyzer="" index="" store=""/>
+                    <column name="airCompressorStatus" type="integer" analyzer="" index="" store=""/>
+                    <column name="dataTime" type="long" analyzer="" index="" store=""/>
+                    <column name="airTemp" type="integer" analyzer="" index="" store=""/>
+                    <column name="barometricPressure" type="integer" analyzer="" index="" store=""/>
+                    <column name="longitute" type="double" analyzer="" index="" store=""/>
+                    <column name="latitude" type="double" analyzer="" index="" store=""/>
+                    <column name="brakePedalOpen" type="integer" analyzer="" index="" store=""/>
+                    <column name="currentBlock" type="integer" analyzer="" index="" store=""/>
+                    <column name="engineFuelRate" type="double" analyzer="" index="" store=""/>
+                    <column name="engineTorqueMode" type="integer" analyzer="" index="" store=""/>
+                    <column name="exhaustTemp" type="integer" analyzer="" index="" store=""/>
+                    <column name="fuelLevel" type="integer" analyzer="" index="" store=""/>
+                    <column name="gpsDir" type="integer" analyzer="" index="" store=""/>
+                    <column name="gpsSpeed" type="double" analyzer="" index="" store=""/>
+                    <column name="grade" type="double" analyzer="" index="" store=""/>
+                    <column name="instrumentSpeed" type="double" analyzer="" index="" store=""/>
+                    <column name="intakeAirTemp" type="integer" analyzer="" index="" store=""/>
+                    <column name="intakeQGpressure" type="integer" analyzer="" index="" store=""/>
+                    <column name="load" type="double" analyzer="" index="" store=""/>
+                    <column name="oilPressure" type="integer" analyzer="" index="" store=""/>
+                    <column name="percentagetorque" type="integer" analyzer="" index="" store=""/>
+                    <column name="relativePress" type="integer" analyzer="" index="" store=""/>
+                    <column name="rpm" type="double" analyzer="" index="" store=""/>
+                    <column name="stateFlag" type="long" analyzer="" index="" store=""/>
+                    <column name="switchsCode" type="integer" analyzer="" index="" store=""/>
+                    <column name="targetGear" type="integer" analyzer="" index="" store=""/>
+                    <column name="throttleOpening" type="integer" analyzer="" index="" store=""/>
+                    <column name="transmissionOutputSpeed" type="double" analyzer="" index="" store=""/>
+                    <column name="ureaLevel" type="integer" analyzer="" index="" store=""/>
+                    <column name="waterTemp" type="integer" analyzer="" index="" store=""/>
+                    <column name="wheelSpeed" type="double" analyzer="" index="" store=""/>
+                    <column name="msgId" type="keyword" analyzer="" index="" store=""/>
+                    <column name="receiveTime" type="long" analyzer="" index="" store=""/>
+                    <column name="vid" type="keyword" analyzer="" index="" store=""/>
+                    <column name="sim" type="keyword" analyzer="" index="" store=""/>
+                </columns>
+            </es-type>
+        </es-index>
+
+    </es-index-defs>
+
+    <es-output id="" type="devEs">
+        <params>
+            <param name="es.nodes" value="172.16.1.221,172.16.1.222,172.16.1.223"/>
+            <param name="es.port" value="9200"/>
+            <param name="es.clustername" value="elk"/>
+            <param name="es.mapping.id" value="id"/>
+            <param name="es.batch.size.entries" value="5000"/>
+        </params>
+    </es-output>
+
+</es-store>

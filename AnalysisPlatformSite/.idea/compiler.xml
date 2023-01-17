@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="AnalysisService" />
+        <module name="AnalysisProcessModel" />
+        <module name="AnalysisCommon" />
+        <module name="AnalysisAlgorithm" />
+        <module name="AnalysisWorkflow" />
+        <module name="AnalysisTask" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AnalysisAlgorithm" target="1.8" />
+      <module name="AnalysisCommon" target="1.8" />
+      <module name="AnalysisPlatformSite" target="1.8" />
+      <module name="AnalysisProcessModel" target="1.8" />
+      <module name="AnalysisService" target="1.8" />
+      <module name="AnalysisTask" target="1.8" />
+      <module name="AnalysisWorkflow" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

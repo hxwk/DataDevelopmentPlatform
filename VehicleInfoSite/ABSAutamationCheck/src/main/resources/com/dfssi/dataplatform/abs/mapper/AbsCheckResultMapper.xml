@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.abs.mapper.AbsCheckResultMapper">
+
+    <insert id="insert">
+        insert into abs_check_result(
+        vid,
+        start_time,
+        stop_time,
+        distant,
+        result,
+        check_count)
+        VALUES(
+        #{vid},
+        #{startTime},
+        #{stopTime},
+        #{distant},
+        #{result},
+        #{checkCount})
+    </insert>
+
+    <update id="update">
+        update abs_check_result
+        set
+        start_time = #{startTime},
+        stop_time = #{stopTime},
+        distant = #{distant},
+        result = #{result},
+        check_count = #{checkCount}
+        WHERE vid = #{vid}
+    </update>
+
+    <select id="getResultByVid" resultType="com.dfssi.dataplatform.abs.entity.AbsCheckResultEntity">
+        select *
+        from abs_check_result
+        WHERE vid = #{vid}
+    </select>
+
+    <select id="listCheckResult" resultType="com.dfssi.dataplatform.abs.entity.AbsCheckResultEntity">
+        select vid, start_time, stop_time, distant, result, check_count
+        from abs_check_result
+        WHERE vid = #{vid}
+    </select>
+
+    <delete id="delect">
+        delete from abs_check_result where vid = #{vid}
+    </delete>
+
+</mapper>

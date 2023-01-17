@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.MenuDao" >
+  <resultMap id="BaseResultMap" type="com.dfssi.dataplatform.userhome.entity.MenuEntity" >
+    <id column="PK_ID" property="id" jdbcType="VARCHAR" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="ORDER_NUM" property="orderNum" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PARENT_MENU" property="pid" jdbcType="VARCHAR" />
+    <result column="IS_DELETED" property="valid" jdbcType="VARCHAR" />
+    <result column="ACCESS_URL" property="accessUrl" jdbcType="LONGVARCHAR" />
+    <result column="OWNED_SYSTEM" property="system" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dfssi.dataplatform.userhome.entity.MenuEntity" extends="BaseResultMap" >
+    <result column="ACCESS_URL" property="accessUrl" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      IS_DELETED=0
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim>
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PK_ID, MENU_NAME, ORDER_NUM, REMARK, PARENT_MENU, IS_DELETED,OWNED_SYSTEM
+  </sql>
+  <sql id="Blob_Column_List" >
+    ACCESS_URL
+  </sql>
+
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.dfssi.dataplatform.userhome.entity.MenuExampleEntity" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dv_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dfssi.dataplatform.userhome.entity.MenuExampleEntity" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dv_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByMenuName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    DISTINCT
+    PK_ID,
+    MENU_NAME,
+    ORDER_NUM,
+    REMARK,
+    PARENT_MENU,
+    IS_DELETED,
+    ACCESS_URL,
+    OWNED_SYSTEM
+    from dv_menu
+    where
+    <if test="menuName!=null and menuName!=''">
+       MENU_NAME LIKE CONCAT(CONCAT('%', #{menuName}), '%')
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dv_menu
+    where PK_ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <update id="deleteByExample" parameterType="com.dfssi.dataplatform.userhome.entity.MenuExampleEntity" >
+    update dv_menu
+    set IS_DELETED =1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+
+  <insert id="insert" parameterType="com.dfssi.dataplatform.userhome.entity.MenuEntity" >
+    insert into dv_menu (PK_ID, MENU_NAME, ORDER_NUM, 
+      REMARK, PARENT_MENU, IS_DELETED,
+      ACCESS_URL,OWNED_SYSTEM)
+    values (#{id,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 0,
+      #{accessUrl,jdbcType=LONGVARCHAR},#{system,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="countByExample" parameterType="com.dfssi.dataplatform.userhome.entity.MenuExampleEntity" resultType="java.lang.Integer" >
+    select count(*) from dv_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update dv_menu
+    set PK_ID = #{record.id,jdbcType=VARCHAR},
+      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      ORDER_NUM = #{record.orderNum,jdbcType=INTEGER},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      PARENT_MENU = #{record.pid,jdbcType=VARCHAR},
+      IS_DELETED = #{record.valid,jdbcType=VARCHAR},
+      ACCESS_URL = #{record.accessUrl,jdbcType=LONGVARCHAR},
+      OWNED_SYSTEM=#{system,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!--检查菜单名是否重复-->
+  <select id="countByName" resultType="int">
+        select count(*) from dv_menu
+        where menu_name=#{menuName}
+    </select>
+
+  <!--修改时判断菜单名与其他菜单名是否冲突-->
+  <select id="countByUpdate" resultType="int">
+        select count(*) from dv_menu
+        where pk_id!=#{id}
+        and menu_name=#{menuName}
+    </select>
+
+  <!--根据条件查询菜单-->
+  <select id="selectByEntity" resultMap="BaseResultMap">
+    select
+    DISTINCT
+    PK_ID,
+    MENU_NAME,
+    ORDER_NUM,
+    REMARK,
+    PARENT_MENU,
+    IS_DELETED,
+    ACCESS_URL,
+    OWNED_SYSTEM
+    from dv_menu
+    where IS_DELETED=0
+    <if test="pid!=null and pid!=''">
+      and PARENT_MENU=#{pid}
+    </if>
+    <if test="(pid==null or pid=='') and system!=null and system!=''">
+      and OWNED_SYSTEM=#{system}
+    </if>
+  </select>
+
+  <select id="selectBySystem" resultMap="BaseResultMap">
+    select
+    DISTINCT
+    PK_ID,
+    MENU_NAME,
+    ORDER_NUM,
+    REMARK,
+    PARENT_MENU,
+    IS_DELETED,
+    ACCESS_URL,
+    OWNED_SYSTEM
+    from dv_menu
+    where IS_DELETED=0
+    and OWNED_SYSTEM=#{system}
+    and PARENT_MENU=''
+  </select>
+
+  <select id="selectByParentMenu" resultMap="BaseResultMap">
+    select
+    DISTINCT
+    PK_ID,
+    MENU_NAME,
+    ORDER_NUM,
+    REMARK,
+    PARENT_MENU,
+    IS_DELETED,
+    ACCESS_URL,
+    OWNED_SYSTEM
+    from dv_menu
+    where IS_DELETED=0
+    and PARENT_MENU=#{pid}
+  </select>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.access.mvc.dao.TaskAccessLinkInfoDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.ide.access.mvc.entity.TaskAccessLinkInfoEntity">
+        <id property="id" column="pk_id"/>
+        <result property="taskId" column="task_id"/>
+        <result property="stepFromId" column="step_from_id"/>
+        <result property="stepToId" column="step_to_id"/>
+        <result property="stepFromPos" column="step_from_position"/>
+        <result property="stepToPos" column="step_to_position"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <delete id="deleteByTaskId">
+        UPDATE dv_accesstask_linkinfo set is_deleted = 1 WHERE task_id=#{taskId} and is_deleted = 0
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO dv_accesstask_linkinfo(
+          pk_id,
+          step_from_id,
+          step_to_id,
+          step_from_position,
+          step_to_position,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{id,jdbcType=VARCHAR},
+          #{stepFromId,jdbcType=VARCHAR},
+          #{stepToId,jdbcType=VARCHAR},
+          #{stepFromPos,jdbcType=VARCHAR},
+          #{stepToPos,jdbcType=INTEGER},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertMutil" parameterType="java.util.List">
+        INSERT INTO dv_accesstask_linkinfo(
+        pk_id,
+        task_id,
+        step_from_id,
+        step_to_id,
+        step_from_position,
+        step_to_position,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.taskId,jdbcType=VARCHAR},
+            #{item.stepFromId,jdbcType=VARCHAR},
+            #{item.stepToId,jdbcType=VARCHAR},
+            #{item.stepFromPos,jdbcType=VARCHAR},
+            #{item.stepToPos,jdbcType=INTEGER},
+            STR_TO_DATE(#{item.createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.createUser,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
+
+    <select id="findListByTaskId" resultMap="resultMap">
+        SELECT
+        pk_id,
+        task_id,
+        step_from_id,
+        step_to_id,
+        step_from_position,
+        step_to_position,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        dv_accesstask_linkinfo
+        <trim prefix="WHERE" >
+            is_deleted = 0 and task_id=#{taskId}
+        </trim>
+    </select>
+
+</mapper>

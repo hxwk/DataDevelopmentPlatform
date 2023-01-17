@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.access.mvc.dao.TaskAccessInfoDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.ide.access.mvc.entity.TaskAccessInfoEntity">
+        <id property="id" column="pk_id"/>
+        <result property="taskName" column="task_name"/>
+        <result property="taskDescription" column="task_description"/>
+        <result property="approveStatus" column="approve_status"/>
+        <result property="status" column="status"/>
+        <result property="taskStartTime" column="task_starttime"/>
+        <result property="taskEndTime" column="task_endtime"/>
+        <result property="taskFrequency" column="task_frequency"/>
+        <result property="taskInterval" column="task_interval"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="clientIds" column="clientids"/>
+    </resultMap>
+
+    <update id="updateStatus">
+      update dv_accesstask set status = #{status} where pk_id = #{taskId}
+    </update>
+
+    <select id="findList" resultMap="resultMap">
+        SELECT
+        pk_id,
+        task_name,
+        task_description,
+        approve_status,
+        status,
+        DATE_FORMAT(task_starttime,'%Y-%m-%d %T') as task_starttime,
+        DATE_FORMAT(task_endtime,'%Y-%m-%d %T') as task_endtime,
+        task_frequency,
+        task_interval,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        dv_accesstask
+        WHERE is_deleted = 0
+        <if test="taskName!=null and taskName!=''">
+            and task_name LIKE '%${taskName}%'
+        </if>
+        <if test="status!=null and status!=''">
+            AND status = #{status}
+        </if>
+        <if test="startCreateTime!=null and startCreateTime!=''">
+            <![CDATA[AND create_date >= #{startCreateTime} ]]>
+        </if>
+        <if test="endCreateTime!=null and endCreateTime!=''">
+            <![CDATA[AND create_date <= #{endCreateTime} ]]>
+        </if>
+        <if test="field!=null and field!=''">
+            order by ${field}  ${orderType}
+        </if>
+    </select>
+
+    <select id="get" resultMap="resultMap">
+        SELECT
+        pk_id,
+        task_name,
+        task_description,
+        approve_status,
+        status,
+        DATE_FORMAT(task_starttime,'%Y-%m-%d %T') as task_starttime,
+        DATE_FORMAT(task_endtime,'%Y-%m-%d %T') as task_endtime,
+        task_frequency,
+        task_interval,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user,
+        clientids
+        FROM
+        dv_accesstask
+        <trim prefix="WHERE" >
+            is_deleted = 0 and pk_id = #{id}
+        </trim>
+    </select>
+
+    <update id="update">
+        UPDATE dv_accesstask
+        SET task_name = #{taskName},
+        task_description = #{taskDescription},
+        task_starttime = STR_TO_DATE(#{taskStartTime,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+        task_endtime = STR_TO_DATE(#{taskEndTime,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+        task_frequency = #{taskFrequency},
+        task_interval = #{taskInterval},
+        update_date = STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+        update_user = #{updateUser},
+        clientids=#{clientIds}
+        WHERE pk_id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE dv_accesstask set is_deleted = 1 WHERE pk_id=#{id} and is_deleted = 0
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO dv_accesstask(
+          pk_id,
+          task_name,
+          task_description,
+          task_starttime,
+          task_endtime,
+          task_frequency,
+          task_interval,
+          create_date,
+          create_user,
+          update_date,
+          update_user,
+          clientids
+        )
+        VALUES
+        (
+          #{id,jdbcType=VARCHAR},
+          #{taskName,jdbcType=VARCHAR},
+          #{taskDescription,jdbcType=VARCHAR},
+          STR_TO_DATE(#{taskStartTime,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          STR_TO_DATE(#{taskEndTime,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{taskFrequency,jdbcType=VARCHAR},
+          #{taskInterval,jdbcType=VARCHAR},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR},
+          #{clientIds,jdbcType=VARCHAR}
+        )
+    </insert>
+    <select id="queryRepeatName" resultMap="resultMap">
+        SELECT
+        pk_id,
+        task_name,
+        task_description,
+        approve_status,
+        status,
+        task_frequency,
+        task_interval,
+        is_deleted
+        FROM
+        dv_accesstask
+        <trim prefix="WHERE" >
+            is_deleted = 0 and task_name = #{taskName}
+            <if test="id != null and id != ''">
+                and pk_id != #{id}
+            </if>
+        </trim>
+    </select>
+
+</mapper>

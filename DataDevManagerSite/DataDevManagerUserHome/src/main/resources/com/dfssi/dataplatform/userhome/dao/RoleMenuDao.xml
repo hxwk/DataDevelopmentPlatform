@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.RoleMenuDao" >
+  <resultMap id="BaseResultMap" type="com.dfssi.dataplatform.userhome.Entity.RoleMenuEntity" >
+    <result column="PK_ROLE_ID" property="roleId" jdbcType="VARCHAR" />
+    <result column="MENU_ID" property="menuId" jdbcType="VARCHAR" />
+    <result column="RELATION_DATE" property="relationDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dfssi.dataplatform.userhome.Entity.RoleMenuEntity" extends="BaseResultMap" >
+    <result column="BUTTON_IDS" property="buttonIds" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PK_ROLE_ID, MENU_ID, RELATION_DATE
+  </sql>
+  <sql id="Blob_Column_List" >
+    BUTTON_IDS
+  </sql>
+
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.dfssi.dataplatform.userhome.Entity.RoleMenuExampleEntity" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dv_role_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dfssi.dataplatform.userhome.Entity.RoleMenuExampleEntity" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dv_role_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <delete id="deleteByExample" parameterType="com.dfssi.dataplatform.userhome.Entity.RoleMenuExampleEntity" >
+    delete from dv_role_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+  <select id="countByExample" parameterType="com.dfssi.dataplatform.userhome.Entity.RoleMenuExampleEntity" resultType="java.lang.Integer" >
+    select count(*) from dv_role_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dv_role_menu
+    <set >
+      <if test="record.roleId != null" >
+        PK_ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuId != null" >
+        MENU_ID = #{record.menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relationDate != null" >
+        RELATION_DATE = #{record.relationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buttonIds != null" >
+        BUTTON_IDS = #{record.buttonIds,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <insert id="multiInsert" parameterType="com.dfssi.dataplatform.userhome.Entity.RoleMenuEntity">
+      insert into dv_role_menu (PK_ROLE_ID, MENU_ID, RELATION_DATE,BUTTON_IDS)
+      values
+          (#{roleId,jdbcType=VARCHAR},#{menuId,jdbcType=VARCHAR},#{relationDate,jdbcType=TIMESTAMP},#{buttonIds,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    SELECT
+    PK_ROLE_ID,
+    MENU_ID,
+    DATE_FORMAT(RELATION_DATE,'%Y-%m-%d %T') as RELATION_DATE
+    FROM dv_role_menu
+    WHERE PK_ROLE_ID=#{roleId}
+  </select>
+</mapper>

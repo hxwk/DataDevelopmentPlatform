@@ -1,0 +1,23 @@
+{
+  "code": 0,
+  "errMsg": "Get task successfully.",
+  "data": {
+    "id": "1213",
+    "name": "abc",
+    "taskType": "OOZIE",
+    "createUser": "ABC",
+    "description": "TEST",
+    "createTime": "2018-01-23 13:48:08",
+    "lastModifiedDate": "2018-01-23 13:48:08",
+    "attrs": [
+      {
+        "id": "345",
+        "taskId": "1213",
+        "name": "raa",
+        "value": "bbb",
+        "description": null,
+        "lastModifiedDate": "2018-01-24 14:57:37"
+      }
+    ]
+  }
+}

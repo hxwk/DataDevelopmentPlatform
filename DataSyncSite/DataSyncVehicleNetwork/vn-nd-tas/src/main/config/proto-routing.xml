@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <skipPackMergeProtos>0801,1003,1005,1205,1206</skipPackMergeProtos>
+
+    <protoMaps>
+        <upProto msgIds="0000" handler="com.yaxon.vn.nd.tas.handler.ExtendedProtocolPH"/>
+        <upProto msgIds="0002,0003,0100,0102" handler="com.yaxon.vn.nd.tas.handler.TerminalManagementPH"/>
+        <upProto msgIds="0200,0704" handler="com.yaxon.vn.nd.tas.handler.PositionAndAlarmPH"/>
+        <upProto msgIds="0700" handler="com.yaxon.vn.nd.tas.handler.TravellingDataRecorder2012PH"/>
+        <upProto msgIds="0705" handler="com.yaxon.vn.nd.tas.handler.CanInformationPH"/>
+        <upProto msgIds="0800,0801,0805" handler="com.yaxon.vn.nd.tas.handler.MultimediaPH"/>
+        <upProto msgIds="0301,0302,0303,0701,0702" handler="com.yaxon.vn.nd.tas.handler.TelAndInfoPH"/>
+        <upProto msgIds="0900,0901,0A00,0B10" handler="com.yaxon.vn.nd.tas.handler.OtherProtocolPH"/>
+        <upProto msgIds="0001,1003,1005,1205,1206"  handler="com.yaxon.vn.nd.tas.handler.AvsProtocolPH"/>
+        <upProto msgIds="0B01,0B07,0B08"  handler="com.yaxon.vn.nd.tas.handler.TaxiCallControlPH"/>
+        <!--南斗定义的锁车相关协议-->
+        <upProto msgIds="F101,F002,F102"  handler="com.yaxon.vn.nd.tas.handler.LockVehicleControlPH"/>
+    </protoMaps>
+</config>

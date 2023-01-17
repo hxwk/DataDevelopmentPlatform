@@ -1,0 +1,15 @@
+{
+  "name": "abc",
+  "taskType": "OOZIE",
+  "createUser": "ABC",
+  "description": "TEST",
+  "attrs": [
+    {
+      "id": "345",
+      "taskId": "1213",
+      "name": "raa_NEW",
+      "value": "bbb",
+      "description": null
+    }
+  ]
+}

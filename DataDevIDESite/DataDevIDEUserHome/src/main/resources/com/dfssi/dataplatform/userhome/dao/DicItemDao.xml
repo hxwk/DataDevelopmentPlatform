@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfssi.dataplatform.userhome.dao.DicItemDao" >
+    <resultMap id="dicItem" type="com.dfssi.dataplatform.userhome.entity.DicItemEntity">
+        <id property="id" column="pk_id"/>
+        <result property="dicType" column="dic_type"/>
+        <result property="itemName" column="item_name"/>
+        <result property="value" column="item_value"/>
+        <result property="isValid" column="is_valid"/>
+    </resultMap>
+
+    <!--显示字典子表-->
+    <select id="listGetDicItem" resultMap="dicItem">
+      select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test="dicType!=null and dicType!=''">
+            and dic_type=#{dicType}
+        </if>
+        </trim>
+    </select>
+
+    <!--接入任务显示数据资源对应的所有有效的字典子表-->
+    <select id="listGetValidResource" resultMap="dicItem">
+        SELECT
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        FROM dv_dic_item
+        WHERE (SELECT is_valid FROM dv_dic WHERE dic_type='resource_queryBigdata')=1
+        AND dv_dic_item.dic_type ='resource_queryBigdata'
+        AND dv_dic_item.is_valid=1
+        union all
+        SELECT
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        FROM dv_dic_item
+        WHERE (SELECT is_valid FROM dv_dic WHERE dic_type='resource_queryDB')=1
+        AND dv_dic_item.dic_type='resource_queryDB'
+        AND dv_dic_item.is_valid=1
+    </select>
+
+    <!--新增修改-->
+    <insert id="insert">
+      insert into dv_dic_item(
+      pk_id,
+      dic_type,
+      item_name,
+      item_value,
+      is_valid
+    )
+   values (
+      #{id},
+      #{dicType},
+      #{itemName},
+      #{value},
+      #{isValid}
+    )ON DUPLICATE KEY UPDATE
+     dic_type=values(dic_type),
+     item_name=values(item_name),
+     item_value=values(item_value),
+     is_valid=values(is_valid)
+    </insert>
+
+    <!-- 根据主键批量删除-->
+    <delete id="deleteById">
+        delete
+        from dv_dic_item
+        where pk_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+
+    <!--根据字典类型查数据-->
+    <select id="listGetByDicType" resultMap="dicItem">
+     select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (select is_valid from dv_dic where dic_type=#{dicType})=1
+        and dv_dic_item.dic_type=#{dicType}
+        and dv_dic_item.is_valid=1
+    </select>
+
+    <!--新增时检查相同类型名称是否重复-->
+    <select id="countByItemName" resultType="int">
+     select count(*) from dv_dic_item
+        where dic_type=#{dicType}
+        and item_name=#{itemName}
+    </select>
+
+    <!--修改时判断与同类型的其他名称是否重复-->
+    <select id="countByUpdate" resultType="int">
+        select count(*) from dv_dic_item
+        where pk_id!=#{id}
+        and dic_type=#{dicType}
+        and item_name=#{itemName}
+    </select>
+
+    <!--判断是否为修改-->
+    <select id="countById" resultType="int">
+     select count(*) from dv_dic_item
+        where pk_id=#{id}
+    </select>
+
+    <!--根据字典类型删除-->
+    <delete id="deleteByType">
+     delete
+     from dv_dic_item
+     where dic_type=#{dicType}
+    </delete>
+
+    <!--修改字表字段的字典类型-->
+    <update id="updateByType">
+     update dv_dic_item
+     set dic_type=#{dicType}
+     where dic_type=(select dic_type from dv_dic where dv_dic.pk_id=#{id});
+    </update>
+
+    <!--接入任务显示数据源对应的所有有效的字典子表-->
+    <select id="listGetValidSource" resultMap="dicItem">
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (SELECT is_valid FROM dv_dic WHERE dic_type='source_queryBigdata')=1
+        and dic_type='source_queryBigdata'
+        and dv_dic_item.is_valid=1
+        union all
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (SELECT is_valid FROM dv_dic WHERE dic_type='source_queryDB')=1
+        and dic_type='source_queryDB'
+        and dv_dic_item.is_valid=1
+        union all
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (SELECT is_valid FROM dv_dic WHERE dic_type='source_queryInterface')=1
+        and dic_type='source_queryInterface'
+        and dv_dic_item.is_valid=1
+
+    </select>
+
+    <!--显示数据库对应的所有有效的字典信息-->
+    <select id="listGetValidDataItem" resultMap="dicItem">
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (SELECT is_valid FROM dv_dic WHERE dic_type='queryBigdata')=1
+        and dic_type='queryBigdata'
+        and dv_dic_item.is_valid=1
+        union all
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (SELECT is_valid FROM dv_dic WHERE dic_type='queryDB')=1
+        and dic_type='queryDB'
+        and dv_dic_item.is_valid=1
+        union all
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where (SELECT is_valid FROM dv_dic WHERE dic_type='queryInterface')=1
+        and dic_type='queryInterface'
+        and dv_dic_item.is_valid=1
+    </select>
+
+ <!--根据类型预览字表信息-->
+    <select id="listSelectDataItem" resultMap="dicItem">
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where dic_type=#{dicType}
+    </select>
+
+    <!--查询系统信息-->
+    <select id="listSelectSystem" resultMap="dicItem">
+        select
+        pk_id,
+        dic_type,
+        item_name,
+        item_value,
+        is_valid
+        from dv_dic_item
+        where dic_type='system'
+        and is_valid=1
+    </select>
+</mapper>

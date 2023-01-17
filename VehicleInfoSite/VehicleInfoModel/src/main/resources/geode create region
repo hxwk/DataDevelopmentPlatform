@@ -1,0 +1,84 @@
+geode集群启动设置第2稿
+三台服务器：172.16.1.202、172.16.1.203、172.16.1.204
+0) 在每台服务器/opt路径下建立工作文件夹geode_worker ,定位到文件夹中
+
+1) 在每台服务器工作文件夹中执行
+   172.16.1.202 下执行  gfsh -e "start locator --name=locator1 --port=10334 --locators=172.16.1.202[10334],172.16.1.203[10334],172.16.1.204[10334]" -e "start server --name=server1 --initial-heap=4G --max-heap=4G --critical-heap-percentage=90 --eviction-heap-percentage=60 --server-port=40404 --bind-address=172.16.1.202"
+   172.16.1.203 下执行  gfsh -e "start locator --name=locator2 --port=10334 --locators=172.16.1.202[10334],172.16.1.203[10334],172.16.1.204[10334]" -e "start server --name=server2 --initial-heap=4G --max-heap=4G --critical-heap-percentage=90 --eviction-heap-percentage=60 --server-port=40404 --bind-address=172.16.1.203"
+   172.16.1.204 下执行  gfsh -e "start locator --name=locator3 --port=10334 --locators=172.16.1.202[10334],172.16.1.203[10334],172.16.1.204[10334]" -e "start server --name=server3 --initial-heap=4G --max-heap=4G --critical-heap-percentage=90 --eviction-heap-percentage=60 --server-port=40404 --bind-address=172.16.1.204"
+
+2) gfsh命令行中执行
+connect --locator=172.16.1.202[10334]
+
+3) 创建磁盘存储
+create disk-store --name=signalsPersistOverflow --dir=/opt/signalUnification/overflow_data#20480 \
+--compaction-threshold=40 --auto-compact=false --allow-force-compaction=true \
+--max-oplog-size=512 --queue-size=10000 --time-interval=15 --write-buffer-size=65536 \
+--disk-usage-warning-percentage=80 --disk-usage-critical-percentage=98
+
+4) gfsh命令行中执行
+create region --name=platformInfo --type=REPLICATE_PERSISTENT_OVERFLOW  --disk-store=vehiclePersistOverflow
+create region --name=vehicleBaseInfo --type=REPLICATE_PERSISTENT_OVERFLOW  --disk-store=vehiclePersistOverflow
+create region --name=cvVehicleBaseInfo --type=REPLICATE_PERSISTENT_OVERFLOW  --disk-store=vehiclePersistOverflow
+create region --name=failureCodeInfo --type=REPLICATE_PERSISTENT_OVERFLOW  --disk-store=vehiclePersistOverflow
+create region --name=signalUnificationInfo --type=REPLICATE_PERSISTENT_OVERFLOW  --disk-store=signalsPersistOverflow
+
+5) gfsh命令行中执行
+deploy --jar=/opt/libs/VehicleInfoModel.jar
+
+6) 创建索引
+create index --name=vinIndex --expression=vin --region=vehicleBaseInfo
+create index --name=vinIndex --expression=vin --region=cvVehicleBaseInfo
+
+#停止服务
+stop server --name=server1
+
+#停止集群
+shutdown --include-locators=true
+
+
+#服务启动时给服务一个设定堆栈空间、临界百分比与移出堆栈百分比
+start server --name=server1 --initial-heap=4G --max-heap=4G --critical-heap-percentage=90 --eviction-heap-percentage=60
+
+#插入数据
+put --key=0 --value='0' --region=vehicleBaseInfo
+
+#删除选定key的数据
+remove --region=vehicleBaseInfo --key=0
+
+删除全部数据
+remove --region=signalUnificationInfo --all
+
+删除表
+destroy region --name=signalUnificationInfo
+
+#修改oplog存储 设定初始存储为20G
+alter disk-store --name=serverPersistOverflow --region=vihicleBaseInfo
+--disk-dirs=/opt/firstDiskStoreDir,/opt/secondDiskStoreDir,/opt/thirdDiskStoreDir
+--initialCapacity=20
+
+#手动压缩
+compact offline-disk-store --name=serverPersistOverflow --disk-dirs=/opt/firstDiskStoreDir,/opt/secondDiskStoreDir,/opt/thirdDiskStoreDir
+
+#锁定内存
+ulimit -a
+
+ulimit -l max-size-in-kbytes
+eg：ulimit -l 4000000
+以这种方式使用锁定的内存会增加启动Geode所需的时间。启动Geode所需的额外时间取决于所使用的内存总量，并且可以从几秒到10分钟或更长时间。
+为了提高启动时间和减少成员超时的潜力，请在启动Geode成员之前，通过发出下述命令，指示内核自由操作系统页面缓存：
+$ echo 1 > /proc/sys/vm/drop_caches
+
+gemfire.properties中
+lock-memory=true
+
+#显示丢失的存储
+show missing-disk-stores
+#去掉丢失存储，服务不再等待
+revoke missing-disk-store --id=60399215-532b-406f-b81f-9b5bd8d1b55a
+
+#批命令执行脚本
+gfsh run --file=mycommands.gfsh
+
+Map存储时，查询表：
+select * from /signalUnificationInfo  u where u['standardId']='1169'

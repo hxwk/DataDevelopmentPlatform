@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <protoMaps>
+        <upProto msgIds="0200" handler="com.dfssi.dataplatform.datasync.plugin.sink.bc.kafkasink.analyze.PositionAndAlarmPH"/>
+    </protoMaps>
+</config>

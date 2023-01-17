@@ -1,0 +1,127 @@
+{
+  "id": "20180302095436000001",
+  "name": "DEV Streaming Kafka To Fuel",
+  "modelTypeId": "20171123152036000003",
+  "description": "Streaming Kafka To Fuel Model",
+  "steps": [
+    {
+      "id": "20180302095436000002",
+      "name": "Streaming Kafka",
+      "stepTypeId": "20171120152038000001",
+      "guiX": 0,
+      "guiY": 0,
+      "params": [
+        {
+          "topics": {
+            "valueStr": "POSITIONINFORMATION_0200_TOPIC"
+          },
+          "brokerList": {
+            "valueStr": "172.16.1.150:9092"
+          }
+        }
+      ]
+    },
+    {
+      "id": "20180302095436000003",
+      "name": "Streaming Kafka To fuel",
+      "stepTypeId": "20181120152039000110",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "interval": {
+            "valueStr": "60"
+          },
+          "fuel.filter.altitude.min.threshold": {
+            "valueStr": "1000"
+          },
+          "fuel.filter.altitude.max.threshold": {
+            "valueStr": "8000"
+          },
+          "fuel.filter.uploadtime.threshold": {
+            "valueStr": "1483200000000"
+          },
+          "fuel.filter.direction.threshold": {
+            "valueStr": "360"
+          },
+          "fuel.filter.lon.max.threshold": {
+            "valueStr": "180"
+          },
+          "fuel.filter.lon.min.threshold": {
+            "valueStr": "-180"
+          },
+          "fuel.filter.lat.max.threshold": {
+            "valueStr": "90"
+          },
+          "fuel.filter.lat.min.threshold": {
+            "valueStr": "-90"
+          },
+          "fuel.out.database.id": {
+            "valueStr": "fuel"
+          },
+          "fuel.out.database.url": {
+            "valueStr": "jdbc:postgresql://172.16.1.156:5432/analysis"
+          },
+          "fuel.out.database.user": {
+            "valueStr": "dbdream"
+          },
+          "fuel.out.database.password": {
+            "valueStr": "dbdream"
+          },
+          "fuel.out.database.driver": {
+            "valueStr": "org.postgresql.Driver"
+          },
+          "fuel.out.database.fuel.table": {
+            "valueStr": "vehicle_fuel"
+          },
+          "fuel.out.database.trip.table": {
+            "valueStr": "vehicle_trip"
+          },
+          "fuel.out.database.abnormalfuel.table": {
+            "valueStr": "vehicle_abnormal_fuel"
+          },
+          "fuel.out.database.min.abnormalfuel": {
+            "valueStr": "30.0"
+          },
+          "fuel.out.database.abnormaldriving.table": {
+            "valueStr": "vehicle_abnormal_driving"
+          },
+          "fuel.out.database.abnormaldriving.label.pair": {
+            "valueStr": "疲劳:0,打电话:1,抽烟:2,未系安全带:3"
+          },
+          "fuel.out.databaser.abnormaldriving.report.url": {
+            "valueStr": "http://172.16.1.207:6766/app/message/newMessage"
+          },
+          "fuel.out.database.totalfuel.table": {
+            "valueStr": "vehicle_total_fuel"
+          },
+          "fuel.trip.split.tv": {
+            "valueStr": "1m"
+          },
+          "fuel.trip.split.ta": {
+            "valueStr": "5m"
+          },
+          "fuel.trip.split.tr": {
+            "valueStr": "15m"
+          },
+          "fuel.trip.split.da": {
+            "valueStr": "1"
+          }
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "id": "20180302095436000004",
+      "modelStepFrom": {
+        "id": "20180302095436000002",
+        "pos": "Top|Bottom|Right|Left"
+      },
+      "modelStepTo": {
+        "id": "20180302095436000003",
+        "pos": "Top|Bottom|Right|Left"
+      }
+    }
+  ]
+}

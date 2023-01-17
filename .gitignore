@@ -1,0 +1,4 @@
+# Project exclude paths
+/DataSyncSite/DataSyncCommon/target/
+/DataSyncSite/DataSyncPlugin/vnnd-tbpsi/target/
+/VehicleInfoSite/DataTrans/target/

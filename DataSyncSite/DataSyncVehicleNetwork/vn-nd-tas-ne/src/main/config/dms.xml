@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <msg-scan base-package="com.yaxon.vn.nd.tbp.si.ne"/>
+
+    <msg-maps>
+
+    </msg-maps>
+</config>

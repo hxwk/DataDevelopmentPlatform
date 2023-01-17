@@ -1,0 +1,51 @@
+/service/task
+
+{
+	"taskId": "taskhbase",
+	"clientId": "client1",
+	"groupId":"hbasesink111",
+	"taskType": "FLUME",
+	"taskAction": "START",
+	"channelType": "com.dfssi.dataplatform.datasync.flume.agent.channel.kafka.KafkaChannel",
+	"taskDataSource": {
+		"srcId": "service_1_6_tcpnesource_01",
+		"type": "com.dfssi.dataplatform.datasync.plugin.source.roadtcpsource.server.TCPSource",
+		"config": {
+			"host": "192.168.80.31",
+			"ports": "3521"
+		}
+	},
+	"taskDataDestinations": [{
+		"destId": "service_1_6_neKafka_03",
+		"type": "com.dfssi.dataplatform.datasync.plugin.sink.hbase.HBase2Sink",
+		"config": {
+
+			"hbase.zookeeper.quorum": "172.16.1.210:2181,172.16.1.211:2181,172.16.1.212:2181",
+			"event_batch_size":"5000",
+			"topicList":
+			[{
+			"topic":"ROAD_POSITIONINFORMATION_0200_TOPIC",
+			"table": "dev:terminal_0200",
+			"prefixLength":"4",
+			"serices": "f",
+			 "rule":"inverted",
+			"param":"",
+			"field":"sim",
+			"concat":["receiveMsgTime"],
+			"separator":""
+			},
+			{
+			"topic":"ROAD_VNND_LOGININFO_STATUS",
+			"table": "dev:terminal_0100",
+			"prefixLength":"4",
+			"serices": "f",
+			"rule":"hash",
+			"param":"4",
+			"field":"vid",
+			"concat":["vid"],
+			"separator":""
+			}
+			]
+		}
+	}]
+}

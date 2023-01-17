@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.devmanage.dataresource.mvc.dao.DataResourceTableColumnDao">
+
+    <resultMap id="resColumnMap" type="dataResourceTableColumnEntity">
+        <id property="dataresTableColumnId" column="datares_table_column_id"/>
+        <result property="dataresTableColumnName" column="datares_table_column_name"/>
+        <result property="dataresTableColumnType" column="datares_table_column_type"/>
+        <result property="dataresId" column="datares_id"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <delete id="delete">
+      BEGIN
+        DELETE FROM meta_dataresourceconf_t WHERE datares_id=#{id}
+        DELETE FROM meta_dataresource_tablecolumn_conf_t WHERE datares_id=#{id}
+      END
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO meta_dataresource_tablecolumn_conf_t(
+          datares_table_column_id,
+          datares_table_column_name,
+          datares_table_column_type,
+          datares_id,
+          is_valid,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{dataresTableColumnId,jdbcType=VARCHAR},
+          #{dataresTableColumnName,jdbcType=VARCHAR},
+          #{dataresTableColumnType,jdbcType=VARCHAR},
+          #{dataresId,jdbcType=VARCHAR},
+          #{isValid,jdbcType=VARCHAR},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="findList" resultMap="resColumnMap">
+        SELECT
+        datares_table_column_id,
+        datares_table_column_name,
+        datares_table_column_type,
+        datares_id,
+        is_valid,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        meta_dataresource_tablecolumn_conf_t where is_valid = 1 ORDER  BY order
+    </select>
+
+    <select id="findListByDsId" resultMap="resColumnMap" parameterType="String">
+        SELECT
+        datares_table_column_id,
+        datares_table_column_name,
+        datares_table_column_type,
+        datares_id,
+        is_valid,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        meta_dataresource_tablecolumn_conf_t
+        where is_valid = 1 AND datares_id = #{dataresId}
+        ORDER BY sort
+    </select>
+
+
+</mapper>

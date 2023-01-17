@@ -1,0 +1,102 @@
+{
+  id: '20161226112036000001',
+  name: 'DEV Offline Empty Value Test',
+  modelTypeId: '20171123152036000001',
+  description: 'Convert Model',
+  steps: [
+    {
+      id: '20161226112036000002',
+      name: 'Hive Table Input',
+      stepTypeId: '20171120152037000001',
+      guiX: 0,
+      guiY: 0,
+      params: [
+        {
+          schema: {
+            valueStr: 'dev_analysis'
+          },
+          tableName: {
+            valueStr: 'emptyvalue'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161226112036000004',
+      name: 'Preprocess Empty value',
+      stepTypeId: '20171120152039000106',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          operator: {
+            valueStr: 'drop'
+          },
+          colName: {
+            valueStr: 'produce_name'
+          }
+        },
+        {
+          operator: {
+            valueStr: 'fill'
+          },
+          colName: {
+            valueStr: 'sales'
+          },
+          toValue: {
+            valueStr: '5.09'
+          }
+        },
+        {
+          operator: {
+            valueStr: 'filter'
+          },
+          exp: {
+            valueStr: 'region is not null'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161226112036000007',
+      name: 'Output Hive converted',
+      stepTypeId: '20171120152040002001',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          schema: {
+            valueStr: 'dev_analysis'
+          },
+          tableName: {
+            valueStr: 'emptyvalueconverted'
+          }
+        }
+      ]
+    }
+  ],
+  links: [
+    {
+      id: '20161226112036100001',
+      modelStepFrom: {
+        id: '20161226112036000002',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepTo: {
+        id: '20161226112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    },
+    {
+      id: '20161226112036000004',
+      modelStepFrom: {
+        id: '20161226112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepTo: {
+        id: '20161226112036000007',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    }
+  ]
+}

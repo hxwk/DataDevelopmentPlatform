@@ -1,0 +1,136 @@
+VERSION " "
+NS_ :
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+BS_:
+
+BU_: MYECU
+BO_ 2566832622 VDHR_S: 8 MYECU
+ SG_ 1128◎小计里程_W : 32|32@1+(0.005,0)[0|21055406] "null" Vector__XXX
+ SG_ 1159◎总计里程_W : 0|32@1+(0.005,0)[0|21055406] "km" Vector__XXX
+BO_ 2364539697 EEC2: 8 MYECU
+ SG_ 1082◎发动机负荷率_W : 16|8@1+(1,0)[0|250] "%" Vector__XXX
+ SG_ 664◎油门踏板开度_W : 8|8@1+(0.4,0)[0|100] "%" Vector__XXX
+ SG_ 1081◎AccelPedalKickdown_W : 2|2@1+(1,0)[0|3] "null" Vector__XXX
+BO_ 2365522225 DEC1: 8 MYECU
+ SG_ 1034◎VECU伪油门_W : 8|16@1+(0.0390625,0)[0|100] "%" Vector__XXX
+BO_ 2364539904 EEC1: 8 MYECU
+ SG_ 453◎发动机转速_W : 24|16@1+(0.125,0)[0|8031.875] "rpm" Vector__XXX
+ SG_ 1039◎发动机扭矩_W : 16|8@1+(1,-125)[-125|125] "%" Vector__XXX
+ SG_ 1038◎驾驶员请求扭矩_W : 8|8@1+(1,-125)[-125|125] "%" Vector__XXX
+ SG_ 666◎发动机扭矩模式_W : 0|4@1+(1,0)[0|15] "null" Vector__XXX
+ SG_ 1040◎EngDemandPercTorque_W : 56|8@1+(1,-125)[-125|125] "%" Vector__XXX
+BO_ 2365484270 TC01: 8 MYECU
+ SG_ 450◎车速_W : 48|16@1+(0.00390625,0)[0|250.996] "km/h" Vector__XXX
+ SG_ 1000005◎变速箱输出轴转速_W : 32|16@1+(0.125,0)[0|8031.875] "rpm" Vector__XXX
+BO_ 2566831883 EBC2: 8 MYECU
+ SG_ 1000008◎RlativeSpeedFrontAxleRightWheel_W : 24|8@1+(0.0625,-7.8125)[-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ 1000006◎RlativeSpeedRearAxle1RightWheel_W : 40|8@1+(0.0625,-7.8125)[-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ 1000009◎RelativeSpeedFrontAxleLeftWheel_W : 16|8@1+(0.0625,-7.8125)[-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ 1000007◎RelativeSpeedRearAxle1LefttWheel_W : 32|8@1+(0.0625,-7.8125)[-7.8125|7.8125] "km/h" Vector__XXX
+ SG_ 1097◎前轴速度_W : 0|16@1+(0.00390625,0)[0|250.996] "km/h" Vector__XXX
+BO_ 2566844721 CCVS: 8 MYECU
+ SG_ 1059◎巡航控制状态_W : 53|3@1+(1,0)[0|7] "null" Vector__XXX
+ SG_ 1000010◎巡航设置速度_W : 40|8@1+(1,0)[0|250] "km/h" Vector__XXX
+ SG_ 1000011◎巡航R开关_W : 36|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 1000012◎巡航按键开关_W : 34|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 1000013◎巡航S-开关_W : 32|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 711◎离合器开关_W : 30|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 1053◎脚刹_W : 28|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 1000014◎巡航进入状态_W : 24|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 1052◎手刹_W : 2|2@1+(1,0)[0|3] "null" Vector__XXX
+BO_ 2365522737 DEC2: 8 MYECU
+ SG_ 1046◎空调AC开关_W : 36|2@1+(1,0)[0|3] "null" Vector__XXX
+ SG_ 1158◎空档开关_W : 34|2@1+(1,0)[0|3] "null" Vector__XXX
+BO_ 2566840064 EEC3: 8 MYECU
+ SG_ 1000016◎Aftrtreatment1ExhaustGasMassFlow_W : 40|16@1+(0.2,0)[0|12851] "null" Vector__XXX
+ SG_ 1000018◎EngnsDsrdOprtngSpdAsymmtryAdjstm_W : 24|8@1+(1,0)[0|250] "null" Vector__XXX
+ SG_ 1047◎名义摩擦扭矩_W : 0|8@1+(1,-125)[-125|125] "%" Vector__XXX
+BO_ 2566845952 IC1: 8 MYECU
+ SG_ 669◎发动机进气温度_W : 16|8@1+(1,-40)[-40|210] "℃" Vector__XXX
+ SG_ 1000023◎发动机进气压力_W : 8|8@1+(2,0)[0|500] "kPa" Vector__XXX
+BO_ 2566844928 LFE: 8 MYECU
+ SG_ 1041◎EngAverageFuelEconomy_W : 32|16@1+(0.001953217056049125,0)[0|125.5] "km/L" Vector__XXX
+ SG_ 1000020◎EngInstFuelEconomy_W : 16|16@1+(1953125,0)[0|125.5] "km/L" Vector__XXX
+ SG_ 614◎瞬时油耗_W : 0|16@1+(0.05,0)[0|3212.75] "L/h" Vector__XXX
+BO_ 2566843904 ET1: 8 MYECU
+ SG_ 767◎发动机水温_W : 0|8@1+(1,-40)[-40|210] "℃" Vector__XXX
+BO_ 2566844160 EPL_P1: 8 MYECU
+ SG_ 657◎发动机机油压力_W : 24|8@1+(4,0)[0|1000] "kPa" Vector__XXX
+BO_ 2566831360 FD: 8 MYECU
+ SG_ 1108◎风扇转速_W : 16|16@1+(0.125,0)[0|8031.875] "rpm" Vector__XXX
+ SG_ 1107◎风扇状态_W : 8|4@1+(1,0)[0|15] "null" Vector__XXX
+BO_ 2566845757 AMB: 8 MYECU
+ SG_ 443◎大气压力_W : 0|8@1+(0.5,0)[0|125] "kPa" Vector__XXX
+ SG_ 670◎环境温度_W : 24|16@1+(0.03125,-273)[-273|1734.96875] "℃" Vector__XXX
+BO_ 2566805053 ADBLUE: 8 MYECU
+ SG_ 1114◎尿素液位_W : 0|8@1+(0.4,0)[0|100] "%" Vector__XXX
+BO_ 2565865739 EB: 8 MYECU
+ SG_ 1084◎防抱死激活_W : 4|2@1+(1,0)[0|3] "null" Vector__XXX
+BO_ 2566849024 ED: 8 MYECU
+ SG_ 1000024◎发动机制动_W : 41|1@1+(1,0)[0|1] "null" Vector__XXX
+BO_ 2566733373 A1: 8 MYECU
+ SG_ 1118◎SCR出口温度_W : 24|16@1+(0.03125,-273)[-273|1735] "℃" Vector__XXX
+ SG_ 1117◎SCR进口温度_W : 0|16@1+(0.03125,-273)[-273|1735] "℃" Vector__XXX
+BO_ 2566849536 MISC1: 8 MYECU
+ SG_ 1000025◎当前档位1_W : 8|8@1+(1,-125)[-125|125] "null" Vector__XXX
+BO_ 2566827543 A: 8 MYECU
+ SG_ 1160◎前桥气压_W : 16|8@1+(8,0)[0|2000] "kPa" Vector__XXX
+ SG_ 1161◎后桥气压 : 24|8@1+(8,0)[0|2000] "kPa" Vector__XXX
+BO_ 2348810251 TSC1EBS: 8 MYECU
+ SG_ 1000029◎EBSEngReqSpeed : 8|16@1+(0.125,0)[0|8031.875] "rpm" Vector__XXX
+ SG_ 1000030◎EBSEngReqTorque : 24|8@1+(1,-125)[-125|125] "null" Vector__XXX
+
+
+BA_DEF_  "HSBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_  "MSBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_  "LSBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_  "ESBaudrate" ENUM  "50000","100000","125000","250000","500000","1000000";
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+
+
+BA_ "HSBaudrate" 3;
+BA_ "MSBaudrate" 6;
+BA_ "LSBaudrate" 6;
+BA_ "ESBaudrate" 6;
+BA_ "VFrameFormat" BO_ 2566832622 1;
+BA_ "VFrameFormat" BO_ 2364539697 1;
+BA_ "VFrameFormat" BO_ 2365522225 1;
+BA_ "VFrameFormat" BO_ 2364539904 1;
+BA_ "VFrameFormat" BO_ 2365484270 1;
+BA_ "VFrameFormat" BO_ 2566831883 1;
+BA_ "VFrameFormat" BO_ 2566844721 1;
+BA_ "VFrameFormat" BO_ 2365522737 1;
+BA_ "VFrameFormat" BO_ 2566840064 1;
+BA_ "VFrameFormat" BO_ 2566845952 1;
+BA_ "VFrameFormat" BO_ 2566844928 1;
+BA_ "VFrameFormat" BO_ 2566843904 1;
+BA_ "VFrameFormat" BO_ 2566844160 1;
+BA_ "VFrameFormat" BO_ 2566831360 1;
+BA_ "VFrameFormat" BO_ 2566845757 1;
+BA_ "VFrameFormat" BO_ 2566805053 1;
+BA_ "VFrameFormat" BO_ 2565865739 1;
+BA_ "VFrameFormat" BO_ 2566849024 1;
+BA_ "VFrameFormat" BO_ 2566733373 1;
+BA_ "VFrameFormat" BO_ 2566849536 1;
+BA_ "VFrameFormat" BO_ 2566827543 1;
+BA_ "VFrameFormat" BO_ 2348810251 1;
+//E1C966ACA453169F0DF5AD0B58F8258A

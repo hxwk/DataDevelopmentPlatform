@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.manager.monitor.task.dao.MonitorTaskExecRecordDao">
+
+    <insert id="insert">
+        INSERT INTO monitor_task_exec_record(id, task_id, exec_app_id, status)
+        VALUES ( #{id},	#{taskId}, #{execAppId}, #{status})
+    </insert>
+
+    <delete id="deleteByTaskId">
+        DELETE FROM monitor_task_exec_record WHERE task_id = #{task_id}
+    </delete>
+
+    <delete id="delete">
+        DELETE FROM monitor_task_exec_record WHERE id = #{id}
+    </delete>
+
+    <select id="getExecRecordsByTaskId" resultType="MonitorTaskExecRecordEntity">
+        SELECT
+        *
+        FROM monitor_task_exec_record mter
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="taskId != null and taskId != ''">
+                AND mter.task_id = #{taskId}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(mter.create_time) >= #{startTime}]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(mter.create_time) <= #{endTime}]]>
+            </if>
+        </trim>
+    </select>
+
+    <select id="listOozieTasks" resultType="MonitorTaskExecRecordEntity">
+        SELECT
+        mter.*
+        FROM monitor_task mt left join monitor_task_exec_record mter on mt.id = mter.task_id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            mter.status NOT IN ('SUCCEEDED','KILLED','SUSPENDED')
+            <if test="taskType != null and taskType != ''">
+                AND mt.task_type = #{taskType}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateTaskStatus">
+        UPDATE monitor_task_exec_record
+        SET `status` = #{status},
+        end_time = #{endTime}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

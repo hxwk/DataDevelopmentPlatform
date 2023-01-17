@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<config>
+
+    <msg-scan base-package="com.yaxon.vn.nd.tbp.si.ne"/>
+
+    <msg-maps>
+        <msg-map msg-ids="jtsne.02,jtsne.03" handler="com.dfssi.dataplatform.plugin.tcpnesource.handler.InformationHandler"/>
+    </msg-maps>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.manager.monitor.task.dao.MonitorTaskAttrDao">
+
+    <delete id="deleteByTaskId">
+		DELETE FROM monitor_task_attr WHERE task_id = #{task_id}
+	</delete>
+
+    <delete id="batchInsert">
+        INSERT INTO monitor_task_attr(id, task_id, name, value, description)
+        VALUES
+        <foreach collection="list" item="attr" index="index" separator=",">
+            (#{attr.id}, #{attr.taskId}, #{attr.name}, #{attr.id}, #{attr.description})
+        </foreach>
+    </delete>
+
+</mapper>

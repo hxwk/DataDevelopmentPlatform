@@ -1,0 +1,40 @@
+<spark-task-def id="">
+    <inputs>
+        <input id="" type="InputHiveTable" inputIds="">
+            <params>
+                <param name="schema" value="default"></param>
+                <param name="tableName" value="order"></param>
+            </params>
+        </input>
+        <input id="" type="InputHiveSql" inputIds="">
+            <params>
+                <param name="sql" value="select * from details"></param>
+            </params>
+        </input>
+    </inputs>
+    <preprocess>
+        <process id="" type="JOIN" inputIds="">
+            <params>
+                <param name="inputId" value=""></param>
+            </params>
+        </process>
+        <process id="" type="MAP" inputIds="">
+            <params>
+                <param name="inputId" value=""></param>
+            </params>
+        </process>
+        <process id="" type="CONVERT" inputIds="">
+            <params>
+                <param colName="inputId" toType="String"></param>
+            </params>
+        </process>
+    </preprocess>
+    <algorithms>
+        <algorithm name="name" type="ALS" action="TRAINNING|TEST" inputIds="">
+            <output></output>
+        </algorithm>
+    </algorithms>
+    <outputs>
+        <output id="" type="" inputIds=""></output>
+    </outputs>
+</spark-task-def>

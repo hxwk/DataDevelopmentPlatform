@@ -1,0 +1,37 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.dfssi.dataplatform.config.DataSourceConfiguration",
+      "name": "spring.datasource",
+      "type": "com.dfssi.dataplatform.config.DataSourceConfiguration"
+    },
+    {
+      "sourceType": "com.dfssi.dataplatform.config.DruidXADataSourceConfigs",
+      "name": "spring.datasource",
+      "type": "com.dfssi.dataplatform.config.DruidXADataSourceConfigs"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.dfssi.dataplatform.config.DataSourceConfiguration",
+      "name": "spring.datasource.mysql",
+      "type": "com.dfssi.dataplatform.config.DruidXADataSourceConfig"
+    },
+    {
+      "sourceType": "com.dfssi.dataplatform.config.DruidXADataSourceConfigs",
+      "name": "spring.datasource.mysql",
+      "type": "com.dfssi.dataplatform.config.DruidXADataSourceConfig"
+    },
+    {
+      "sourceType": "com.dfssi.dataplatform.config.DataSourceConfiguration",
+      "name": "spring.datasource.postgresql",
+      "type": "com.dfssi.dataplatform.config.DruidXADataSourceConfig"
+    },
+    {
+      "sourceType": "com.dfssi.dataplatform.config.DruidXADataSourceConfigs",
+      "name": "spring.datasource.postgresql",
+      "type": "com.dfssi.dataplatform.config.DruidXADataSourceConfig"
+    }
+  ]
+}

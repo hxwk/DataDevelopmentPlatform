@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.EmailAlertUserDao">
+
+    <insert id="insert">
+        INSERT INTO email_alert_user(user_id, name, mobile, email, is_valid, create_date, update_date, create_user, update_user)
+        VALUES ( #{userId}, #{name}, #{mobile}, #{email}, #{isValid}, #{createDate}, #{updateDate}, #{createUser}, #{updateUser})
+    </insert>
+
+    <select id="getUserByUserId" resultType="com.dfssi.dataplatform.analysis.entity.EmailAlertUserEntity">
+        SELECT *
+        FROM email_alert_user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--<update id="updateStatusByModelId">-->
+        <!--update email_alert_user-->
+        <!--set-->
+        <!--status = #{status},-->
+        <!--start_time = #{startTime},-->
+        <!--finish_time = #{finishTime},-->
+        <!--run_containers = #{runContainers},-->
+        <!--memory = #{memory},-->
+        <!--virtual_cores = #{virtualCores},-->
+        <!--progress = #{progress}-->
+        <!--WHERE model_id = #{modelId}-->
+    <!--</update>-->
+
+    <!--<delete id="deleteByModelId">-->
+		<!--DELETE FROM monitor_yarn_job WHERE model_id = #{modelId}-->
+	<!--</delete>-->
+
+</mapper>

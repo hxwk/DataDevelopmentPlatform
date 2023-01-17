@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.cleantransform.mvc.dao.ITaskCleanTransformMapperDao">
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.ide.cleantransform.mvc.entity.TaskCleanTransformMapperEntity">
+        <id property="id" column="pk_id"/>
+        <result property="mappingId" column="mapping_id"/>
+        <result property="field" column="field"/>
+        <result property="ruleName" column="rule_name"/>
+        <result property="param" column="param"/>
+        <result property="descr" column="description"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+    <!--批量插入保存-->
+    <insert id="batchInsert">
+        INSERT INTO dv_cleantransform_mapping(pk_id, field, rule_name, param, description, create_date, create_user, update_date, update_user)
+        VALUES
+        <foreach collection="list" item="cleanTrans" index="index" separator=",">
+            (#{cleanTrans.id}, #{cleanTrans.field}, #{cleanTrans.ruleName}, #{cleanTrans.param}, #{cleanTrans.descr},
+            #{cleanTrans.createDate}, #{cleanTrans.createUser}, #{cleanTrans.updateDate}, #{cleanTrans.updateUser})
+        </foreach>
+    </insert>
+
+    <!--根据ID删除数据-->
+    <delete id="delete">
+        UPDATE dv_cleantransform_mapping set is_deleted = 1 WHERE pk_id = #{id} and is_deleted = 0
+    </delete>
+
+    <update id="update">
+        UPDATE dv_cleantransform_mapping
+        SET field = #{field},
+        rule_name = #{ruleName},
+        param = #{param},
+        description = #{descr},
+        create_date = #{createDate},
+        create_user = #{createUser},
+        update_date = #{updateDate},
+        update_user = #{updateUser}
+        WHERE pk_id = #{id}
+    </update>
+
+   <!--逻辑删除子表-->
+    <update id="deleteByMappingId">
+        UPDATE dv_cleantransform_mapping set is_deleted = 1 WHERE is_deleted = 0 and mapping_id = #{id}
+    </update>
+
+
+    <!--批量插入保存-->
+    <insert id="insertMutil">
+        INSERT INTO dv_cleantransform_mapping(pk_id, mapping_id, field, rule_name, param, description, create_date, create_user, update_date, update_user)
+        VALUES
+        <foreach collection="list" item="cleanTrans" index="index" separator=",">
+            (#{cleanTrans.id},#{cleanTrans.mappingId}, #{cleanTrans.field}, #{cleanTrans.ruleName}, #{cleanTrans.param}, #{cleanTrans.descr},
+           #{cleanTrans.createDate},#{cleanTrans.createUser},#{cleanTrans.updateDate},#{cleanTrans.updateUser})
+        </foreach>
+    </insert>
+
+    <select id="findListByMappingId" resultMap="resultMap">
+        SELECT
+        pk_id,
+        mapping_id,
+        field,
+        rule_name,
+        param,
+        description,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as createDate,
+        create_user createUser,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as updateDate,
+        update_user
+        FROM
+        dv_cleantransform_mapping
+        WHERE is_deleted = 0 and mapping_id = #{id}
+    </select>
+
+
+</mapper>

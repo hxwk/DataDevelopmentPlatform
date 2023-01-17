@@ -1,0 +1,407 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="job_ods_a_xdr_ps_gn_dns_wf">
+    <start to="CHECK_DATA" />
+    <decision name="CHECK_DATA">
+        <switch>
+            <case to="HIVE_PARTITION">
+                ${fs:exists(concat("cache/O_RE_ST_XDR_PS_GN_DNS/",inputtime))}
+            </case>
+            <default to="end" />
+        </switch>
+    </decision>
+
+    <action name="HIVE_PARTITION">
+        <hive xmlns="uri:oozie:hive-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>oozie.hive.defaults</name>
+                    <value>my-hive-default.xml</value>
+                </property>
+                <property>
+                    <name>hive.metastore.local</name>
+                    <value>false</value>
+                </property>
+                <property>
+                    <name>hive.metastore.uris</name>
+                    <value>thrift://GZ-HADOOP37:9083</value>
+                </property>
+                <property>
+                    <name>hive.metastore.warehouse.dir</name>
+                    <value>/user/hive/warehouse</value>
+                </property>
+            </configuration>
+            <script>addpartition_script.q</script>
+            <param>tablename=ODS_RE_ST_XDR_PS_GN_DNS_15MI</param>
+            <param>day=${day}</param>
+            <param>hour=${hour}</param>
+        </hive>
+
+        <ok to="ODS_RE_ST_XDR_PS_GN_DNS_15MI" />
+        <error to="fail" />
+    </action>
+
+    <action name="ODS_RE_ST_XDR_PS_GN_DNS_15MI">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.etl.ods.OdsReStXdrPsGnDns15Mi.OdsReStXdrPsGnDns15MiDriver</main-class>
+            <arg>cache/O_RE_ST_XDR_PS_GN_DNS/${inputtime}</arg>
+            <arg>ods/ODS_RE_ST_XDR_PS_GN_DNS_15MI/${wf:id()}/</arg>
+            <arg>${wf:id()}</arg>
+        </java>
+        <ok to="IMAPAL_REFRESH" />
+        <error to="fail" />
+    </action>
+
+    <action name="IMAPAL_REFRESH">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <exec>impala-shell</exec>
+            <argument>-q</argument>
+            <argument>refresh ODS_RE_ST_XDR_PS_GN_DNS_15MI</argument>
+            <capture-output />
+        </shell>
+        <ok to="LAST_15MI" />
+        <error to="fail" />
+    </action>
+
+    <!-- 判断是否1小时最后15分钟的数据 -->
+    <decision name="LAST_15MI">
+        <switch>
+            <case to="ODS_A_XDR_PS_GN_DNS_H">
+                ${mi eq 45 }
+            </case>
+            <default to="CHECK_ODS" />
+        </switch>
+    </decision>
+
+    <action name="ODS_A_XDR_PS_GN_DNS_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.impala.ImpalaCollect</main-class>
+            <arg>ODS_A_XDR_PS_GN_DNS_H</arg>
+            <arg>${day}</arg>
+            <arg>${hour}</arg>
+        </java>
+        <ok to="DW_F_XDR_PS_GN_DNS_SUBAPP_H" />
+        <error to="fail" />
+    </action>
+
+    <action name="DW_F_XDR_PS_GN_DNS_SUBAPP_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.impala.ImpalaCollect</main-class>
+            <arg>DW_F_XDR_PS_GN_DNS_SUBAPP_H</arg>
+            <arg>${day}</arg>
+            <arg>${hour}</arg>
+        </java>
+        <ok to="DW_F_XDR_PS_GN_DNS_CELL_H" />
+        <error to="fail" />
+    </action>
+    <action name="DW_F_XDR_PS_GN_DNS_CELL_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.impala.ImpalaCollect</main-class>
+            <arg>DW_F_XDR_PS_GN_DNS_CELL_H</arg>
+            <arg>${day}</arg>
+            <arg>${hour}</arg>
+        </java>
+        <ok to="ODS_RE_ST_XDR_PS_CAUSE_DNS_H" />
+        <error to="fail" />
+    </action>
+    <action name="ODS_RE_ST_XDR_PS_CAUSE_DNS_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.impala.ImpalaCollect</main-class>
+            <arg>ODS_RE_ST_XDR_PS_CAUSE_DNS_H</arg>
+            <arg>${day}</arg>
+            <arg>${hour}</arg>
+        </java>
+        <ok to="DEL_ODS_RE_ST_XDR_PS_CAUSE_DNS_H" />
+        <error to="fail" />
+    </action>
+
+    <!-- 调用oracle存储过程删除小时数据 -->
+    <!--    <fork name="fork_del_oracle_data">
+            <path start="DEL_DW_F_XDR_PS_GN_DNS_SUBAPP_H" />
+            <path start="DEL_DW_F_XDR_PS_GN_DNS_CELL_H" />
+            <path start="DEL_ODS_A_XDR_PS_GN_DNS_H" />
+        </fork> -->
+
+    <action name="DEL_ODS_RE_ST_XDR_PS_CAUSE_DNS_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.utils.TruncateTable</main-class>
+            <arg>ODS_RE_ST_XDR_PS_CAUSE_DNS_H</arg>
+            <arg>${deltime}</arg>
+            <arg>${deltime}</arg>
+        </java>
+        <ok to="DEL_DW_F_XDR_PS_GN_DNS_CELL_H" />
+        <error to="fail" />
+    </action>
+
+    <action name="DEL_DW_F_XDR_PS_GN_DNS_CELL_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.utils.TruncateTable</main-class>
+            <arg>DW_F_XDR_PS_GN_DNS_CELL_H</arg>
+            <arg>${deltime}</arg>
+            <arg>${deltime}</arg>
+        </java>
+        <ok to="DEL_DW_F_XDR_PS_GN_DNS_SUBAPP_H" />
+        <error to="fail" />
+    </action>
+    <action name="DEL_DW_F_XDR_PS_GN_DNS_SUBAPP_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.utils.TruncateTable</main-class>
+            <arg>DW_F_XDR_PS_GN_DNS_SUBAPP_H</arg>
+            <arg>${deltime}</arg>
+            <arg>${deltime}</arg>
+        </java>
+        <ok to="DEL_ODS_A_XDR_PS_GN_DNS_H" />
+        <error to="fail" />
+    </action>
+    <action name="DEL_ODS_A_XDR_PS_GN_DNS_H">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>com.boco.BSSystem.utils.TruncateTable</main-class>
+            <arg>ODS_A_XDR_PS_GN_DNS_H</arg>
+            <arg>${deltime}</arg>
+            <arg>${deltime}</arg>
+        </java>
+        <ok to="fork_sqoop_DW" />
+        <error to="fail" />
+    </action>
+    <!--    <join name="joining_impala_DW" to="fork_sqoop_DW" /> -->
+
+    <fork name="fork_sqoop_DW">
+        <path start="SQOOP_DW_F_XDR_PS_GN_DNS_SUBAPP_H" />
+        <path start="SQOOP_DW_F_XDR_PS_GN_DNS_CELL_H" />
+        <path start="SQOOP_ODS_A_XDR_PS_GN_DNS_H" />
+        <path start="SQOOP_ODS_RE_ST_XDR_PS_CAUSE_DNS_H" />
+    </fork>
+
+    <action name="SQOOP_ODS_RE_ST_XDR_PS_CAUSE_DNS_H">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <arg>export</arg>
+            <arg>--connect</arg>
+            <arg>${strUrl}</arg>
+            <arg>--username</arg>
+            <arg>${odsdbuser}</arg>
+            <arg>--password</arg>
+            <arg>${odsdbpwd}</arg>
+            <arg>-m</arg>
+            <arg>2</arg>
+            <arg>--table</arg>
+            <arg>ODS_RE_ST_XDR_PS_CAUSE_DNS_H</arg>
+            <arg>--export-dir</arg>
+            <arg>impala/ODS_RE_ST_XDR_PS_CAUSE_DNS_H/day=${day}/hour=${hour}/*</arg>
+            <arg>--input-fields-terminated-by</arg>
+            <arg>|</arg>
+            <arg>--columns</arg>
+            <arg>day_id,hour_id,lac,cid,cell_type,dns_resp_code,dns_req_cnt,resp_cnt</arg>
+        </sqoop>
+        <ok to="joining_sqoop_DW" />
+        <error to="fail" />
+    </action>
+
+    <action name="SQOOP_ODS_A_XDR_PS_GN_DNS_H">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <arg>export</arg>
+            <arg>--connect</arg>
+            <arg>${strUrl}</arg>
+            <arg>--username</arg>
+            <arg>${odsdbuser}</arg>
+            <arg>--password</arg>
+            <arg>${odsdbpwd}</arg>
+            <arg>-m</arg>
+            <arg>2</arg>
+            <arg>--table</arg>
+            <arg>ODS_A_XDR_PS_GN_DNS_H</arg>
+            <arg>--export-dir</arg>
+            <arg>impala/ODS_A_XDR_PS_GN_DNS_H/day=${day}/hour=${hour}/*</arg>
+            <arg>--input-fields-terminated-by</arg>
+            <arg>|</arg>
+            <arg>--columns</arg>
+            <arg>day_id,hour_id,u_province_desc,u_region_desc,bscrnc_desc,rat,lac,cid,cell_type,app_type,app_sub_type,ul_data,dl_data,ul_ip_packet,dl_ip_packet,ul_tcp_discordnum,dl_tcp_discordnum,ul_tcp_renum,dl_tcp_renum,ul_ip_frag_packets,dl_ip_frag_packets,dns_req_cnt,response_cnt,auth_content_cnt,addi_content_cnt,timedelay,req_succ_num</arg>
+        </sqoop>
+        <ok to="joining_sqoop_DW" />
+        <error to="fail" />
+    </action>
+    <action name="SQOOP_DW_F_XDR_PS_GN_DNS_SUBAPP_H">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <arg>export</arg>
+            <arg>--connect</arg>
+            <arg>${strUrl}</arg>
+            <arg>--username</arg>
+            <arg>${dwdbuser}</arg>
+            <arg>--password</arg>
+            <arg>${dwdbpwd}</arg>
+            <arg>-m</arg>
+            <arg>2</arg>
+            <arg>--table</arg>
+            <arg>DW_F_XDR_PS_GN_DNS_SUBAPP_H</arg>
+            <arg>--export-dir</arg>
+            <arg>impala/DW_F_XDR_PS_GN_DNS_SUBAPP_H/day=${day}/hour=${hour}/*</arg>
+            <arg>--input-fields-terminated-by</arg>
+            <arg>|</arg>
+            <arg>--columns</arg>
+            <arg>day_id,hour_id,region_id,region_desc,net_type,app_type,app_sub_type,ul_data,dl_data,ul_ip_packet,dl_ip_packet,ul_tcp_discordnum,dl_tcp_discordnum,ul_tcp_renum,dl_tcp_renum,ul_ip_frag_packets,dl_ip_frag_packets,dns_req_cnt,response_cnt,auth_content_cnt,addi_content_cnt,timedelay,req_succ_num</arg>
+        </sqoop>
+        <ok to="joining_sqoop_DW" />
+        <error to="fail" />
+    </action>
+    <action name="SQOOP_DW_F_XDR_PS_GN_DNS_CELL_H">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <arg>export</arg>
+            <arg>--connect</arg>
+            <arg>${strUrl}</arg>
+            <arg>--username</arg>
+            <arg>${dwdbuser}</arg>
+            <arg>--password</arg>
+            <arg>${dwdbpwd}</arg>
+            <arg>-m</arg>
+            <arg>2</arg>
+            <arg>--table</arg>
+            <arg>DW_F_XDR_PS_GN_DNS_CELL_H</arg>
+            <arg>--export-dir</arg>
+            <arg>impala/DW_F_XDR_PS_GN_DNS_CELL_H/day=${day}/hour=${hour}/*</arg>
+            <arg>--input-fields-terminated-by</arg>
+            <arg>|</arg>
+            <arg>--columns</arg>
+            <arg>day_id,hour_id,region_id,region_desc,net_type,bscrnc_id,bscrnc_desc,lac,cid,cell_id,ul_data,dl_data,ul_ip_packet,dl_ip_packet,ul_tcp_discordnum,dl_tcp_discordnum,ul_tcp_renum,dl_tcp_renum,ul_ip_frag_packets,dl_ip_frag_packets,dns_req_cnt,response_cnt,auth_content_cnt,addi_content_cnt,timedelay,req_succ_num</arg>
+        </sqoop>
+        <ok to="joining_sqoop_DW" />
+        <error to="fail" />
+    </action>
+    <join name="joining_sqoop_DW" to="CHECK_ODS" />
+
+    <decision name="CHECK_ODS">
+        <switch>
+            <case to="del_ods_node">
+                ${fs:exists(concat("ods/ODS_RE_ST_XDR_PS_GN_DNS_15MI/", wf:id()))}
+            </case>
+            <default to="end" />
+        </switch>
+    </decision>
+    <!-- 清除过程数据 -->
+    <action name="del_ods_node">
+        <fs>
+            <delete path='${nameNode}/user/${wf:user() }/ods/ODS_RE_ST_XDR_PS_GN_DNS_15MI/${wf:id()}/'/>
+        </fs>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>job failed, error message[${wf:errorMessage(wf:lastErrorNode())}] </message>
+    </kill>
+    <end name="end" />
+</workflow-app>

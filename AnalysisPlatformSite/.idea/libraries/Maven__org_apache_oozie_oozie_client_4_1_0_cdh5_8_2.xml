@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.oozie:oozie-client:4.1.0-cdh5.8.2">
+    <CLASSES>
+      <root url="jar://E:/maven/repo/org/apache/oozie/oozie-client/4.1.0-cdh5.8.2/oozie-client-4.1.0-cdh5.8.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://E:/maven/repo/org/apache/oozie/oozie-client/4.1.0-cdh5.8.2/oozie-client-4.1.0-cdh5.8.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://E:/maven/repo/org/apache/oozie/oozie-client/4.1.0-cdh5.8.2/oozie-client-4.1.0-cdh5.8.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

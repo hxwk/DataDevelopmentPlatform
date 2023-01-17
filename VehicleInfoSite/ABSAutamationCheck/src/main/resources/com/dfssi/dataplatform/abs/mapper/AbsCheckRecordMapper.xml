@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.abs.mapper.AbsCheckRecordMapper">
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO abs_check_record(
+        vid,
+        speed,
+        lon,
+        lat,
+        coll_time,
+        less_speed,
+        check_count
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.vid},
+            #{item.speed},
+            #{item.lon},
+            #{item.lat},
+            #{item.collTime},
+            #{item.lessSpeed},
+            #{item.checkCount}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="java.util.List">
+        INSERT INTO abs_check_record(
+        vid,
+        speed,
+        lon,
+        lat,
+        coll_time,
+        less_speed,
+        check_count
+        )
+        VALUES
+        (
+        #{vid},
+        #{speed},
+        #{lon},
+        #{lat},
+        #{collTime},
+        #{lessSpeed},
+        #{checkCount}
+        )
+    </insert>
+
+    <select id="vehicleLastInfo" resultType="com.dfssi.dataplatform.abs.entity.AbsCheckRecordEntity">
+        SELECT * FROM abs_check_record WHERE
+        <if test="#{vidList != null and vidList.size() > 0}">
+            `vid` IN
+            <foreach collection="vidList" open="(" close=")" separator="," item="vid">
+                #{vid}
+            </foreach>
+        </if>
+        ORDER BY
+        coll_time DESC
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="com.dfssi.dataplatform.abs.entity.VehicleTrajectoryEntity">
+      select lon,lat,vid,coll_time from abs_check_record where vid = #{vid} limit #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="getRecordByVid" resultType="com.dfssi.dataplatform.abs.entity.AbsCheckRecordEntity">
+      select * from abs_check_record where vid = #{vid} and check_count = #{checkCount}
+    </select>
+
+    <select id="getMinBreakLessSpeed" resultType="java.lang.String">
+        SELECT MIN(less_speed) FROM abs_check_record
+        WHERE less_speed > (SELECT MIN(less_speed) FROM abs_check_record)
+    </select>
+
+    <delete id="delect">
+        delete from abs_check_record where vid = #{vid}
+    </delete>
+
+</mapper>

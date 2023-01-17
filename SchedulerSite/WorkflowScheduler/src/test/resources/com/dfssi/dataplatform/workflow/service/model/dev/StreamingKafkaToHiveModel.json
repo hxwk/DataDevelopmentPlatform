@@ -1,0 +1,25 @@
+{
+  id: '20180301112036000002',
+  name: 'DEV Streaming Kafka To Hive',
+  modelTypeId: '20171123152036000003',
+  description: 'Streaming Kafka To Hive Model',
+  steps: [
+    {
+      id: '20181212112036000003',
+      name: 'Streaming Kafka To Hive',
+      stepTypeId: '20181120152039000102',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          configPath: {
+            valueStr: '/user/hdfs/config/dev/streaming-store/'
+          }
+        }
+      ]
+    }
+  ],
+  links: [
+
+  ]
+}

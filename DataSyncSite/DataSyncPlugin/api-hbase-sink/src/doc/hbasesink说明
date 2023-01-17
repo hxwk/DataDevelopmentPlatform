@@ -1,0 +1,97 @@
+
+kafka channel用的分组ID
+"consumer.group.id":"hbasesink",
+
+hbase zookeeper 连接地址
+hbase.zookeeper.quorum
+
+批量处理的大小
+event_batch_size
+
+运行模式
+mode  default  自动配置rowkey规则 为时间戳反正 ，[vid反转][Long.MAX_VALUE -系统当前时间]
+
+topic 映射配置规则
+topicList
+
+kafka topic 名称
+topic
+
+Hbase namespace 类似数据库中库的概念 需要预先在hbase创建, 开发环境dev，测试环境test,生产环境 prod
+namespace   不缺省时处理逻辑 namespace:tableName ;缺省时 tableName
+
+hbase表名
+tableName
+
+hbase rowkey 分区的前缀长度
+prefixLength 缺省默认 5
+
+hbase 写到缓冲区的大小，先写到缓冲区，后面刷到硬盘，优化速度
+flushSize  缺省 默认 60 m
+
+hbase family 所有的qualify 都写到固定的 family 下
+serices  默认f
+
+rowkey 规则配置
+  rule 支持
+  hash ： field 生成hash 按照 ruleParam 截取 然后连接 rowkeyConcat
+  mod 数值的话整数取模,字符串的话hashcode取模 ： field 按照 ruleParam 截取 然后连接 rowkeyConcat
+  substring 截取位数  ： field 按照 ruleParam 截取 然后连接 rowkeyConcat
+  random ： ruleParam 随机数范围  然后连接 rowkeyConcat
+  inverted 时间戳反转 [field反转][Long.MAX_VALUE -rowkeyConcat[0]]
+  invertedstring 字符串field反转 ： field 按照 ruleParam 截取 然后连接 rowkeyConcat
+
+   ruleParam 整数字符串
+
+   field 字段
+
+   rowkeyConcat 拼接字段
+
+   separator 分隔符 前缀与 拼接字段间的分隔符
+
+{
+	"taskId": "taskhbase",
+	"clientId": "client1",
+	"groupId":"hbasesink",
+	"taskType": "FLUME",
+	"taskAction": "START",
+	"channelType": "com.dfssi.dataplatform.datasync.flume.agent.channel.kafka.KafkaChannel",
+	"taskDataSource": {
+		"srcId": "service_1_6_tcpnesource_01",
+		"type": "com.dfssi.dataplatform.datasync.plugin.source.roadtcpsource.server.TCPSource",
+		"config": {
+			"host": "192.168.80.31",
+			"ports": "3521"
+		}
+	},
+	"taskDataDestinations": [{
+		"destId": "service_1_6_neKafka_03",
+		"type": "com.dfssi.dataplatform.datasync.plugin.sink.hbase.HbaseSink",
+		"config": {
+
+			"hbase.zookeeper.quorum": "172.16.1.210:2181,172.16.1.211:2181,172.16.1.212:2181",
+			"event_batch_size":"1000",
+			"mode":"",
+			"topicList":
+			[{
+			"topic":"ROAD_POSITIONINFORMATION_0200_TOPIC",
+			"namespace":"dev",
+			"tableName": "terminal_0200",
+			"prefixLength":"4",
+			"flushSize":"100",
+			"serices": "f",
+			"rowkey": {"rule":"inverted","ruleParam":"","field":"sim","rowkeyConcat":["receiveMsgTime"],"separator":""}
+			},
+			{
+			"topic":"ROAD_VNND_LOGININFO_STATUS",
+			"namespace":"dev",
+			"tableName": "terminal_0100",
+			"prefixLength":"4",
+			"flushSize":"100",
+			"serices": "f",
+			"rowkey": {"rule":"hash","ruleParam":"4","field":"vid","rowkeyConcat":["vid"],"separator":""}
+			}
+			]
+		}
+	}]
+}

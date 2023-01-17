@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.video.mvc.dao.VideoMonitorListDao">
+    <resultMap id="videoMonitorMap" type="com.dfssi.dataplatform.ide.video.mvc.entity.VideoMonitorListEntity">
+        <id property="id" column="pk_id"/>
+        <result property="flowId" column="flow_id"/>
+        <result property="avResourcesSum" column="av_resources_sum"/>
+        <result property="channelNo" column="channel_no"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="alarmFlag" column="alarm_flag"/>
+        <result property="avResourceType" column="av_resource_type"/>
+        <result property="codeStreamType" column="code_stream_type"/>
+        <result property="memoryType" column="memory_type"/>
+        <result property="fileSize" column="file_size"/>
+        <result property="vin" column="vin"/>
+        <result property="sim" column="sim"/>
+        <result property="vid" column="vid"/>
+        <result property="descr" column="description"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into dv_videomanage_monitorlist(
+          pk_id,
+          flow_id,
+          av_resources_sum,
+          channel_no,
+          start_date,
+          end_date,
+          alarm_flag,
+          av_resource_type,
+          code_stream_type,
+          memory_type,
+          file_size,
+          vin,
+          sim,
+          vid,
+          create_date
+        )
+        values (
+          #{id},
+          #{flowId},
+          #{avResourcesSum},
+          #{channelNo},
+          #{startDate},
+          #{endDate},
+          #{alarmFlag},
+          #{avResourceType},
+          #{codeStreamType},
+          #{memoryType},
+          #{fileSize},
+          #{vin},
+          #{sim},
+          #{vid},
+          now()
+        )
+
+    </insert>
+
+    <select id="getVideoMonitorList" resultMap="videoMonitorMap">
+        select
+          pk_id,
+          flow_id,
+          av_resources_sum,
+          channel_no,
+          start_date,
+          end_date,
+          alarm_flag,
+          av_resource_type,
+          code_stream_type,
+          memory_type,
+          file_size,
+          vin,
+          sim,
+          vid,
+          is_deleted,
+          description,
+          create_user,
+          update_user,
+          create_date,
+          update_date
+        from dv_videomanage_monitorlist
+        where sim = #{sim} and is_deleted ='0'
+        order by start_date desc
+    </select>
+
+    <delete id="deleteList">
+        delete from dv_videomanage_monitorlist
+        where is_deleted = '0'
+              and sim = #{sim}
+              and channel_no = #{channelNo}
+              and start_date = #{startDate}
+              and end_date = #{endDate}
+    </delete>
+
+</mapper>

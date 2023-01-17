@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="cdh.repo" />
+      <option name="name" value="Cloudera Repositories" />
+      <option name="url" value="https://repository.cloudera.com/artifactory/cloudera-repos/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Codehaus repository" />
+      <option name="name" value="Codehaus repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="apache.snapshots.repo" />
+      <option name="name" value="Apache Snapshots Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="cdh.repo" />
+      <option name="name" value="Cloudera Repositories" />
+      <option name="url" value="https://repository.cloudera.com/content/groups/cloudera-repos/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-libs-snapshot" />
+      <option name="name" value="Spring libs-snapshot Maven Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="scala-tools.org" />
+      <option name="name" value="Scala-Tools Maven2 Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-libs-release" />
+      <option name="name" value="Spring libs-release Maven Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="datanucleus" />
+      <option name="name" value="Datanucleus" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="cdh.snapshots.repo" />
+      <option name="name" value="Cloudera Snapshots Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Akka repository" />
+      <option name="name" value="Akka repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="cloudera" />
+      <option name="name" value="cloudera" />
+      <option name="url" value="https://repository.cloudera.com/artifactory/cloudera-repos/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-libs-milestone" />
+      <option name="name" value="Spring libs-milestone Maven Repository" />
+      <option name="url" value="https://maven.aliyun.com/repository/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="cdh.repo" />
+      <option name="name" value="Cloudera Repositories" />
+      <option name="url" value="https://repository.cloudera.com/content/groups/cloudera-repos" />
+    </remote-repository>
+  </component>
+</project>

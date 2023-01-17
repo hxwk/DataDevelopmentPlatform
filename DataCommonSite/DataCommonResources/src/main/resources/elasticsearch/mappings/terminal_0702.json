@@ -1,0 +1,64 @@
+{
+	"terminal_0702" : {
+		"settings" : {
+			"index.analysis.analyzer.default.type" : "keyword",
+			"index.number_of_shards" : "3",
+			"index.refresh_interval" : "30s",
+			"index.translog.durability" : "ASYNC",
+			"index.translog.flush_threshold_size" : "2g",
+			"index.translog.sync_interval" : "120s"
+		},
+		"_all": {
+			"enabled": false
+		},
+		"properties": {
+			"id": {
+				"type": "keyword"
+			},
+			"name": {
+				"type": "keyword"
+			},
+			"workDate": {
+				"type": "long"
+			},
+			"ptfReceiveTime": {
+				"type": "long"
+			},
+			"validPeriod": {
+				"type": "long"
+			},
+			"status": {
+				"type": "integer"
+			},
+			"icResult": {
+				"type": "integer"
+			},
+			"vid": {
+				"type": "keyword"
+			},
+			"iDCard": {
+				"type": "keyword"
+			},
+			"msgId": {
+				"type": "keyword"
+			},
+			"practitionerIdCardInstitution": {
+				"type": "keyword"
+			},
+			"practitionerIdCard": {
+				"type": "keyword"
+			},
+			"icResultReason": {
+				"type": "keyword"
+			},
+			"table": {
+				"index": false,
+				"type": "text"
+			},
+			"index": {
+				"index": false,
+				"type": "text"
+			}
+		}
+	}
+}

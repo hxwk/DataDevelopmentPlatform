@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.StepDao">
+
+    <resultMap id="analysisStepMap" type="com.dfssi.dataplatform.analysis.entity.AnalysisStepEntity">
+        <id property="id" column="id"/>
+        <result property="modelId" column="model_id"/>
+        <result property="name" column="name"/>
+        <result property="stepType.id" column="step_type_id"/>
+        <result property="stepType.name" column="step_type_name"/>
+        <result property="stepType.type" column="step_type_type"/>
+        <result property="stepType.group" column="step_type_group"/>
+        <result property="buildType" column="build_type"/>
+        <result property="mainClass" column="main_class"/>
+        <result property="guiX" column="gui_x"/>
+        <result property="guiY" column="gui_y"/>
+        <result property="lastModifiedDate" column="last_modified_date"/>
+        <collection property="attrs" ofType="com.dfssi.dataplatform.analysis.entity.AnalysisStepAttrEntity">
+            <id property="id" column="attr_id"/>
+            <result property="modelStepId" column="attr_model_step_id"/>
+            <result property="code" column="attr_code"/>
+            <result property="nRow" column="attr_n_row"/>
+            <result property="valueStr" column="attr_value_str"/>
+            <result property="valueNum" column="attr_value_num"/>
+            <result property="lastModifiedDate" column="attr_last_modified_date"/>
+        </collection>
+    </resultMap>
+
+    <delete id="deleteByModelId">
+        DELETE FROM analysis_model_step WHERE model_id=#{id}
+    </delete>
+
+    <delete id="batchInsert">
+        INSERT INTO analysis_model_step(id, model_id, name, step_type_id, build_type, main_class, gui_x, gui_y)
+        VALUES
+        <foreach collection="list" item="step" index="index" separator=",">
+            (#{step.id}, #{step.modelId}, #{step.name}, #{step.stepType.id}, #{step.buildType}, #{step.mainClass}, #{step.guiX},
+            #{step.guiY})
+        </foreach>
+    </delete>
+
+    <select id="getStepsByModelId" resultMap="analysisStepMap">
+        SELECT ams.*, ast.name AS step_type_name, ast.type AS step_type_type, ast.group AS
+              step_type_group, amsa.id AS attr_id, amsa.model_step_id  AS attr_model_step_id,
+              amsa.code AS attr_code, amsa.n_row AS attr_n_row, amsa.value_str AS attr_value_str,
+              amsa.value_num AS attr_value_num, amsa.last_modified_date AS attr_last_modified_date
+        FROM analysis_model_step ams LEFT JOIN analysis_model_step_attr amsa ON ams.id=amsa.model_step_id
+             LEFT JOIN analysis_step_type ast ON ams.step_type_id=ast.id
+        WHERE ams.model_id=#{id}
+    </select>
+
+</mapper>

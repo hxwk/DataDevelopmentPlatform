@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AnalysisAlgorithm/AnalysisAlgorithm.iml" filepath="$PROJECT_DIR$/AnalysisAlgorithm/AnalysisAlgorithm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnalysisCommon/AnalysisCommon.iml" filepath="$PROJECT_DIR$/AnalysisCommon/AnalysisCommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnalysisPlatformSite.iml" filepath="$PROJECT_DIR$/AnalysisPlatformSite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnalysisProcessModel/AnalysisProcessModel.iml" filepath="$PROJECT_DIR$/AnalysisProcessModel/AnalysisProcessModel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnalysisService/AnalysisService.iml" filepath="$PROJECT_DIR$/AnalysisService/AnalysisService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnalysisTask/AnalysisTask.iml" filepath="$PROJECT_DIR$/AnalysisTask/AnalysisTask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnalysisWorkflow/AnalysisWorkflow.iml" filepath="$PROJECT_DIR$/AnalysisWorkflow/AnalysisWorkflow.iml" />
+    </modules>
+  </component>
+</project>

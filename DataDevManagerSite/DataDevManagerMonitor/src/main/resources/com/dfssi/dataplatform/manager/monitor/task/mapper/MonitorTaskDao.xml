@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.manager.monitor.task.dao.MonitorTaskDao">
+
+    <sql id="taskColumns">
+	  mt.id,
+	  mt.name,
+	  mt.task_type,
+	  mt.description,
+	  mt.last_modified_date,
+	  mt.create_user,
+	  mt.create_time
+    </sql>
+
+    <sql id="taskAndAttrColumns">
+      mt.id,
+	  mt.name,
+	  mt.task_type,
+	  mt.description,
+	  mt.last_modified_date,
+	  mt.create_user,
+	  mt.create_time,
+	  mta.id as attr_id,
+	  mta.name as attr_name,
+	  mta.value as attr_value,
+	  mta.task_id as attr_task_id,
+	  mta.description as attr_description,
+	  mta.last_modified_date as attr_last_modified_date
+    </sql>
+
+    <resultMap id="taskConnColumns" type="MonitorTaskEntity">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="taskType" column="task_type"/>
+        <result property="description" column="description"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastModifiedDate" column="last_modified_date"/>
+        <collection property="attrs" ofType="MonitorTaskAttrEntity">
+            <id property="id" column="attr_id"/>
+            <result property="taskId" column="attr_task_id"/>
+            <result property="name" column="attr_name"/>
+            <result property="value" column="attr_value"/>
+            <result property="description" column="attr_description"/>
+            <result property="lastModifiedDate" column="attr_last_modified_date"/>
+        </collection>
+    </resultMap>
+
+    <select id="getByTaskId" resultMap="taskConnColumns">
+        SELECT
+        <include refid="taskAndAttrColumns"/>
+        FROM monitor_task mt left join monitor_task_attr mta on mt.id = mta.task_id
+        WHERE mt.id = #{id}
+    </select>
+
+    <delete id="delete">
+		DELETE FROM monitor_task WHERE id = #{id}
+	</delete>
+
+    <insert id="insert">
+        INSERT INTO monitor_task(id, name, task_type, description, create_user)
+        VALUES ( #{id},	#{name}, #{taskType}, #{description}, #{createUser})
+    </insert>
+
+    <update id="update">
+        UPDATE monitor_task
+        SET `name` = #{name},
+            task_type = #{taskType},
+            description = #{description},
+            create_user = #{createUser}
+        WHERE id = #{id}
+    </update>
+
+    <select id="listAllTasks" resultType="MonitorTaskEntity">
+        SELECT
+        <include refid="taskColumns"/>
+        FROM monitor_task mt
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="name != null and name != ''">
+                AND mt.name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="taskType != null and taskType != ''">
+                AND mt.task_type = #{taskType}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(mt.create_time) >= #{startTime}]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[AND UNIX_TIMESTAMP(mt.create_time) <= #{endTime}]]>
+            </if>
+        </trim>
+    </select>
+</mapper>

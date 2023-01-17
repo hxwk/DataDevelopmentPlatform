@@ -1,0 +1,125 @@
+{
+  "dbcType": "t38",
+  "id": "c5943e25-0ae8-488b-b1e9-495cbf62783c",
+  "itemNum": 19,
+  "messageBeanList": [
+    {
+      "id": "1afb1c44-7edc-470b-897d-484c18f1ea31",
+      "signal_name": "1082◎发动机负荷率_W",
+      "unit": "%",
+      "value": 48.0
+    },
+    {
+      "id": "675e3e47-9187-4e00-9bc5-a65b90a6ca78",
+      "signal_name": "664◎油门踏板开度_W",
+      "unit": "%",
+      "value": 12.8
+    },
+    {
+      "id": "e6f735dc-9a72-4c59-98a7-1c252b1bc112",
+      "signal_name": "1081◎AccelPedalKickdown_W",
+      "unit": "",
+      "value": 1.0
+    },
+    {
+      "id": "ba38c276-bacd-454e-bb82-6e26274776be",
+      "signal_name": "1034◎VECU伪油门_W",
+      "unit": "%",
+      "value": 321.875
+    },
+    {
+      "id": "75ce082f-6124-46bb-9a58-12cd4e38b64f",
+      "signal_name": "1082◎发动机负荷率_W",
+      "unit": "%",
+      "value": 48.0
+    },
+    {
+      "id": "acaa6b8c-0f30-43de-8b2f-3e8026d85adf",
+      "signal_name": "664◎油门踏板开度_W",
+      "unit": "%",
+      "value": 12.8
+    },
+    {
+      "id": "4de89b9d-2f91-42a9-9316-a2a3a3abffa2",
+      "signal_name": "1081◎AccelPedalKickdown_W",
+      "unit": "",
+      "value": 1.0
+    },
+    {
+      "id": "d9e5cb7a-2cb6-48b8-8232-47f05ffe2454",
+      "signal_name": "1034◎VECU伪油门_W",
+      "unit": "%",
+      "value": 321.875
+    },
+    {
+      "id": "50beaabd-fdbf-43ba-8b50-55e655ae5cef",
+      "signal_name": "1082◎发动机负荷率_W",
+      "unit": "%",
+      "value": 48.0
+    },
+    {
+      "id": "47f96739-8c2e-4d35-9a04-9c8396581262",
+      "signal_name": "664◎油门踏板开度_W",
+      "unit": "%",
+      "value": 12.8
+    },
+    {
+      "id": "7c02a7bb-9655-4d5a-8ff9-5cb85fea6229",
+      "signal_name": "1081◎AccelPedalKickdown_W",
+      "unit": "",
+      "value": 1.0
+    },
+    {
+      "id": "8c0caf15-f7e0-4cf9-ac4e-d597e92dafbf",
+      "signal_name": "1034◎VECU伪油门_W",
+      "unit": "%",
+      "value": 321.875
+    },
+    {
+      "id": "35757172-292d-4c33-9309-3af8a7e7d844",
+      "signal_name": "1082◎发动机负荷率_W",
+      "unit": "%",
+      "value": 48.0
+    },
+    {
+      "id": "71abae5a-a4d0-4096-a098-2b23f5a0664c",
+      "signal_name": "664◎油门踏板开度_W",
+      "unit": "%",
+      "value": 12.8
+    },
+    {
+      "id": "30408dfb-9af8-4871-beb1-cdab1d45d9f4",
+      "signal_name": "1081◎AccelPedalKickdown_W",
+      "unit": "",
+      "value": 1.0
+    },
+    {
+      "id": "9db51985-85c1-42ca-bffa-13fb1efc542b",
+      "signal_name": "1034◎VECU伪油门_W",
+      "unit": "%",
+      "value": 321.875
+    },
+    {
+      "id": "7878b693-2321-49ff-b99b-34a989098f7f",
+      "signal_name": "1082◎发动机负荷率_W",
+      "unit": "%",
+      "value": 48.0
+    },
+    {
+      "id": "e3ace01e-32b3-4a24-a133-6ed530ef5824",
+      "signal_name": "664◎油门踏板开度_W",
+      "unit": "%",
+      "value": 12.8
+    },
+    {
+      "id": "f63ce098-5205-4c96-90cd-79e69ccca193",
+      "signal_name": "1081◎AccelPedalKickdown_W",
+      "unit": "",
+      "value": 1.0
+    }
+  ],
+  "msgId": "0705",
+  "receiveTime": 1516783776028,
+  "sim": "10647851115",
+  "vid": "7c4c631ef0bc444684d4d406be17668e"
+}

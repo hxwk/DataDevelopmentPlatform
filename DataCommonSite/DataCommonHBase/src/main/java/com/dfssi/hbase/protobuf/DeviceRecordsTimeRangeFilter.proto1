@@ -1,0 +1,13 @@
+package com.bh.d406.bigdata.hbase.protobuf;
+
+option java_package = "com.bh.d406.bigdata.hbase.protobuf.generated";
+option java_outer_classname = "DeviceRecordsTimeRangeFilterProto";
+
+message DeviceRecordsTimeRangeFilter {
+  required bytes columnFamily = 1;                    //版本过滤的列族
+  required bytes columnQualifier = 2;                 //版本过滤字段
+  optional sint64 upperBound = 3;                     //版本上界
+  optional sint64 lowerBound = 4;                     //版本下界
+  optional bool   filterOnMatch  = 5;                 //当条件满足则马上过滤,不再往下匹配
+  optional bool   filterIfMissing = 6;                //不满足条件是否过滤整行
+}

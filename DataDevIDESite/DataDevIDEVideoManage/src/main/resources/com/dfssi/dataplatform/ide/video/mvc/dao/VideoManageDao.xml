@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.video.mvc.dao.VideoManageDao">
+    <resultMap id="videoManageMap" type="com.dfssi.dataplatform.ide.video.mvc.entity.VideoManageEntity">
+        <id property="vin" column="pk_vin"/>
+        <result property="realEncodeMode" column="real_encode_mode"/>
+        <result property="realResolution" column="real_resolution"/>
+        <result property="realKeyFrameInterval" column="real_key_frame_interval"/>
+        <result property="realTargetFrameRate" column="real_target_frame_rate"/>
+        <result property="realTargetBitRate" column="real_target_bit_rate"/>
+        <result property="memStreamEncodingMode" column="mem_stream_encoding_mode"/>
+        <result property="memStreamResolution" column="mem_stream_resolution"/>
+        <result property="memStreamKeyFrameInterval" column="mem_stream_key_frame_interval"/>
+        <result property="memStreamTargetFrameRate" column="mem_stream_target_frame_rate"/>
+        <result property="memStreamTargetBitRate" column="mem_stream_target_bit_rate"/>
+        <result property="osdSupertitleSettings" column="osd_supertitle_settings"/>
+        <result property="enableAudioOutput" column="enable_audio_output"/>
+        <result property="sim" column="sim"/>
+        <result property="descr" column="description"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+
+    </resultMap>
+
+    <insert id="insertOrUpdate">
+      INSERT INTO dv_videomanage(
+        real_encode_mode,
+        real_resolution,
+        real_key_frame_interval,
+        real_target_frame_rate,
+        real_target_bit_rate,
+        mem_stream_encoding_mode,
+        mem_stream_resolution,
+        mem_stream_key_frame_interval,
+        mem_stream_target_frame_rate,
+        mem_stream_target_bit_rate,
+        osd_supertitle_settings,
+        enable_audio_output,
+        pk_vin,
+        sim,
+        create_user,
+        update_user,
+        create_date,
+        update_date,
+        description
+        )
+        VALUES (
+        #{realEncodeMode},
+        #{realResolution},
+        #{realKeyFrameInterval},
+        #{realTargetFrameRate},
+        #{realTargetBitRate},
+        #{memStreamEncodingMode},
+        #{memStreamResolution},
+        #{memStreamKeyFrameInterval},
+        #{memStreamTargetFrameRate},
+        #{memStreamTargetBitRate},
+        #{osdSupertitleSettings},
+        #{enableAudioOutput},
+        #{vin},
+        #{sim},
+        #{createUser},
+        #{updateUser},
+        now(),
+        #{updateDate},
+        #{descr}
+        )
+        ON DUPLICATE KEY UPDATE
+        real_encode_mode = values(real_encode_mode),
+        real_resolution = values(real_resolution),
+        real_key_frame_interval = values(real_key_frame_interval),
+        real_target_frame_rate = values(real_target_frame_rate),
+        real_target_bit_rate = values(real_target_bit_rate),
+        mem_stream_encoding_mode = values(mem_stream_encoding_mode),
+        mem_stream_resolution = values(mem_stream_resolution),
+        mem_stream_key_frame_interval = values(mem_stream_key_frame_interval),
+        mem_stream_target_frame_rate = values(mem_stream_target_frame_rate),
+        mem_stream_target_bit_rate = values(mem_stream_target_bit_rate),
+        osd_supertitle_settings = values(osd_supertitle_settings),
+        enable_audio_output = values(enable_audio_output),
+        sim = values(sim),
+        update_user = values(update_user),
+        update_date = now(),
+        description = values(description)
+    </insert>
+
+    <delete id="delete" >
+        UPDATE dv_videomanage
+        SET is_deleted = '1'
+        WHERE pk_vin = #{strVin} AND is_deleted='0';
+
+    </delete>
+    <select id="getList" resultMap="videoManageMap" >
+        SELECT
+            pk_vin,
+            real_encode_mode,
+            real_resolution,
+            real_key_frame_interval,
+            real_target_frame_rate,
+            real_target_bit_rate,
+            mem_stream_encoding_mode,
+            mem_stream_resolution,
+            mem_stream_key_frame_interval,
+            mem_stream_target_frame_rate,
+            mem_stream_target_bit_rate,
+            osd_supertitle_settings,
+            enable_audio_output,
+            sim,
+            description,
+            is_deleted,
+            create_date,
+            create_user,
+            update_date,
+            update_user
+          FROM dv_videomanage
+          WHERE pk_vin = #{strVin} and is_deleted = '0'
+          order by create_date DESC
+    </select>
+</mapper>

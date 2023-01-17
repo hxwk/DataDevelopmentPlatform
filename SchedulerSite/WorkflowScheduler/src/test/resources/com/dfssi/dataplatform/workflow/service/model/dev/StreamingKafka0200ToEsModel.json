@@ -1,0 +1,58 @@
+{
+  "id": "20180301112036000006",
+  "name": "DEV Streaming Kafka 0200 To Es",
+  "modelTypeId": "20171123152036000003",
+  "description": "Streaming Kafka 0200 To Es Model",
+  "steps": [
+    {
+      "id": "20181212112036000007",
+      "name": "Streaming Kafka",
+      "stepTypeId": "20171120152038000001",
+      "guiX": 0,
+      "guiY": 0,
+      "params": [
+        {
+          "topics": {
+            "valueStr": "POSITIONINFORMATION_0200_TOPIC,POSITIONINFORMATION_0704_TOPIC"
+          },
+          "brokerList": {
+            "valueStr": "172.16.1.150:9092"
+          }
+        }
+      ]
+    },
+    {
+      "id": "20181212112036000008",
+      "name": "Streaming Kafka To Es",
+      "stepTypeId": "20181120152039000106",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "interval": {
+            "valueStr": "60"
+          },
+          "esNodes": {
+            "valueStr": "172.16.1.153"
+          },
+          "esClusterName": {
+            "valueStr": "es"
+          }
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "id": "20180301112036000009",
+      "modelStepFrom": {
+        "id": "20181212112036000007",
+        "pos": "Top|Bottom|Right|Left"
+      },
+      "modelStepTo": {
+        "id": "20181212112036000008",
+        "pos": "Top|Bottom|Right|Left"
+      }
+    }
+  ]
+}

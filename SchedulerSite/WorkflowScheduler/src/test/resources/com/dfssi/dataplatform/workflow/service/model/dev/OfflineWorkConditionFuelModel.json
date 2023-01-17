@@ -1,0 +1,71 @@
+{
+  "id": "20180302131536000001",
+  "name": "DEV Workcondition Fuel",
+  "modelTypeId": "20171123152036000003",
+  "description": "Workcondition Fuel",
+  "steps": [
+    {
+      "id": "20180302131536000002",
+      "name": "Workcondition Fuel",
+      "stepTypeId": "20181120152039000112",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "daytime": {
+            "valueStr": "20180210"
+          },
+          "fuel.condition.hive.0200.table": {
+            "valueStr": "terminal_0200"
+          },
+          "fuel.condition.hive.0705.table": {
+            "valueStr": "terminal_0705"
+          },
+          "fuel.out.database.conditionfuel.table": {
+            "valueStr": "vehicle_workcondition_fuel"
+          },
+          "fuel.filter.altitude.min.threshold": {
+            "valueStr": "1000"
+          },
+          "fuel.filter.altitude.max.threshold": {
+            "valueStr": "8000"
+          },
+          "fuel.filter.uploadtime.threshold": {
+            "valueStr": "1483200000000"
+          },
+          "fuel.filter.direction.threshold": {
+            "valueStr": "360"
+          },
+          "fuel.filter.lon.max.threshold": {
+            "valueStr": "180"
+          },
+          "fuel.filter.lon.min.threshold": {
+            "valueStr": "-180"
+          },
+          "fuel.filter.lat.max.threshold": {
+            "valueStr": "90"
+          },
+          "fuel.filter.lat.min.threshold": {
+            "valueStr": "-90"
+          },
+          "fuel.out.database.id": {
+            "valueStr": "fuel"
+          },
+          "fuel.out.database.url": {
+            "valueStr": "jdbc:postgresql://172.16.1.150:5432/analysis"
+          },
+          "fuel.out.database.user": {
+            "valueStr": "dbdream"
+          },
+          "fuel.out.database.password": {
+            "valueStr": "dbdream"
+          },
+          "fuel.out.database.driver": {
+            "valueStr": "org.postgresql.Driver"
+          }
+        }
+      ]
+    }
+  ],
+  "links": []
+}

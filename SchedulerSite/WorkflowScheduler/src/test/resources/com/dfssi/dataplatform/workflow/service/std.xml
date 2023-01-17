@@ -1,0 +1,9 @@
+<streaming-task-def id="20180301112036000002" name="DEV Streaming Kafka To Hive">
+    <preprocess>
+        <process id="20181212112036000003" type="PreprocessJoin" inputIds="">
+            <params>
+                <param name="configPath" value="/user/hdfs/config/dev/streaming-store/"/>
+            </params>
+        </process>
+    </preprocess>
+</streaming-task-def>

@@ -1,0 +1,15 @@
+#spring boot \u9ED8\u8BA4\u914D\u7F6E\u6587\u4EF6
+server.port=8090
+spring.profiles.active=dev
+spring.application.name=mng-system
+#server.context-path=/DataDevManagerUserHome
+
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+spring.http.encoding.force-request=true
+spring.http.encoding.force-response=true
+
+info.appname=\u7CFB\u7EDF\u7BA1\u7406
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8

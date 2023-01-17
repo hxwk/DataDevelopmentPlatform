@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.dfssi.dataplatform</groupId>
+        <artifactId>DataSyncSite</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>DataSyncPlugin</artifactId>
+
+    <packaging>pom</packaging>
+    <modules>
+         <!--<module>rpc-solr-sink-4.10.3</module>-->
+        <!--<module>rpc-elasticsearch-sink-1.4.4</module>-->
+        <!--<module>rpc-hbase-source-1.1.x</module>-->
+        <!--<module>rpc-hdfs-source</module>-->
+        <module>api-808-interceptor</module>
+        <module>api-text-interceptor</module>
+        <module>api-numeric-interceptor</module>
+        <module>api-cleantransform-interceptor</module>
+
+        <module>api-tcp-ne-source</module>
+        <module>api-tcp-cv-source</module>
+        <module>api-tcp-road-source</module>
+
+        <module>api-crawler-source</module>
+        <module>api-jdbc-source</module>
+        <module>api-tcp-source</module>
+        <module>api-http-source</module>
+
+        <module>api-kafka-sink</module>
+        <module>api-hdfs-sink</module>
+        <module>api-jdbc-sink</module>
+        <!--<module>api-remote-diagnosis</module>-->
+        <module>api-elasticsearch-sink</module>
+
+
+        <!--<module>api-remote-diagnosis</module>-->
+        <module>api-tcp-source-data-dispense</module>
+    </modules>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.dfssi.dataplatform</groupId>
+            <artifactId>DataSyncFlume</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.chargingPile.dao.ChargeStationInfoDao">
+
+    <resultMap id="chargingPileUserDistributionMap" type="com.dfssi.dataplatform.chargingPile.entity.TwoValueResultEntity" >
+        <result column="stationType" property="strValue"></result>
+        <result column="totalNum" property="longValue"></result>
+    </resultMap>
+
+    <delete id="delete" >
+        delete from charge_station_info where station_id=#{id}
+    </delete>
+
+    <insert id="insert" >
+        INSERT INTO charge_station_info(station_id, operator_id, equipment_owner_id, station_name,
+            country_code, area_code,address,station_tel,service_tel,station_type,station_status,park_nums,
+            station_lng,station_lat,site_guide,construction,pictures,match_cars,park_info,park_owner,park_manager,
+            open_all_day,busine_hours,min_electricity_price,electricity_fee,service_fee,park_free,park_fee,payment,
+            support_order,remark)
+        VALUES
+        (#{StationID}, #{OperatorID}, #{EquipmentOwnerID},
+            #{StationName}, #{CountryCode}, #{AreaCode},
+            #{Address}, #{StationTel}, #{ServiceTel},
+            #{StationType}, #{StationStatus}, #{ParkNums},
+            #{StationLng}, #{StationLat}, #{SiteGuide},
+            #{Construction}, #{Pictures}, #{MatchCars},
+            #{ParkInfo}, #{ParkOwner}, #{ParkManager},
+            #{OpenAllDay}, #{BusineHours}, #{MinElectricityPrice},
+            #{ElectricityFee}, #{ServiceFee}, #{ParkFree},
+            #{ParkFee}, #{Payment}, #{SupportOrder},
+            #{Remark}
+        )
+    </insert>
+
+    <select id="countStationNumByStationType" resultType="java.lang.Long">
+        select count(1) from charge_station_info where station_type = #{stationType}
+    </select>
+
+    <select id="chargePileAreaCount" resultType="com.dfssi.dataplatform.chargingPile.entity.StationAreaEntity">
+        select case substring(address, 7, 3) when '东西湖' THEN substring(address, 7, 4) else substring(address, 7, 3) END as areaname,count(station_id) as stationCount from charge_station_info where address like '湖北省武汉市%' GROUP BY areaname ORDER BY stationCount desc
+    </select>
+
+    <select id="listEquipmentInfo" resultType="com.dfssi.dataplatform.chargingPile.entity.ChargeStationInfoEntity">
+        SELECT
+        station_id, operator_id, equipment_owner_id, station_name,
+        country_code, area_code,address,station_tel,service_tel,station_type,station_status,park_nums,
+        station_lng,station_lat,site_guide,construction,pictures,match_cars,park_info,park_owner,park_manager,
+        open_all_day,busine_hours,min_electricity_price,electricity_fee,service_fee,park_free,park_fee,payment,
+        support_order,remark
+        FROM charge_station_info
+    </select>
+
+    <select id="chargingPileUserDistribution" resultMap="chargingPileUserDistributionMap">
+        SELECT
+            T.stationType AS stationType,
+            SUM( T.totalNum ) AS totalNum
+        FROM
+            ( SELECT CASE WHEN station_type LIKE '10%' THEN '100' ELSE station_type END AS stationType, COUNT( station_id ) AS totalNum FROM charge_station_info GROUP BY station_type ) T
+        GROUP BY
+            T.stationType
+        ORDER BY
+            T.stationType
+    </select>
+
+    <select id="totalNumberOfChargingStations" resultType="java.lang.Long">
+        select count(station_id) as totalNum from charge_station_info
+    </select>
+
+</mapper>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+    </parent>
+    <packaging>jar</packaging>
+	<artifactId>DataDevIDEDataSource</artifactId>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<jdk.version>1.8</jdk.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+        <docker.image.prefix>192.168.91.229:8080/ndypt</docker.image.prefix>
+		<guava.version>23.0</guava.version>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<pagehelper-spring.version>1.2.5</pagehelper-spring.version>
+        <oracle.version>10.2.0.3.0</oracle.version>
+		<kafka.version>0.9.0.1</kafka.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.dfssi.dataplatform</groupId>
+            <artifactId>DataCloudCommon</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-log4j2</artifactId>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- 添加oracle驱动依赖 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>${oracle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>${pagehelper-spring.version}</version>
+		</dependency>
+
+		<!-- java连接hdfs的API接口 注意版本不要用1.1.0 必须引用这个jar包
+		Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/hadoop/util/PlatformName
+		除去netty-all-4.0.23.Final.jar  还有eclipse相关的jetty插件  否则会和springboot冲突-->
+		<dependency>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-jdbc</artifactId>
+			<version>2.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>io.netty</groupId>
+					<artifactId>netty-all</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-project</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty.aggregate</groupId>
+					<artifactId>jetty-all</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty.orbit</groupId>
+					<artifactId>jetty-orbit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty.orbit</groupId>
+					<artifactId>javax.servlet</artifactId>
+				</exclusion>
+
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-1.2-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-slf4j-impl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- 引入hadoop-common Jar包 -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>2.6.0-cdh5.8.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>2.6.0-cdh5.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>transport</artifactId>
+			<version>6.4.2</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.geode/geode-core -->
+		<dependency>
+			<groupId>org.apache.geode</groupId>
+			<artifactId>geode-core</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<!-- 版本问题2.6.0-cdh5.8.2必须引用htrace-core4.jar 否则java.lang.NoClassDefFoundError: org/apache/htrace/core/Tracer$Builder
+		java.lang.NoClassDefFoundError: org/apache/hadoop/util/PlatformName-->
+		<dependency>
+			<groupId>org.apache.htrace</groupId>
+			<artifactId>htrace-core4</artifactId>
+			<version>4.0.1-incubating</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.10</artifactId>
+			<version>${kafka.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>DataDevIDEDataSource</finalName>
+		<plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+		</plugins>
+	</build>
+</project>

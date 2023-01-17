@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.task.mapper.ExtJarDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.analysis.task.entity.ExtJarEntity">
+        <id property="jarId" column="jar_id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="uploadDate" column="upload_date"/>
+        <result property="uploadUser" column="upload_user"/>
+        <result property="jarSize" column="jar_size"/>
+        <result property="jarPath" column="jar_path"/>
+        <result property="isValid" column="is_valid"/>
+    </resultMap>
+
+    <delete id="delectJarByPath">
+		DELETE FROM analysis_ext_jar WHERE jar_path = #{jarPath}
+	</delete>
+
+    <insert id="insert">
+        INSERT INTO analysis_ext_jar(name, description, upload_date, upload_user, jar_size, jar_path, is_valid)
+        VALUES (#{name}, #{description}, #{uploadDate}, #{uploadUser}, #{jarSize}, #{jarPath}, #{isValid})
+    </insert>
+
+    <select id="listAllJars" resultMap="resultMap" parameterType="com.dfssi.dataplatform.analysis.task.entity.ExtJarEntity">
+        SELECT
+        jar_id,
+        name,
+        description,
+        upload_date,
+        upload_user,
+        jar_size,
+        jar_path,
+        is_valid
+        FROM analysis_ext_jar am
+        WHERE is_valid = 1
+    </select>
+
+</mapper>

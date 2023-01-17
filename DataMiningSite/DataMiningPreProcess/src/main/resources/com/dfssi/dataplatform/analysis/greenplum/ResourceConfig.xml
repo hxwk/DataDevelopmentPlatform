@@ -1,0 +1,5 @@
+<resource-config>
+    <params>
+        <param name="latLngUrl" value="http://gc.ditu.aliyun.com/regeocoding"/>
+    </params>
+</resource-config>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.task.mapper.EmailAlertRuleDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.analysis.task.entity.EmailAlertRuleEntity">
+        <id property="ruleId" column="rule_id"/>
+        <result property="name" column="name"/>
+        <result property="status" column="status"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO email_alert_rule(rule_id, name, status, is_valid, create_date, update_date, create_user, update_user)
+        VALUES (#{ruleId}, #{name}, #{status}, #{isValid}, #{createDate}, #{updateDate}, #{createUser}, #{updateUser})
+    </insert>
+
+    <select id="getRuleByRuleId" resultType="com.dfssi.dataplatform.analysis.task.entity.EmailAlertRuleEntity">
+        SELECT *
+        FROM email_alert_rule
+        WHERE rule_id = #{ruleId}
+    </select>
+
+</mapper>

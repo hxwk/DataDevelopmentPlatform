@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <msg-scan base-package="com.yaxon.vn.nd.tbp.si"/>
+
+    <msg-maps>
+        <msg-map msg-ids="jts.8103,jts.8104,jts.8105,jts.8106,disconnectVehiceFromTas,
+        jts.8106.nd"
+                  handler="com.yaxon.vn.nd.tas.handler.TerminalManagementPH"/>
+        <msg-map msg-ids="jts.8300,jts.8301,jts.8302,jts.8303,jts.8304,jts.8400,jts.8401"
+                  handler="com.yaxon.vn.nd.tas.handler.TelAndInfoPH"/>
+        <msg-map msg-ids="jts.8700.2012,jts.8701.2012"
+                  handler="com.yaxon.vn.nd.tas.handler.TravellingDataRecorder2012PH"/>
+        <msg-map msg-ids="jts.8500,jts.8500X,jts.8600,jts.8601,jts.8602,jts.8603,jts.8604,
+        jts.8605,jts.8606,jts.8607"
+                  handler="com.yaxon.vn.nd.tas.handler.VehicleControlAndManagementPH"/>
+        <msg-map msg-ids="jts.8201,jts.8202,jts.8203,jts.8203X"
+                  handler="com.yaxon.vn.nd.tas.handler.PositionAndAlarmPH"/>
+        <msg-map msg-ids="jts.8801,jts.8802,jts.8803,jts.8804,jts.8805"
+                  handler="com.yaxon.vn.nd.tas.handler.MultimediaPH"/>
+        <msg-map msg-ids="jts.8900,jts.8A00,jts.8B10"
+                  handler="com.yaxon.vn.nd.tas.handler.OtherProtocolPH"/>
+
+        <msg-map msg-ids="jts.8B00,jts.8B01,jts.8B09,jts.0B01,jts.0B07,jts.0B08"
+                 handler="com.yaxon.vn.nd.tas.handler.TaxiCallControlPH"/>
+
+        <!--南斗锁车相关-->
+        <msg-map msg-ids="jts.F001.nd,jts.F003.nd"
+                 handler="com.yaxon.vn.nd.tas.handler.LockVehicleControlPH"/>
+
+    </msg-maps>
+</config>

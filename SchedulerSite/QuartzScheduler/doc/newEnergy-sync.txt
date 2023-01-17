@@ -1,0 +1,25 @@
+本文档介绍如何部署新能源相关的任务以及同步进程。
+部署说明：
+  1. 由于需要将新能源质量检测存放在redis中的数据同步到greeplum表中，
+     因此可以部署在任意一台可以与redis和greeplum都联通的节点上，并且拥有sun jdk1.8的环境中（环境变量已配置）
+
+【一、解压部署】
+    1. 在节点 /opt 目录下创建新能源目录 newenergy，并进入此目录
+       mkdir /opt/newenergy
+       cd /opt/newenergy
+
+    2. 将QuartzScheduler-0.1-SNAPSHOT.tar.gz上传到 /opt/newenergy 目录下，并解压、进入， 命令如下：
+       tar -zxf QuartzScheduler-0.1-SNAPSHOT.tar.gz
+       cd QuartzScheduler-0.1-SNAPSHOT
+
+
+【二、配置同步进程】
+     1. 修改同步进程命令参数：
+        vim ./bin/syncEvs/start_syncEvs_cron.sh
+        将devmaster替换成cdh集群中hdfs的处于active状态下的namenode的ip或主机名
+
+     2. 配置crontab:
+       crontab -e
+           在最后添加一行：
+           */10 * * * *  sh /opt/newenergy/QuartzScheduler-0.1-SNAPSHOT/bin/syncEvs/start_syncEvs_cron.sh
+

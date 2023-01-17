@@ -1,0 +1,61 @@
+{
+  id: '20161227112036000001',
+  name: 'PROD Offline KMeans Test',
+  modelTypeId: '20171123152036000001',
+  description: 'KMeans Model',
+  steps: [
+    {
+      id: '20161227112036000002',
+      name: 'Hive Table Input',
+      stepTypeId: '20171120152037000001',
+      guiX: 0,
+      guiY: 0,
+      params: [
+        {
+          schema: {
+            valueStr: 'prod_analysis'
+          },
+          tableName: {
+            valueStr: 'kmeans'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161227112036000004',
+      name: 'Algorithm KMeans',
+      stepTypeId: '20171120152040001002',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          action: {
+            valueStr: 'trainning'
+          },
+          k: {
+            valueStr: '2'
+          },
+          numIterations: {
+            valueStr: '50'
+          },
+          saveTo: {
+            valueStr: 'algorithm/model/kmeans/test.mode'
+          }
+        }
+      ]
+    }
+  ],
+  links: [
+    {
+      id: '20161227112036100001',
+      modelStepFrom: {
+        id: '20161227112036000002',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepTo: {
+        id: '20161227112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    }
+  ]
+}

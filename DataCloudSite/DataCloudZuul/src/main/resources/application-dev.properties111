@@ -1,0 +1,82 @@
+server.port=9999
+
+##eureka \u670D\u52A1\u6CE8\u518C
+eureka.client.serviceUrl.defaultZone=http://172.16.1.196:6666/eureka/
+eureka.instance.preferIpAddress=true
+eureka.instance.lease-renewal-interval-in-seconds=10
+eureka.instance.lease-expiration-duration-in-seconds=20
+
+eureka.instance.instance-id=${spring.cloud.client.ip-address}:${server.port}
+eureka.instance.health-check-url-path=/actuator/health
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=ALWAYS
+management.server.port=1${server.port}
+management.endpoint.shutdown.enabled=true
+management.endpoint.restart.enabled=true
+#spring.boot.admin.client.url=http://192.168.91.229:5555
+spring.boot.admin.client.instance.prefer-ip=true
+spring.boot.admin.client.username=admin
+spring.boot.admin.client.password=admin
+
+#spring.session
+spring.session.store-type=REDIS
+spring.session.redis.flush-mode=IMMEDIATE
+#spring.session.redis.namespace=session
+
+#redis
+#spring.redis.host=172.16.1.201
+#spring.redis.port=6379
+spring.redis.password=112233
+spring.redis.database=7
+spring.redis.timeout=5000
+spring.redis.jedis.pool.maxActive=8
+spring.redis.jedis.pool.maxWait=-1
+spring.redis.jedis.pool.maxIdle=8
+spring.redis.jedis.pool.minIdle=0
+spring.redis.sentinel.master=mymaster
+spring.redis.sentinel.nodes=172.16.1.201:26379,172.16.1.201:26380
+#spring.redis.cluster.nodes=192.168.211.134:7000,192.168.211.134:7001,192.168.211.134:7002
+#spring.redis.cluster.maxRedirects=6
+#spring.redis.pool.max-active=8
+#spring.redis.pool.min-idle=0
+#spring.redis.pool.max-idle=8
+#spring.redis.pool.max-wait=-1
+
+
+# ----------------------------------------
+# LOGGING PROPERTIES
+# ----------------------------------------
+#logging.config=classpath:log4j2.xml
+#logging.path=/opt/logs
+logging.exception-conversion-word=%wEx
+logging.file=/opt/logs/zuul.log
+logging.file.max-history=0
+logging.file.max-size=10MB
+logging.pattern.dateformat=yyyy-MM-dd HH:mm:ss.SSS
+logging.pattern.level=%5p
+logging.register-shutdown-hook=false
+logging.level.root=info
+logging.level.org.springframework=info
+logging.level.com.dfssi=INFO
+
+# ----------------------------------------
+# XDiamond PROPERTIES
+# ----------------------------------------
+xdiamond.serverHost=172.16.1.224
+xdiamond.serverPort=5678
+xdiamond.groupId=com.dfssi.dataplatform
+xdiamond.artifactId=DataCloudZuul
+xdiamond.version=1.0
+xdiamond.profile=dev
+xdiamond.secretKey=i0IfAFbrwmHCuJE1
+xdiamond.syncToSystem=true
+
+
+######## cors \u914D\u7F6E ###########
+cors.pathPattern=/**
+cors.origins=*
+cors.allowedMethods=*
+cors.allowedHeaders=
+cors.exposedHeaders=
+cors.allowCredentials=true
+cors.maxAge=1800

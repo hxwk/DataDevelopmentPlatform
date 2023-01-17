@@ -1,0 +1,7 @@
+#read vid<=>FastDFSFileId from redis
+#Redis\u914D\u7F6E
+redis.host=172.16.1.201
+redis.port=6379
+redis.db=2
+redis.password=112233
+redis.db1=1

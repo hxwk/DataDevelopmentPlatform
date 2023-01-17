@@ -1,0 +1,166 @@
+<spark-task-def id="">
+    <!--<inits>-->
+        <!--<input id="" type="IndicatorsConfig" >-->
+            <!--<params>-->
+                <!--<param name="xmlFileName" value="RateIndicatorConfig.xml" />-->
+                <!--<param name="xmlResourcePath" value="com/dfssi/dataplatform/analysis/dbha/config" />-->
+            <!--</params>-->
+        <!--</input>-->
+    <!--</inits>-->
+    <inputs>
+        <input id="11" type="InputGreenplumTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.221"/>
+                <param name="jdbcPort" value="5432"/>
+                <param name="jdbcDatabase" value="analysis"/>
+                <param name="dbtable" value="vehicle_trip"/>
+                <param name="user" value="analysis"/>
+                <param name="password" value="112233"/>
+                <param name="condition" value="isprocessed=0 AND isvalid=1 "/>
+            </params>
+        </input>
+        <input id="12" type="InputMysqlTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.241"/>
+                <param name="jdbcPort" value="3306"/>
+                <param name="jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="dbtable" value="dbha_trip_indicators"/>
+                <param name="user" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </input>
+        <input id="13" type="InputMysqlTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.241"/>
+                <param name="jdbcPort" value="3306"/>
+                <param name="jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="dbtable" value="dbha_trip_detail"/>
+                <param name="user" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </input>
+        <input id="14" type="InputMysqlTable" inputIds="">
+            <params>
+                <param name="jdbcHostname" value="172.16.1.241"/>
+                <param name="jdbcPort" value="3306"/>
+                <param name="jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="dbtable" value="dbha_stat_indicators"/>
+                <param name="user" value="ssiuser"/>
+                <param name="password" value="112233"/>
+            </params>
+        </input>
+        <!--<input id="1" type="InputCsvFile" inputIds="">-->
+            <!--<params>-->AND (isover=1 OR now()-endtime > 43200000)
+                <!--<param name="schema" value="default"/>-->
+                <!--<param name="header" value="true"/>-->
+                <!--<param name="filePath" value="C:\Users\Administrator\PyProject\autoloan\data\*.csv"/>-->
+            <!--</params>-->
+        <!--</input>-->
+    </inputs>
+    <preprocess>
+        <process id="21" type="PreprocessTripsV2" inputIds="11">
+            <params>
+                <param name="0200CaptureTimesPerSec" value="0.5"/>
+                <param name="0705CaptureTimesPerSec" value="0.5"/>
+                <param name="maxIntervalPerEvent"    value="4"/>
+
+                <!--根据经纬度获取地理位置-->
+                <param name="latLngUrl" value="http://gc.ditu.aliyun.com/regeocoding"/>
+
+                <!-- Greeplum 中vehicle_trip表所在的analysis库连接配置 -->
+                <param name="AnalysisDB_jdbcDatabase" value="analysis"/>
+                <param name="AnalysisDB_jdbcHostname" value="172.16.1.221"/>
+                <param name="AnalysisDB_jdbcPort" value="5432"/>
+                <param name="AnalysisDB_driver" value="com.pivotal.jdbc.GreenplumDriver"/>
+                <!--<param name="AnalysisDB_Dbtable" value="vehicle_trip"/>-->
+                <param name="AnalysisDB_user" value="analysis"/>
+                <param name="AnalysisDB_password" value="112233"/>
+
+                <!-- MySql 中车队及驾驶员信息表所在的SSI_SERVICE_PLATFORM库连接配置 -->
+                <param name="ServiceDB_jdbcDatabase" value="SSI_SERVICE_PLATFORM"/>
+                <param name="ServiceDB_jdbcHostname" value="172.16.1.241"/>
+                <param name="ServiceDB_jdbcPort" value="3306"/>
+                <param name="ServiceDB_driver" value="com.mysql.jdbc.Driver"/>
+                <param name="ServiceDB_user" value="ssiuser"/>
+                <param name="ServiceDB_password" value="112233"/>
+            <!--<param name="ServiceDB_url" value="jdbc:mysql://172.16.1.241:3306/SSI_SERVICE_PLATFORM?useSSL=false"/>-->
+
+                <!-- MySql 中驾驶行为分析表所在的SSI_MOTORCADE库连接配置 -->
+                <param name="MotorcadeDB_jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="MotorcadeDB_jdbcHostname" value="172.16.1.241"/>
+                <param name="MotorcadeDB_jdbcPort" value="3306"/>
+                <param name="MotorcadeDB_driver" value="com.mysql.jdbc.Driver"/>
+                <!--<param name="MotocadeDB_dbtable" value="vehicle_trip"/>-->
+                <param name="MotorcadeDB_user" value="ssiuser"/>
+                <param name="MotorcadeDB_password" value="112233"/>
+            <!--<param name="MotorcadeDB_url" value="jdbc:mysql://172.16.1.241:3306/SSI_SERVICE_PLATFORM?useSSL=false"/>-->
+            </params>
+        </process>
+
+        <!--<process id="22" type="PreprocessIndicators" inputIds="12,13,14">-->
+            <!--<params>-->
+                <!--<param name="groupType" value="NONE" />-->
+                <!--&lt;!&ndash;<param name="updateMode" value="INCREMENTAL" />&ndash;&gt;-->
+                <!--<param name="jdbcHostname" value="172.16.1.241"/>-->
+                <!--<param name="jdbcPort" value="3306"/>-->
+                <!--<param name="jdbcDatabase" value="SSI_MOTORCADE"/>-->
+                <!--<param name="dbtable" value="dbha_stat_indicators"/>-->
+                <!--<param name="user" value="ssiuser"/>-->
+                <!--<param name="password" value="112233"/>-->
+            <!--</params>-->
+        <!--</process>-->
+
+        <!--<process id="2" type="PreprocessSelect" inputIds="1">-->
+            <!--<params>-->
+                <!--<param name="colNames" value="SIM,LON,LAT"/>-->
+            <!--</params>-->
+        <!--</process>-->
+        <!--<process id="3" type="PreprocessConvert" inputIds="2">-->
+            <!--<params>-->
+                <!--<param colName="LON" toType="int"/>-->
+                <!--<param colName="LAT" toType="int"/>-->
+            <!--</params>-->
+        <!--</process>-->
+        <!--<process id="4" type="PreprocessToIndex" inputIds="3">-->
+            <!--<params>-->
+                <!--<param name="latCol" value="LAT"/>-->
+                <!--<param name="lonCol" value="LON"/>-->
+            <!--</params>-->
+        <!--</process>-->
+    </preprocess>
+
+    <!--调用刚才的回归模型进行评分-->
+    <algorithms>
+        <!--<algorithm id="0" name="name" type="AlgorithmLR" action="MANU_TRAINING|TEST" inputIds="6">-->
+        <!--<params>-->
+        <!--<param name="intercept" value="100"/>-->
+        <!--<param name="coefficients" value="-0.2,-0.2,-0.2,-0.2,-0.2"/>-->
+        <!--<param name="saveTo" value="model/lr"/>-->
+        <!--<param name="action" value="MANU_TRAINING"/>-->
+        <!--</params>-->
+        <!--</algorithm>-->
+        <!--<algorithm name="name" type="AlgorithmLR" action="TRAINING|TEST" inputIds="6">-->
+        <!--<params>-->
+        <!--<param name="saveTo" value="DataMiningSite/DataMiningPreProcess/src/main/resources/model/lr"/>-->
+        <!--<param name="action" value="PREDICTING"/>-->
+        <!--<param name="idCol" value="SIM"/>-->
+        <!--<param name="featureCols"-->
+        <!--value="harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"/>-->
+        <!--</params>-->
+        <!--</algorithm>-->
+        <!--<algorithm name="name" type="AlgorithmKMeans" action="TRAINING|TEST" inputIds="6">-->
+            <!--<params>-->
+                <!--<param name="k" value="2"/>-->
+                <!--<param name="numIterations" value="10"/>-->
+                <!--<param name="saveTo" value="model/kmeans"/>-->
+                <!--<param name="action" value="AUTO_TRAINING"/>-->
+                <!--<param name="idCol" value="SIM"/>-->
+                <!--<param name="featureCols"-->
+                       <!--value="harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"/>-->
+            <!--</params>-->
+        <!--</algorithm>-->
+    </algorithms>
+    <!--<outputs>-->
+    <!--<output id="" type="" inputIds=""></output>-->
+    <!--</outputs>-->
+</spark-task-def>

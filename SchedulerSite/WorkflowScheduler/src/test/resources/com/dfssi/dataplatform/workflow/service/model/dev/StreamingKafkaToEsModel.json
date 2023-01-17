@@ -1,0 +1,39 @@
+{
+  "id": "20180312112036000001",
+  "name": "DEV Streaming Kafka To Es",
+  "modelTypeId": "20171123152036000003",
+  "description": "Streaming Kafka To Es Model",
+  "steps": [
+    {
+      "id": "20180312112036000002",
+      "name": "Streaming Kafka To Es init",
+      "stepTypeId": "20181120152039000115",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "configPath": {
+            "valueStr": "/user/hdfs/config/dev/streaming-store/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "20180312112036000003",
+      "name": "Streaming Kafka To Es",
+      "stepTypeId": "20181120152039000114",
+      "guiX": 10,
+      "guiY": 10,
+      "params": [
+        {
+          "configPath": {
+            "valueStr": "/user/hdfs/config/dev/streaming-store/"
+          }
+        }
+      ]
+    }
+  ],
+  "links": [
+
+  ]
+}

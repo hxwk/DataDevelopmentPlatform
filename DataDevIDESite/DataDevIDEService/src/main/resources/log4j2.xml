@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="CONTEXT_BASE">/var/log/bigdata</Property>
+    </Properties>
+    <Appenders>
+
+        <!--这个输出控制台的配置，这里输出除了warn和error级别的信息到System.out -->
+        <Console name="console_out_appender" target="SYSTEM_OUT">
+            <!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) . -->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n" />
+        </Console>
+
+        <RollingFile name="service-gui"
+                     fileName="${CONTEXT_BASE}/service/service-gui.log"
+                     filePattern="${CONTEXT_BASE}/service/$${date:yyyy-MM}/service-gui%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <Pattern>%d %p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="warn">
+            <appender-ref ref="console_out_appender" />
+            <AppenderRef ref="service-gui"/>
+        </Root>
+        <Logger name="service-gui" level="debug" additivity="false">
+            <appender-ref ref="console_out_appender" />
+            <AppenderRef ref="service-gui"/>
+        </Logger>
+        <Logger name="org.springframework" level="info">
+            <AppenderRef ref="service-gui"/>
+        </Logger>
+        <Logger name="com.dfssi" level="info">
+            <appender-ref ref="console_out_appender" />
+            <AppenderRef ref="service-gui"/>
+        </Logger>
+    </Loggers>
+</Configuration>

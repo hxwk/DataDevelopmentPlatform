@@ -1,0 +1,168 @@
+<!-- 该文件用于配置当前有效的评价维度及其对应的指标 -->
+<rateindicator-config>
+    <events>
+        <event id="1" name="急加速次数" value="numOfHarshSpeedUp" />
+        <event id="2" name="急减速次数" value="numOfHarshSpeedDown" />
+        <event id="3" name="急转弯次数" value="numOfHarshTurn" />
+        <event id="4" name="连续加减速次数" value="numOfSpeedUpThenBrake" />
+        <event id="5" name="熄火滑行次数" value="numOfshutdownAndCoasting" />
+        <event id="6" name="夜间行驶时长" value="durationOfRunAtNight" />
+        <event id="7" name="夜间行驶里程" value="mileageOfRunAtNight" />
+        <event id="8" name="空档滑行次数" value="numOfRunAtNullPos" />
+        <event id="9" name="带故障行车次数" value="numOfRunAtTrouble" />
+        <event id="10" name="疲劳驾驶告警次数" value="numOfRunAtFatigue" />
+        <event id="11" name="超速告警次数" value="numOfRunAtOverSpeedLimit" />
+        <event id="12" name="路线偏离告警次数" value="numOfRunAtBiasedRoute" />
+        <event id="13" name="先离合后刹车次数" value="numOfClutchBeforeBrake" />
+        <event id="14" name="长时离合次数" value="numOfLongClutch" />
+        <event id="15" name="长时刹车次数" value="numOfLongBrake" />
+        <event id="16" name="刹车里程" value="mileageOfBrake" />
+        <event id="17" name="刹车时长" value="durationOfBrake" />
+        <event id="18" name="高转速起步次数" value="numOfStartAtHighRotation" />
+        <event id="19" name="大油门行驶时长" value="durationOfRunAtBigAccelerator" />
+        <event id="20" name="满油门行驶次数" value="numOfRunAtFullAccelerator" />
+        <event id="21" name="速度波动性" value="waveOfSpeed" />
+        <event id="22" name="停车踩油门次数" value="numOfStepOnThrottleWhenStop" />
+        <event id="23" name="超长怠速次数" value="numOfLongIdle" />
+        <event id="24" name="怠速空调次数" value="numOfIdledAirConditioner" />
+        <event id="25" name="最高档里程" value="mileageOfRunAtHighestPos" />
+        <event id="26" name="最高档时长" value="durationOfRunAtHighestPos" />
+        <event id="27" name="冷车行驶次数" value="numOfRunAtColdMotor" />
+        <event id="28" name="高档低速次数" value="numOfLowSpeedAtHighPos" />
+        <event id="29" name="低档高速次数" value="numOfHighSpeedAtLowPos" />
+        <event id="30" name="经济负荷行驶里程" value="mileageOfRunAtEcoLoad" />
+        <event id="31" name="经济负荷行驶时长" value="durationOfRunAtEcoLoad" />
+        <event id="32" name="高速行驶里程" value="mileageOfRunAtHighSpeed" />
+        <event id="33" name="高速行驶时长" value="durationOfRunAtHighSpeed" />
+        <event id="34" name="停车次数" value="numOfStop" />
+        <event id="35" name="停车立即熄火次数" value="numOfShutDownOnceStop" />
+        <event id="36" name="机油压力低次数" value="numOfLowPressureOfMachineOil" />
+        <event id="37" name="带手刹行车次数" value="numOfRunWithBrake" />
+        <event id="38" name="档位速度匹配度" value="posMatchSpeed" />
+        <event id="39" name="随意变道次数" value="numOfChangeRoadAtWill" />
+        <event id="40" name="错打转向灯转弯次数" value="numOfSwitchWrongDirectionSignalLight" />
+        <event id="41" name="未打转向灯转弯次数" value="numOfTurnCornerWithoutDirectionSignalLight" />
+        <event id="42" name="恶劣天气行车" value="runAtBadWeather" />
+        <event id="43" name="违章次数" value="numOfViolationOfRules" />
+        <event id="44" name="经济速度里程" value="mileageOfRunAtEcoSpeed" />
+        <event id="45" name="离合时长" value="durationOfCluth" />
+        <event id="46" name="怠速时长" value="durationOfIdle" />
+        <event id="47" name="带转向灯直行" value="numOfGoStraightWithTurnLight" />
+        <event id="48" name="超载次数" value="numOfOverload" />
+    </events>
+    <indicators>
+        <indicator name="百公里急加速次数" id="1" contrib="-1" value="" />
+        <indicator name="百公里急减速次数" id="2" contrib="-1" value="" />
+        <indicator name="百公里急转弯次数" id="3" contrib="-1" value="" />
+        <indicator name="百公里连续加减速次数" id="4" contrib="-1" value="" />
+        <indicator name="百公里熄火滑行次数" id="5" contrib="-1" value="" />
+        <indicator name="百公里夜间行驶时长" id="6" contrib="-1" value="" />
+        <indicator name="百公里夜间行驶里程" id="7" contrib="-1" value="" />
+        <indicator name="百公里空档滑行次数" id="8" contrib="-1" value="" />
+        <indicator name="百公里故障行车次数" id="9" contrib="-1" value="" />
+        <indicator name="百公里疲劳驾驶次数" id="10" contrib="-1" value="" />
+        <indicator name="百公里超速行驶次数" id="11" contrib="-1" value="" />
+        <indicator name="百公里路线偏离告警次数" id="12" contrib="-1" value="" />
+        <indicator name="百公里先离合后刹车次数" id="13" contrib="-1" value="" />
+        <indicator name="百公里长时离合次数" id="14" contrib="-1" value="" />
+        <indicator name="百公里长时刹车次数" id="15" contrib="-1" value="" />
+        <indicator name="百公里刹车里程" id="16" contrib="-1" value="" />
+        <indicator name="百公里刹车时长" id="17" contrib="-1" value="" />
+        <indicator name="百公里高转速起步次数" id="18" contrib="-1" value="" />
+        <indicator name="百公里大油门时长" id="19" contrib="-1" value="" />
+        <indicator name="百公里满油门行驶次数" id="20" contrib="-1" value="" />
+        <indicator name="速度波动性" id="21" contrib="-1" value="" />
+        <indicator name="百公里停车踩油门次数" id="22" contrib="-1" value="" />
+        <indicator name="百公里超长怠速次数" id="23" contrib="-1" value="" />
+        <indicator name="百公里怠速空调次数" id="24" contrib="-1" value="" />
+        <indicator name="百公里高档行驶里程" id="25" contrib="-1" value="" />
+        <indicator name="百公里高档行驶时长" id="26" contrib="-1" value="" />
+        <indicator name="百公里冷车行驶次数" id="27" contrib="-1" value="" />
+        <indicator name="百公里高档低速次数" id="28" contrib="-1" value="" />
+        <indicator name="百公里高速低档次数" id="29" contrib="-1" value="" />
+        <indicator name="百公里经济负荷里程" id="30" contrib="1" value="" />
+        <indicator name="百公里经济负荷时长" id="31" contrib="1" value="" />
+        <indicator name="百公里高速行驶里程" id="32" contrib="-1" value="" />
+        <indicator name="百公里高速行驶时长" id="33" contrib="-1" value="" />
+        <indicator name="百公里停车次数" id="34" contrib="-1" value="" />
+        <indicator name="百公里停车立即熄火次数" id="35" contrib="-1" value="" />
+        <indicator name="百公里机油压力低次数" id="36" contrib="-1" value="" />
+        <indicator name="百公里行车带手刹次数" id="37" contrib="-1" value="" />
+        <indicator name="档位速度匹配度" id="38" contrib="1" value="" />
+        <indicator name="百公里随意变道次数" id="39" contrib="-1" value="" />
+        <indicator name="百公里错打转向灯转弯次数" id="40" contrib="-1" value="" />
+        <indicator name="百公里未打转向灯转弯次数" id="41" contrib="-1" value="" />
+        <indicator name="百公里恶劣天气行驶次数" id="42" contrib="-1" value="" />
+        <indicator name="百公里违章次数" id="43" contrib="-1" value="" />
+        <indicator name="百公里经济速度里程" id="44" contrib="1" value="" />
+        <indicator name="百公里离合时长" id="45" contrib="-1" value="" />
+        <indicator name="百公里怠速时长" id="46" contrib="-1" value="" />
+        <indicator name="百公里带转向灯直行次数" id="47" contrib="-1" value="" />
+        <indicator name="百公里超载次数" id="48" contrib="-1" value="" />
+    </indicators>
+    <dimensions>
+        <dimension id="101" name="安全维度" value="SAFETY">
+            <indicators>
+                <indicator id="2" name="百公里急减速次数"       />
+                <indicator id="13" name="百公里先离合后刹车次数" />
+                <indicator id="1" name="百公里急加速次数"       />
+                <indicator id="3" name="百公里急转弯次数"       />
+                <indicator id="42" name="百公里恶劣天气行驶次数"  />
+                <indicator id="4" name="百公里连续加减速次数"       />
+                <indicator id="5" name="百公里熄火滑行次数"       />
+                <indicator id="6" name="百公里夜间行驶时长"       />
+                <indicator id="7" name="百公里夜间行驶里程"       />
+                <indicator id="8" name="百公里空档滑行次数"       />
+                <indicator id="9" name="百公里故障行车次数"       />
+                <indicator id="10" name="百公里疲劳驾驶次数"       />
+                <indicator id="11" name="百公里超速行驶次数"       />
+            </indicators>
+        </dimension>
+        <dimension id="102" name="节能维度" value="ECONOMY">
+            <indicators>
+                <indicator id="16"  name="百公里刹车里程"        value="" />
+                <indicator id="18" name="百公里高转速起步次数"     value="" />
+                <indicator id="19"  name="百公里大油门时长"           value="" />
+                <indicator id="20"  name="百公里满油门行驶次数"       value="" />
+                <indicator id="21"   name="速度波动性"             value="" />
+                <indicator id="22"   name="百公里停车踩油门次数"       value="" />
+                <!--<indicator id="38"   name="档位速度匹配度"       value="" />-->
+                <!--<indicator id="25"   name="百公里高档行驶里程       value="" />-->
+                <!--<indicator id="26"   name="百公里高档行驶时长       value="" />-->
+                <indicator id="23"   name="百公里超长怠速次数"       value="" />
+                <indicator id="24"   name="百公里怠速空调次数"       value="" />
+                <indicator id="34"   name="百公里停车次数"       value="" />
+                <indicator id="30"   name="百公里经济负荷里程"       value="" />
+                <indicator id="31"   name="百公里经济负荷时长"       value="" />
+                <indicator id="33"   name="百公里高速行驶时长"       value="" />
+                <indicator id="44"   name="百公里经济速度里程"       value="" />
+                <indicator id="46"   name="百公里怠速时长"       value="" />
+            </indicators>
+        </dimension>
+        <dimension id="103" name="护车维度" value="MAINTAINENCE">
+            <indicators>
+                <indicator id="14" name="百公里长时离合次数"        value="" />
+                <indicator id="15" name="百公里长时刹车次数"     value="" />
+                <indicator id="17" name="百公里刹车时长"            value="" />
+                <indicator id="45" name="百公里离合时长"        value="" />
+                <indicator id="35" name="百公里停车立即熄火次数"     value="" />
+                <indicator id="27" name="百公里冷车行驶次数"       value="" />
+                <!--<indicator id="" name="百公里机油压力低       value="" />-->
+                <!--<indicator id="" name="百公里高档低速次       value="" />-->
+                <indicator id="37" name="百公里行车带手刹次数"       value="" />
+                <indicator id="42" name="百公里恶劣天气行驶次数"       value="" />
+            </indicators>
+        </dimension>
+        <dimension id="104" name="文明维度" value="CIVILIZATION">
+            <indicators>
+                <indicator id="48" name="百公里超载次数"       value="" />
+                <indicator id="39" name="百公里随意变道次数"    value="" />
+                <indicator id="43" name="百公里违章次数"           value="" />
+                <indicator id="12" name="百公里路线偏离告警次数"       value="" />
+                <indicator id="40" name="百公里错打转向灯转弯次数"    value="" />
+                <indicator id="41" name="百公里未打转向灯转弯次数"      value="" />
+                <indicator id="47" name="百公里带转向灯直行次数"      value="" />
+            </indicators>
+        </dimension>
+    </dimensions>
+</rateindicator-config>

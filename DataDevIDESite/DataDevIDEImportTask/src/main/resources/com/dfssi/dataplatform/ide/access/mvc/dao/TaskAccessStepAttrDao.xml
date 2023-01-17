@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.access.mvc.dao.TaskAccessStepAttrDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.ide.access.mvc.entity.TaskAccessStepAttrEntity">
+        <id property="id" column="pk_id"/>
+        <result property="stepId" column="step_id"/>
+        <result property="attrItem" column="attr_item"/>
+        <result property="attrValue" column="attr_value"/>
+        <result property="attrDesc" column="attr_description"/>
+        <result property="taskId" column="task_id"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <delete id="deleteByTaskId">
+        UPDATE dv_accesstask_stepattr set is_deleted = 1 WHERE task_id=#{taskId} and is_deleted = 0
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO dv_accesstask_stepattr(
+          pk_id,
+          step_id,
+          attr_item,
+          attr_value,
+          attr_description,
+          task_id,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{id,jdbcType=VARCHAR},
+          #{stepId,jdbcType=VARCHAR},
+          #{attrItem,jdbcType=VARCHAR},
+          #{attrValue,jdbcType=VARCHAR},
+          #{attrDesc,jdbcType=VARCHAR},
+          #{taskId,jdbcType=VARCHAR},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertMutil" parameterType="java.util.List">
+        INSERT INTO dv_accesstask_stepattr(
+        pk_id,
+        step_id,
+        attr_item,
+        attr_value,
+        attr_description,
+        task_id,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.stepId,jdbcType=VARCHAR},
+            #{item.attrItem,jdbcType=VARCHAR},
+            #{item.attrValue,jdbcType=VARCHAR},
+            #{item.attrDesc,jdbcType=VARCHAR},
+            #{item.taskId,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.createUser,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="findListByTaskId" resultMap="resultMap">
+        SELECT
+        pk_id,
+        step_id,
+        task_id,
+        attr_item,
+        attr_value,
+        attr_description,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        dv_accesstask_stepattr
+        <trim prefix="WHERE" >
+            is_deleted = 0 and task_id=#{taskId}
+        </trim>
+        order by step_id
+    </select>
+
+    <!--批量逻辑删除-->
+    <update id="batchDelete" parameterType="java.util.List">
+       <foreach collection="list" item="item" index="index" separator=";">
+                update dv_accesstask_stepattr
+                set is_deleted = 1
+                where  step_id=#{item.stepId} and attr_item=#{item.attrItem}
+                 and task_id=#{item.taskId} and is_deleted = 0
+       </foreach>
+    </update>
+
+    <!--批量插入保存-->
+    <insert id="batchInsert">
+        INSERT INTO dv_accesstask_stepattr(pk_id, step_id, attr_item, attr_value, attr_description,create_date,create_user,update_date,update_user,task_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.stepId}, #{item.attrItem}, #{item.attrValue}, #{item.attrDesc},
+            #{item.createDate},#{item.createUser},#{item.updateDate},#{item.updateUser},#{item.taskId})
+        </foreach>
+    </insert>
+
+    <select id="findListByTaskIdandStepId" resultMap="resultMap">
+        SELECT
+          pk_id,
+          step_id,
+          attr_item,
+          attr_value,
+          attr_description,
+          task_id
+          FROM dv_accesstask_stepattr
+        WHERE task_id=#{taskId} and step_id=#{stepId} and is_deleted = 0
+    </select>
+</mapper>

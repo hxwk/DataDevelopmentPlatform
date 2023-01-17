@@ -1,0 +1,34 @@
+#\u670D\u52A1\u7AEF\u53E3
+server.port=6666
+
+#\u670D\u52A1\u6CE8\u518C\u4E0E\u53D1\u73B0
+eureka.instance.hostname=172.16.1.196
+eureka.instance.leaseRenewalIntervalInSeconds=20
+eureka.instance.leaseExpirationDurationInSeconds=40
+eureka.instance.prefer-ip-address=true
+eureka.server.enableSelfPreservation=false
+eureka.client.serviceUrl.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/
+
+eureka.instance.instance-id=${spring.cloud.client.ip-address}:${server.port}
+eureka.instance.health-check-url-path=/actuator/health
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=ALWAYS
+#spring.boot.admin.client.url=http://192.168.91.229:5555
+spring.boot.admin.client.instance.prefer-ip=true
+spring.boot.admin.client.username=admin
+spring.boot.admin.client.password=admin
+# ----------------------------------------
+# XDiamond PROPERTIES
+# ----------------------------------------
+xdiamond.serverHost=172.16.1.224
+xdiamond.serverPort=5678
+xdiamond.groupId=com.dfssi.dataplatform
+xdiamond.artifactId=DataCloudRegister
+xdiamond.version=1.0
+xdiamond.profile=test
+xdiamond.secretKey=i0IfAFbrwmHCuJE1
+xdiamond.syncToSystem=true

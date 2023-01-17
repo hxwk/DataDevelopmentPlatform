@@ -1,0 +1,141 @@
+{
+  id: '20161218112036000001',
+  name: 'PROD Streaming Convert Test',
+  modelTypeId: '20171123152036000002',
+  description: 'Streaming Convert Model',
+  steps: [
+    {
+      id: '20161218112036000002',
+      name: 'Streaming Input Kafka Receiver',
+      stepTypeId: '20171120152038000001',
+      guiX: 0,
+      guiY: 0,
+      params: [
+        {
+          'zkConnect': {
+            valueStr: 'cxq:2181/kafka'
+          },
+          'consumerId': {
+            valueStr: 'streaming-kafka-consumer'
+          },
+          'groupId': {
+            valueStr: 'streaming-kafka-group'
+          },
+          'topics': {
+            valueStr: 'streamingprod'
+          },
+          'numThreads': {
+            valueStr: '1'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'id'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_int'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_decimal'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_float'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_date'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161218112036000004',
+      name: 'Preprocess Convert convert',
+      stepTypeId: '20171120152039000104',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          colName: {
+            valueStr: 'num_int'
+          },
+          toType: {
+            valueStr: 'int'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_decimal'
+          },
+          toType: {
+            valueStr: 'decimal(18,6)'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_float'
+          },
+          toType: {
+            valueStr: 'float'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'num_date'
+          },
+          toType: {
+            valueStr: 'timestamp'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161218112036000007',
+      name: 'Output Hive Table order_details',
+      stepTypeId: '20171120152040002001',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          schema: {
+            valueStr: 'prod_analysis'
+          },
+          tableName: {
+            valueStr: 'converted'
+          }
+        }
+      ]
+    }
+  ],
+  links: [
+    {
+      id: '20161218112036100001',
+      modelStepFrom: {
+        id: '20161218112036000002',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepTo: {
+        id: '20161218112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    },
+    {
+      id: '20161218112036100003',
+      modelStepFrom: {
+        id: '20161218112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepTo: {
+        id: '20161218112036000007',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    }
+  ]
+}

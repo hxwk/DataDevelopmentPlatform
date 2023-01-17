@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.LinkDao">
+
+    <resultMap id="analysisLinkMap" type="com.dfssi.dataplatform.analysis.entity.AnalysisLinkEntity">
+        <id property="id" column="id"/>
+        <result property="modelId" column="model_id"/>
+    </resultMap>
+
+    <delete id="deleteByModelId">
+        DELETE FROM analysis_model_link WHERE model_id=#{id}
+    </delete>
+
+    <delete id="batchInsert">
+        INSERT INTO analysis_model_link(id, model_id, model_step_from_id, model_step_from_pos,
+        model_step_to_id, model_step_to_pos)
+        VALUES
+        <foreach collection="list" item="link" index="index" separator=",">
+            (#{link.id}, #{link.modelId}, #{link.modelStepFromId},
+            #{link.modelStepFromPos}, #{link.modelStepToId}, #{link.modelStepToPos})
+        </foreach>
+    </delete>
+
+    <select id="getLinksByModelId" resultType="com.dfssi.dataplatform.analysis.entity.AnalysisLinkEntity">
+        SELECT id, model_id, model_step_from_id, model_step_from_pos, model_step_to_id,
+        model_step_to_pos
+        FROM analysis_model_link
+        WHERE model_id=#{id}
+    </select>
+
+</mapper>

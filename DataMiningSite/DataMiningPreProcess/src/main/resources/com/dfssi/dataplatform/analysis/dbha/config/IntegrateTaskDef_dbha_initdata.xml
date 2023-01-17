@@ -1,0 +1,17 @@
+<spark-task-def id="">
+    <inits>
+        <init id="" type="InitDbhaData" >
+        <!-- 获取Resource中的配置并广播 -->
+            <params>
+                <param name="InitOption" value="InitDbhaIndicators" />
+                <!-- MySql 中驾驶行为分析表所在的SSI_MOTORCADE库连接配置 -->
+                <param name="MotorcadeDB_jdbcDatabase" value="SSI_MOTORCADE"/>
+                <param name="MotorcadeDB_jdbcHostname" value="172.16.1.241"/>
+                <param name="MotorcadeDB_jdbcPort" value="3306"/>
+                <param name="MotorcadeDB_driver" value="com.mysql.jdbc.Driver"/>
+                <param name="MotorcadeDB_user" value="ssiuser"/>
+                <param name="MotorcadeDB_password" value="112233"/>
+            </params>
+        </init>
+    </inits>
+</spark-task-def>

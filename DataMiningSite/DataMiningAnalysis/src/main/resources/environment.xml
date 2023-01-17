@@ -1,0 +1,60 @@
+<environments>
+
+    <!-- kafka集群配置 -->
+    <environment id="kafka">
+        <params>
+            <param name="metadata.broker.list" value="172.16.1.121:9092,172.16.1.122:9092,172.16.1.121:9092"/>
+        </params>
+    </environment>
+
+    <!-- 哨兵模式下的redis连接配置 -->
+    <environment id="redis">
+        <params>
+            <param name="master" value="mymaster"/>
+            <param name="sentinels" value="172.16.1.201:26379,172.16.1.201:26380"/>
+            <param name="password" value="112233"/>
+        </params>
+    </environment>
+
+    <!-- 新能源数据质量检测使用的greenplum数据库连接参数 -->
+    <environment id="gp-detect">
+        <params>
+            <param name="type" value="postgresql"/>
+            <param name="url" value="jdbc:postgresql://172.16.1.221:5432/analysis"/>
+            <param name="user" value="analysis"/>
+            <param name="password" value="112233"/>
+            <param name="driver" value="org.postgresql.Driver"/>
+        </params>
+    </environment>
+
+    <!-- 商用车油耗分析使用的greenplum数据库连接参数 -->
+    <environment id="gp-ccv-fuel">
+        <params>
+            <param name="type" value="postgresql"/>
+            <param name="url" value="jdbc:postgresql://172.16.1.221:5432/analysis"/>
+            <param name="user" value="analysis"/>
+            <param name="password" value="112233"/>
+            <param name="driver" value="org.postgresql.Driver"/>
+        </params>
+    </environment>
+
+
+    <!-- es集群配置 -->
+    <environment id="elasticsearch">
+        <params>
+            <param name="es.nodes" value="172.16.1.221,172.16.1.222,172.16.1.223"/>
+            <param name="es.port" value="9200"/>
+            <param name="es.clustername" value="elk"/>
+        </params>
+    </environment>
+
+    <!-- xdiamond配置 -->
+    <environment id="xdiamond">
+        <params>
+            <param name="serverHost" value="172.16.1.224"/>
+            <param name="serverPort" value="5678"/>
+            <param name="secretKey" value="i0IfAFbrwmHCuJE1"/>
+        </params>
+    </environment>
+
+</environments>

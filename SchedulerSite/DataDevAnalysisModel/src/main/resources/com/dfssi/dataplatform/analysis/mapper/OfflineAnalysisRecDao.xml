@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.dao.OfflineAnalysisRecDao">
+
+    <select id="get" resultType="com.dfssi.dataplatform.analysis.entity.OfflineAnalysisRecEntity">
+        SELECT *
+        FROM offline_analysis_rec
+        WHERE id = #{id}
+    </select>
+    <select id="getOozieId" resultType="java.lang.String">
+        SELECT oozie_task_id
+        FROM offline_analysis_rec
+        WHERE model_id = #{modelId}
+        and status='1'
+    </select>
+    <update id="updateStatus">
+        update offline_analysis_rec set status='0' WHERE model_id = #{modelId}
+    </update>
+    <delete id="delete">
+		DELETE FROM offline_analysis_rec WHERE id = #{id}
+	</delete>
+
+    <insert id="insert">
+        INSERT INTO offline_analysis_rec(id, model_id, oozie_task_id, status)
+        VALUES ( #{id},	#{modelId}, #{oozieTaskId}, '1')
+    </insert>
+
+    <select id="getLastJobId" resultType="java.lang.String">
+        select oozie_task_id from offline_analysis_rec WHERE model_id = #{modelId} ORDER BY submit_date desc limit 1
+    </select>
+
+</mapper>

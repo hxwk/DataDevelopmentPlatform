@@ -1,0 +1,18 @@
+#spring boot \u9ED8\u8BA4\u914D\u7F6E\u6587\u4EF6
+spring.profiles.active=dev
+server.port=8090
+spring.application.name=ide-logManager
+#server.context-path=/DataDevIDELogManager
+
+#swagger2
+security.basic.path=/swagger-ui.html
+security.basic.enabled=true
+security.user.name=dfssi
+security.user.password=1234567
+
+
+info.appname=\u65E5\u5FD7\u7BA1\u7406
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8
+
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.task.mapper.DataresourceConfDao">
+
+    <sql id="sourceColumns">
+        am.dataresource_id,
+        am.dataresource_name,
+        am.dataresource_desc,
+        amt.dbname AS "dataresource_type"
+    </sql>
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.analysis.task.entity.DataresourceConfEntity">
+        <id property="dataresourceId" column="dataresource_id"/>
+        <result property="dataresourceName" column="dataresource_name"/>
+        <result property="dataresourceDesc" column="dataresource_desc"/>
+        <result property="dataresourceType" column="dataresource_type"/>
+    </resultMap>
+
+    <select id="listAllSources" resultMap="resultMap" parameterType="com.dfssi.dataplatform.analysis.task.entity.DataresourceConfEntity">
+        SELECT
+        <include refid="sourceColumns"/>
+        FROM metadata.meta_dataresource_conf_t am, metadata.meta_dic_datatype amt
+        WHERE
+        am.dataresource_type=amt.dbtype
+        AND
+        am.is_valid = 1
+    </select>
+
+    <select id="getByDataresourceId" resultMap="resultMap" parameterType="com.dfssi.dataplatform.analysis.task.entity.DataresourceConfEntity">
+        SELECT
+        <include refid="sourceColumns"/>
+        FROM metadata.meta_dataresource_conf_t am, metadata.meta_dic_datatype amt
+        WHERE
+        am.dataresource_type=amt.dbtype
+        AND
+        am.dataresource_id = #{dataresourceId}
+        AND am.is_valid = 1
+    </select>
+
+    <insert id="insert">
+        INSERT INTO metadata.meta_dataresource_conf_t(
+        dataresource_id,
+        dataresource_name,
+        dataresource_desc,
+        dataresource_type,
+        is_valid,
+        create_user,
+        create_date,
+        shared_status)
+        VALUES (
+        #{dataresourceId},
+        #{dataresourceName},
+        #{dataresourceDesc},
+        #{dataresourceType},
+        #{isValid},
+        #{createUser},
+        #{createDate},
+        #{sharedStatus})
+    </insert>
+
+</mapper>

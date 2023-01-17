@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.metadata.dao.DataResourceConfDao">
+
+    <!--<select id="get" resultType="DataResourceConfEntity">-->
+        <!--SELECT *-->
+        <!--FROM metadata.meta_dataresource_conf_t-->
+        <!--WHERE id = #{id}-->
+    <!--</select>-->
+
+    <!--<select id="getAllDataResource" resultType="DataResourceConfEntity">-->
+        <!--SELECT *-->
+        <!--FROM metadata.meta_dataresource_conf_t-->
+    <!--</select>-->
+
+    <sql id="modelColumns">
+        am.datares_id,
+        am.datares_name,
+        am.datares_desc,
+        amt.dbname AS "datares_type",
+        am.ipaddr,
+        am.port_num,
+        am.status,
+        am.delimiter,
+        am.zk_list,
+        am.database_name,
+        am.table_name,
+        am.is_valid,
+        am.create_date,
+        am.create_user,
+        am.update_date,
+        am.update_user,
+        am.shared_status
+    </sql>
+
+    <select id="get" resultType="com.dfssi.dataplatform.metadata.entity.DataResourceConfEntity">
+        SELECT
+        <include refid="modelColumns"/>
+        FROM metadata.copy_meta_dataresource_conf_t am, metadata.meta_dic_datatype amt
+        WHERE am.datares_id = #{id}
+        AND am.datares_type=amt.dbtype
+    </select>
+
+    <select id="getAllDataResource" resultType="com.dfssi.dataplatform.metadata.entity.DataResourceConfEntity">
+        SELECT
+        <include refid="modelColumns"/>
+        FROM metadata.copy_meta_dataresource_conf_t am,  metadata.meta_dic_datatype amt
+        WHERE am.datares_type=amt.dbtype
+    </select>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.datasource.mvc.dao.DataSourceConfDao">
+<!--接入调微服务获取数据源-->
+    <select id="getAllDataSources"  resultType="com.dfssi.dataplatform.ide.datasource.mvc.entity.DataSourceConfEntity">
+SELECT pk_datasource_id datasourceId,
+        datasource_name datasourceName,
+        datasource_description datasourceDescription,
+        datasource_type datasourceType,
+        is_deleted isDeleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') createDate,
+        create_user createUser,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') updateDate,
+        update_user updateUser
+        FROM dv_datasource
+        WHERE is_deleted='0'
+        and dv_datasource.datasource_type in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item,jdbcType=VARCHAR}
+            </foreach>
+    </select>
+
+</mapper>

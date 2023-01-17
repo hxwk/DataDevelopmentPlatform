@@ -1,0 +1,153 @@
+<streaming-store-config>
+    <context>
+        <params>
+            <param name="nameNode" value="hdfs://testmaster:8020"/>
+            <param name="kafkaGroupName" value="streaming-kafka-to-hive-group"/>
+            <!--210 DEV -->
+
+            <!--230 PROD -->
+            <param name="kafkaBrokers" value="172.16.1.121:9092,172.16.1.122:9092,172.16.1.123:9092"/>
+            <param name="kafkaTopics" value="POSITIONINFORMATION_0200_TOPIC,POSITIONINFORMATION_0704_TOPIC,CANINFORMATION_0705_TOPIC"/>
+            <param name="hiveExternalTableDataRootPath" value="/user/hdfs/hiveexternal/prod/"/>
+            <param name="hiveSchema" value="prod_analysis"/>
+            <!--230 DEV -->
+            <!--<param name="kafkaBrokers" value="172.16.1.209:9092"/>-->
+            <!--<param name="kafkaTopics" value="streamingdev"/>-->
+            <!--<param name="hiveExternalTableDataRootPath" value="/user/hdfs/hiveexternal/dev/"/>-->
+            <!--<param name="hiveSchema" value="dev_analysis"/>-->
+
+            <param name="dataPartitionNum" value="2"/>
+            <param name="hadoopConfUser" value="hdfs"/>
+            <param name="msgIdAttrName" value="msgId"/>
+            <param name="errorMsgTableName" value="error_message"/>
+            <param name="checkTableExist" value="true"/>
+            <param name="streamingDuration" value="120"/>
+            <param name="mergeEnableCompress" value="false"/>
+            <param name="mergeCompressMethod" value="GZIP"/>
+            <param name="mergePartitionNum" value="2"/>
+        </params>
+    </context>
+    <hive-table-defs>
+        <hive-table name="terminal_0200">
+            <columns>
+                <column name="id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="alarm_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="alarms" type="array" length="" precision="" paramizedClassName="string"/>
+                <column name="alt" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="analog" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="artificial_confirmed_alarm" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="content" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="cumulative_oil_consumption" type="double" length="" precision="" paramizedClassName=""/>
+                <column name="dir" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="from_qly" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="fuel" type="double" length="" precision="" paramizedClassName=""/>
+                <column name="gps_time" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="io_state" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="lat" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="lon" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="mile" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="positioning_satellite_number" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="signal_strength" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="sim" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="speed" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="speed1" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="state" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="supply_voltage" type="double" length="" precision="" paramizedClassName=""/>
+                <column name="vehicle_status" type="array" length="" precision="" paramizedClassName="string"/>
+                <column name="total_fuel_consumption" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="battery_voltage" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="hydraulic_tank" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="vehicle_weight" type="double" length="" precision="" paramizedClassName=""/>
+                <column name="canandhydraulic_tank_status" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="receive_msg_time" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="vid" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="signal_states" type="array" length="" precision="" paramizedClassName="string"/>
+            </columns>
+            <partitions>
+                <column name="part_year" type="BIGINT" partitionRulePattern="yyyy"/>
+                <column name="part_yearmonthday" type="BIGINT" partitionRulePattern="yyyyMMdd"/>
+            </partitions>
+        </hive-table>
+        <hive-table name="terminal_0705">
+            <columns>
+                <column name="id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="sim" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="dbc_type" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="receive_time" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="signal_name" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="unit" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="value" type="double" length="" precision="" paramizedClassName=""/>
+                <column name="vid" type="string" length="" precision="" paramizedClassName=""/>
+            </columns>
+            <partitions>
+                <column name="part_year" type="BIGINT" partitionRulePattern="yyyy"/>
+                <column name="part_yearmonthday" type="BIGINT" partitionRulePattern="yyyyMMdd"/>
+            </partitions>
+        </hive-table>
+        <hive-table name="error_message">
+            <columns>
+                <column name="id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="msg_content" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="error_msg" type="string" length="" precision="" paramizedClassName=""/>
+            </columns>
+            <partitions>
+                <column name="part_year" type="BIGINT" partitionRulePattern="yyyy"/>
+                <column name="part_yearmonthday" type="BIGINT" partitionRulePattern="yyyyMMdd"/>
+            </partitions>
+        </hive-table>
+    </hive-table-defs>
+    <messsage-defs>
+        <message name="0200" toTableName="terminal_0200" dateAttrName="receiveMsgTime">
+            <attrs>
+                <attr name="id" toFieldName="id"/>
+                <attr name="alarmCode" toFieldName="alarm_code"/>
+                <attr name="alarms" toFieldName="alarms"/>
+                <attr name="alt" toFieldName="alt"/>
+                <attr name="analog" toFieldName="analog"/>
+                <attr name="artificialConfirmedAlarm" toFieldName="artificial_confirmed_alarm"/>
+                <attr name="content" toFieldName="content"/>
+                <attr name="cumulativeOilConsumption" toFieldName="cumulative_oil_consumption"/>
+                <attr name="dir" toFieldName="dir"/>
+                <attr name="fromQly" toFieldName="from_qly"/>
+                <attr name="fuel" toFieldName="fuel"/>
+                <attr name="gpsTime" toFieldName="gps_time"/>
+                <attr name="ioState" toFieldName="io_state"/>
+                <attr name="lat" toFieldName="lat"/>
+                <attr name="lon" toFieldName="lon"/>
+                <attr name="mile" toFieldName="mile"/>
+                <attr name="positioningSatelliteNumber" toFieldName="positioning_satellite_number"/>
+                <attr name="signalState" toFieldName="signal_state"/>
+                <attr name="signalStrength" toFieldName="signal_strength"/>
+                <attr name="sim" toFieldName="sim"/>
+                <attr name="speed" toFieldName="speed"/>
+                <attr name="speed1" toFieldName="speed1"/>
+                <attr name="state" toFieldName="state"/>
+                <attr name="supplyVoltage" toFieldName="supply_voltage"/>
+                <attr name="vehicleStatus" toFieldName="vehicle_status"/>
+                <attr name="totalFuelConsumption" toFieldName="total_fuel_consumption"/>
+                <attr name="batteryVoltage" toFieldName="battery_voltage"/>
+                <attr name="hydraulicTank" toFieldName="hydraulic_tank"/>
+                <attr name="vehicleWeight" toFieldName="vehicle_weight"/>
+                <attr name="canAndHydraulicTankStatus" toFieldName="canandhydraulic_tank_status"/>
+                <attr name="receiveMsgTime" toFieldName="receive_msg_time"/>
+                <attr name="vid" toFieldName="vid"/>
+                <attr name="signalStates" toFieldName="signal_states"/>
+            </attrs>
+        </message>
+        <message name="0705" toTableName="terminal_0705" dateAttrName="receiveTime">
+            <attrs>
+                <attr name="id" toFieldName="id"/>
+                <attr name="dbcType" toFieldName="dbc_type"/>
+                <attr name="receiveTime" toFieldName="receive_time"/>
+                <attr name="sim" toFieldName="sim"/>
+                <attr name="signal_name" toFieldName="signal_name"/>
+                <attr name="unit" toFieldName="unit"/>
+                <attr name="value" toFieldName="value"/>
+                <attr name="vid" toFieldName="vid"/>
+            </attrs>
+        </message>
+        <message name="0704" refMessageName="0200">
+        </message>
+    </messsage-defs>
+
+</streaming-store-config>

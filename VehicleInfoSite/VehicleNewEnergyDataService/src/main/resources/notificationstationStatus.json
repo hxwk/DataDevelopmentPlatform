@@ -1,0 +1,13 @@
+{  "ConnectorStatusInfo":
+   {"ConnectorID": "1",
+    "Status": 4,
+    "CurrentA": 0,
+    "CurrentB": 0,
+    "CurrentC": 0,
+    "VoltageA": 0,
+    "VoltageB": 0,
+    "VoltageC": 0,
+    "ParkStatus": 10,
+    "LockStatus": 10,
+    "SOC": 10  }
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <packaging>jar</packaging>
+
+    <groupId>com.dfssi.dataplatform</groupId>
+    <artifactId>VehicleNetworkBasicInfo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.8</jdk.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Geode 分布式大数据存储 -->
+        <spring-data-geode.version>2.1.0.RELEASE</spring-data-geode.version>
+        <!-- Geode 依赖jar包 -->
+        <fastutil.version>8.1.1</fastutil.version>
+        <!--springcloud-->
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+    </properties>
+    <repositories>
+        <repository>
+            <id>spring-libs-release</id>
+            <name>Spring libs-release Maven Repository</name>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+        <repository>
+            <id>spring-libs-milestone</id>
+            <name>Spring libs-milestone Maven Repository</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+        </repository>
+        <repository>
+            <id>spring-libs-snapshot</id>
+            <name>Spring libs-snapshot Maven Repository</name>
+            <url>https://repo.spring.io/libs-snapshot</url>
+        </repository>
+    </repositories>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.dfssi.dataplatform</groupId>
+            <artifactId>DataCloudCommon</artifactId>
+            <version>1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <!-- Geode 依赖jar包 -->
+        <dependency>
+            <groupId>it.unimi.dsi</groupId>
+            <artifactId>fastutil</artifactId>
+            <version>${fastutil.version}</version>
+        </dependency>
+        <!-- Geode 分布式大数据存储 -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-geode</artifactId>
+            <version>${spring-data-geode.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dfssi.dataplatform</groupId>
+            <artifactId>VehicleInfoModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>VehicleNetwork</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

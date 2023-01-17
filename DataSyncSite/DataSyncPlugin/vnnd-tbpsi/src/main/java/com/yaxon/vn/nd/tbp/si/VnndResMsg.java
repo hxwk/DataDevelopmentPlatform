@@ -1,0 +1,36 @@
+package com.yaxon.vn.nd.tbp.si;
+
+
+/**
+ * 基类
+ */
+public class VnndResMsg {
+
+    private String vid;
+
+    private Integer status;
+
+    public String getVid() {
+        return vid;
+    }
+
+    public void setVid(String vid) {
+        this.vid = vid;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "VnndLoginResMsg{" +
+                ", vid=" + vid +
+                ", status=" + status +
+                '}';
+    }
+}

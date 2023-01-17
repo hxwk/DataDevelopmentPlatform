@@ -1,0 +1,99 @@
+#\u5F00\u53D1\u73AF\u5883
+server.port=8094
+
+access.service.url=http://172.16.1.6:10000
+#access.service.url=http://172.16.1.101:10002
+
+##eureka \u670D\u52A1\u6CE8\u518C
+eureka.client.serviceUrl.defaultZone=http://172.16.1.196:6666/eureka/
+eureka.instance.preferIpAddress=true
+eureka.instance.lease-renewal-interval-in-seconds=10
+eureka.instance.lease-expiration-duration-in-seconds=20
+
+eureka.instance.instance-id=${spring.cloud.client.ip-address}:${server.port}
+eureka.instance.health-check-url-path=/actuator/health
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=ALWAYS
+management.server.port=1${server.port}
+#spring.boot.admin.client.url=http://192.168.91.229:5555
+
+spring.boot.admin.client.instance.prefer-ip=true
+spring.boot.admin.client.username=admin
+spring.boot.admin.client.password=admin
+
+#MySQL
+spring.datasource.type=com.zaxxer.hikari.HikariDataSource
+spring.datasource.url=jdbc:mysql://172.16.1.241:3306/videodb?useSSL=false&allowMultiQueries=true
+spring.datasource.hikari.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.hikari.jdbc-url=${spring.datasource.url}
+spring.datasource.hikari.username=app_user
+spring.datasource.hikari.password=112233
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.maximum-pool-size=15
+spring.datasource.hikari.auto-commit=true
+spring.datasource.hikari.idle-timeout=30000
+spring.datasource.hikari.pool-name=DatebookHikariCP
+spring.datasource.hikari.max-lifetime=1800000
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.connection-test-query=SELECT 1
+
+# ----------------------------------------
+# APACHE KAFKA (KafkaProperties)
+# ----------------------------------------
+spring.kafka.bootstrap-servers=172.16.1.121:9092,172.16.1.122:9092,172.16.1.123:9092
+spring.kafka.consumer.auto-commit-interval=1000
+spring.kafka.consumer.auto-offset-reset=earliest
+spring.kafka.consumer.enable-auto-commit=true
+spring.kafka.consumer.group-id=video1
+spring.kafka.consumer.heartbeat-interval=3000
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.max-poll-records=100
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.jaas.login-module=com.sun.security.auth.module.Krb5LoginModule
+spring.kafka.listener.ack-count=10
+spring.kafka.listener.ack-mode=TIME
+spring.kafka.listener.ack-time=5000
+spring.kafka.listener.concurrency=10
+spring.kafka.listener.poll-timeout=30000
+spring.kafka.listener.type=single
+spring.kafka.producer.retries=3
+
+# ----------------------------------------
+# LOGGING PROPERTIES
+# ----------------------------------------
+#logging.config=classpath:log4j2.xml
+#logging.path=/opt/logs
+logging.exception-conversion-word=%wEx
+logging.file=/opt/logs/video.log
+logging.file.max-history=0
+logging.file.max-size=10MB
+logging.pattern.dateformat=yyyy-MM-dd HH:mm:ss.SSS
+logging.pattern.level=%5p
+logging.register-shutdown-hook=false
+logging.level.root=info
+logging.level.org.springframework=info
+logging.level.com.dfssi=INFO
+
+# SqlMap logging configuration...
+logging.level.com.ibatis=DEBUG
+logging.level.com.ibatis.common.jdbc.SimpleDataSource=DEBUG
+logging.level.com.ibatis.sqlmap.engine.cache.CacheModel=DEBUG
+logging.level.com.ibatis.sqlmap.engine.impl.SqlMapClientImpl=DEBUG
+logging.level.com.ibatis.sqlmap.engine.builder.xml.SqlMapParser=DEBUG
+logging.level.com.ibatis.common.util.StopWatch=DEBUG
+logging.level.java.sql.Connection=DEBUG
+logging.level.java.sql.Statement=DEBUG
+logging.level.java.sql.PreparedStatement=DEBUG
+logging.level.java.sql.ResultSet=DEBUG
+
+# ----------------------------------------
+# XDiamond PROPERTIES
+# ----------------------------------------
+xdiamond.serverHost=172.16.1.224
+xdiamond.serverPort=5678
+xdiamond.groupId=com.dfssi.dataplatform
+xdiamond.artifactId=DataDevIDEVideoManage
+xdiamond.version=1.0
+xdiamond.profile=test
+xdiamond.secretKey=i0IfAFbrwmHCuJE1
+xdiamond.syncToSystem=true

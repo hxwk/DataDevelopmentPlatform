@@ -1,0 +1,8 @@
+#\u670D\u52A1\u7AEF\u53E3
+server.port=6666
+spring.profiles.active=dev
+spring.application.name=ssi-register
+
+info.appname=\u5FAE\u670D\u52A1\u6CE8\u518C\u4E2D\u5FC3
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8

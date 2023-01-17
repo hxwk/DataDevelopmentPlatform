@@ -1,0 +1,188 @@
+{
+  id: '20161202112036000001',
+  name: 'DEV Offline Join Test',
+  modelTypeId: '20171123152036000001',
+  description: 'Join Model',
+  steps: [
+    {
+      id: '20161202112036000002',
+      name: 'Hive Table order',
+      stepTypeId: '20171120152037000001',
+      guiX: 0,
+      guiY: 0,
+      params: [
+        {
+          schema: {
+            valueStr: 'dev_analysis'
+          },
+          tableName: {
+            valueStr: 'order'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161202112036000003',
+      name: 'Hive Table details',
+      stepTypeId: '20171120152037000001',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          schema: {
+            valueStr: 'dev_analysis'
+          },
+          tableName: {
+            valueStr: 'details'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161202112036000004',
+      name: 'Preprocess Map details',
+      stepTypeId: '20171120152039000102',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          sourceColName: {
+            valueStr: 'id'
+          },
+          destColName: {
+            valueStr: 'details_id'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161202112036000005',
+      name: 'Preprocess Join',
+      stepTypeId: '20171120152039000101',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          connType: {
+            valueStr: 'left_outer'
+          },
+          left: {
+            valueStr: '20161202112036000002'
+          },
+          right: {
+            valueStr: '20161202112036000004'
+          },
+          leftColName: {
+            valueStr: 'id'
+          },
+          rightColName: {
+            valueStr: 'order_id'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161202112036000006',
+      name: 'Preprocess Select',
+      stepTypeId: '20171120152039000103',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          colName: {
+            valueStr: 'id'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'details_id'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'name'
+          }
+        },
+        {
+          colName: {
+            valueStr: 'product_name'
+          }
+        }
+      ]
+    },
+    {
+      id: '20161202112036000007',
+      name: 'Output Hive Table order_details',
+      stepTypeId: '20171120152040002001',
+      guiX: 10,
+      guiY: 10,
+      params: [
+        {
+          schema: {
+            valueStr: 'dev_analysis'
+          },
+          tableName: {
+            valueStr: 'order_details'
+          }
+        }
+      ]
+    }
+  ],
+  links: [
+    {
+      id: '20161202112036100001',
+      modelStepFrom: {
+        id: '20161202112036000002',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepEnd: {
+        id: '20161202112036000005',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    },
+    {
+      id: '20161202112036100002',
+      modelStepFrom: {
+        id: '20161202112036000003',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepEnd: {
+        id: '20161202112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    },
+    {
+      id: '20161202112036100003',
+      modelStepFrom: {
+        id: '20161202112036000004',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepEnd: {
+        id: '20161202112036000005',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    },
+    {
+      id: '20161202112036100004',
+      modelStepFrom: {
+        id: '20161202112036000005',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepEnd: {
+        id: '20161202112036000006',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    },
+    {
+      id: '20161202112036100005',
+      modelStepFrom: {
+        id: '20161202112036000006',
+        pos: 'Top|Bottom|Right|Left'
+      },
+      modelStepEnd: {
+        id: '20161202112036000007',
+        pos: 'Top|Bottom|Right|Left'
+      }
+    }
+  ]
+}

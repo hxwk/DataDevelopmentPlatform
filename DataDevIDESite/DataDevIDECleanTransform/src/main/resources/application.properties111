@@ -1,0 +1,10 @@
+#spring boot \u9ED8\u8BA4\u914D\u7F6E\u6587\u4EF6
+spring.profiles.active=dev
+server.port=8090
+spring.application.name=ide-cleanTransform
+#server.context-path=/DataDevIDECleanTransform
+
+info.appname=\u6E05\u6D17\u8F6C\u6362\u7BA1\u7406
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8
+

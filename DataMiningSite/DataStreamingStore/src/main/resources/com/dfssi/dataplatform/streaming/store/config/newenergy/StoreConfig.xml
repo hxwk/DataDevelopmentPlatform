@@ -1,0 +1,206 @@
+<streaming-store-config>
+    <context>
+        <params>
+            <param name="nameNode" value="hdfs://devmaster:8020"/>
+            <param name="kafkaGroupName" value="newenergy-kafka-to-hive-group"/>
+            <!--210 DEV -->
+
+            <!--230 PROD -->
+            <!--<param name="kafkaBrokers" value="172.16.1.121:9092,172.16.1.122:9092,172.16.1.123:9092"/>-->
+            <!--<param name="kafkaTopics" value="NE_VECHILE_DATA_TOPIC"/>-->
+            <!--<param name="hiveExternalTableDataRootPath" value="/user/hdfs/hiveexternal/prod/"/>-->
+            <!--<param name="hiveSchema" value="prod_analysis"/>-->
+            <!--230 DEV -->
+            <param name="kafkaBrokers" value="172.16.1.209:9092"/>
+            <param name="kafkaTopics" value="streamingdev"/>
+            <param name="hiveExternalTableDataRootPath" value="/user/hdfs/hiveexternal/dev/"/>
+            <param name="hiveSchema" value="dev_analysis"/>
+
+            <param name="dataPartitionNum" value="2"/>
+            <param name="hadoopConfUser" value="hdfs"/>
+            <param name="msgIdAttrName" value="msgId"/>
+            <param name="errorMsgTableName" value="error_message"/>
+            <param name="checkTableExist" value="true"/>
+            <param name="streamingDuration" value="120"/>
+            <param name="mergeEnableCompress" value="false"/>
+            <param name="mergeCompressMethod" value="GZIP"/>
+            <param name="mergePartitionNum" value="2"/>
+        </params>
+    </context>
+    <hive-table-defs>
+        <hive-table name="error_message">
+            <columns>
+                <column name="id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="msg_content" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="error_msg" type="string" length="" precision="" paramizedClassName=""/>
+            </columns>
+            <partitions>
+                <column name="part_year" type="BIGINT" partitionRulePattern="yyyy"/>
+                <column name="part_yearmonthday" type="BIGINT" partitionRulePattern="yyyyMMdd"/>
+            </partitions>
+        </hive-table>
+        <hive-table name="terminal_3296003">
+            <columns>
+                <column name="id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="vin" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="collect_time" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="alarm_identification" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="alarm_identification_list" type="array" length="" precision=""
+                        paramizedClassName="string"/>
+                <column name="driver_motor_failurecode_list" type="array" length="" precision=""
+                        paramizedClassName="string"/>
+                <column name="driver_motor_failuren2" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="engine_failurecode_list" type="array" length="" precision="" paramizedClassName="string"/>
+                <column name="engine_failuren3" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="alarm_information_type" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="max_alarm_rating" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="other_failurecode_list" type="array" length="" precision="" paramizedClassName="string"/>
+                <column name="other_failuren4" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="rechargeable_storagecode_list" type="array" length="" precision=""
+                        paramizedClassName="string"/>
+                <column name="rechargeable_storagedevicen1" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="drivemotor_informationtype" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="drivermotor_number" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="extremum_informationtype" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="high_temperature_probeserial" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="high_temperature_subnum" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="high_vbatterycell_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="high_vbattery_subnum" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="low_temperature_probeserial" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="low_temperature_subnum" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="low_vbatterycell_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="low_vbattery_subnum" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="max_temperature_value" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="maximum_battery_voltage" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="min_temperature_value" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="minimum_battery_voltage" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="gps_informationtype" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="latitude" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="location_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="locations" type="array" length="" precision="" paramizedClassName="string"/>
+                <column name="longitude" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="accumulative_mile" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="charging_status" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="charging_status_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="dc_status" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="dc_status_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="gear_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="gears" type="array" length="" precision="" paramizedClassName="string"/>
+                <column name="insulation_resistance" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="run_mode" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="run_mode_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="soc" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="speed" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="total_electricity" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="total_voltage" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="vehicle_informationtype" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="vehicle_status" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="vehicle_status_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+            </columns>
+            <partitions>
+                <column name="part_year" type="BIGINT" partitionRulePattern="yyyy"/>
+                <column name="part_yearmonthday" type="BIGINT" partitionRulePattern="yyyyMMdd"/>
+            </partitions>
+        </hive-table>
+        <hive-table name="terminal_3296003_drivemotor">
+            <columns>
+                <column name="id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="terminal_32960_id" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="collect_time" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="driver_motorcontroller_temperature" type="BIGINT" length="" precision=""
+                        paramizedClassName=""/>
+                <column name="driver_motor_rpm" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="driver_motor_serial" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="driver_motor_state" type="string" length="" precision="" paramizedClassName=""/>
+                <column name="driver_motor_state_code" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="driver_motor_temperature" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="driver_motor_torque" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="information_type" type="BIGINT" length="" precision="" paramizedClassName=""/>
+                <column name="motor_controller_input_voltage" type="BIGINT" length="" precision=""
+                        paramizedClassName=""/>
+                <column name="motor_controller_negativedccurrent" type="BIGINT" length="" precision=""
+                        paramizedClassName=""/>
+            </columns>
+            <partitions>
+                <column name="part_year" type="BIGINT" partitionRulePattern="yyyy"/>
+                <column name="part_yearmonthday" type="BIGINT" partitionRulePattern="yyyyMMdd"/>
+            </partitions>
+        </hive-table>
+    </hive-table-defs>
+    <messsage-defs>
+        <message name="32960_03" toTableName="terminal_3296003" dateAttrName="collectTime">
+            <attrs>
+                <attr name="id" toFieldName="id"/>
+                <attr name="vin" toFieldName="vin"/>
+                <attr name="collectTime" toFieldName="collect_time"/>
+                <attr name="alarmIdentification" toFieldName="alarm_identification"/>
+                <attr name="alarmIdentificationList" toFieldName="alarm_identification_list"/>
+                <attr name="driverMotorFailureCodeList" toFieldName="driver_motor_failurecode_list"/>
+                <attr name="driverMotorFailureN2" toFieldName="driver_motor_failuren2"/>
+                <attr name="engineFailureCodeList" toFieldName="engine_failurecode_list"/>
+                <attr name="engineFailureN3" toFieldName="engine_failuren3"/>
+                <attr name="alarmInformationType" toFieldName="alarm_information_type"/>
+                <attr name="maxAlarmRating" toFieldName="max_alarm_rating"/>
+                <attr name="otherFailureCodeList" toFieldName="other_failurecode_list"/>
+                <attr name="otherFailureN4" toFieldName="other_failuren4"/>
+                <attr name="rechargeableStorageCodeList" toFieldName="rechargeable_storagecode_list"/>
+                <attr name="rechargeableStorageDeviceN1" toFieldName="rechargeable_storagedevicen1"/>
+                <attr name="driveMotorInformationType" toFieldName="drivemotor_informationtype"/>
+                <attr name="driverMotorNumber" toFieldName="drivermotor_number"/>
+                <attr name="extremumInformationType" toFieldName="extremum_informationtype"/>
+                <attr name="highTemperatureProbeSerial" toFieldName="high_temperature_probeserial"/>
+                <attr name="highTemperatureSubNum" toFieldName="high_temperature_subnum"/>
+                <attr name="highVBatteryCellCode" toFieldName="high_vbatterycell_code"/>
+                <attr name="highVBatterySubNum" toFieldName="high_vbattery_subnum"/>
+                <attr name="lowTemperatureProbeSerial" toFieldName="low_temperature_probeserial"/>
+                <attr name="lowTemperatureSubNum" toFieldName="low_temperature_subnum"/>
+                <attr name="lowVBatteryCellCode" toFieldName="low_vbatterycell_code"/>
+                <attr name="lowVBatterySubNum" toFieldName="low_vbattery_subnum"/>
+                <attr name="maxTemperatureValue" toFieldName="max_temperature_value"/>
+                <attr name="maximumBatteryVoltage" toFieldName="maximum_battery_voltage"/>
+                <attr name="minTemperatureValue" toFieldName="min_temperature_value"/>
+                <attr name="minimumBatteryVoltage" toFieldName="minimum_battery_voltage"/>
+                <attr name="gpsInformationType" toFieldName="gps_informationtype"/>
+                <attr name="latitude" toFieldName="latitude"/>
+                <attr name="locationCode" toFieldName="location_code"/>
+                <attr name="locations" toFieldName="locations"/>
+                <attr name="longitude" toFieldName="longitude"/>
+                <attr name="accumulativeMile" toFieldName="accumulative_mile"/>
+                <attr name="chargingStatus" toFieldName="charging_status"/>
+                <attr name="chargingStatusCode" toFieldName="charging_status_code"/>
+                <attr name="dcStatus" toFieldName="dc_status"/>
+                <attr name="dcStatusCode" toFieldName="dc_status_code"/>
+                <attr name="gearCode" toFieldName="gear_code"/>
+                <attr name="gears" toFieldName="gears"/>
+                <attr name="insulationResistance" toFieldName="insulation_resistance"/>
+                <attr name="runMode" toFieldName="run_mode"/>
+                <attr name="runModeCode" toFieldName="run_mode_code"/>
+                <attr name="soc" toFieldName="soc"/>
+                <attr name="speed" toFieldName="speed"/>
+                <attr name="totalElectricity" toFieldName="total_electricity"/>
+                <attr name="totalVoltage" toFieldName="total_voltage"/>
+                <attr name="vehicleInformationType" toFieldName="vehicle_informationtype"/>
+                <attr name="vehicleStatus" toFieldName="vehicle_status"/>
+                <attr name="vehicleStatusCode" toFieldName="vehicle_status_code"/>
+            </attrs>
+        </message>
+        <message name="32960_03_drivemotor" toTableName="terminal_3296003_drivemotor" dateAttrName="collectTime">
+            <attrs>
+                <attr name="id" toFieldName="id"/>
+                <attr name="terminal_32960_id" toFieldName="terminal_32960_id"/>
+                <attr name="collectTime" toFieldName="collect_time"/>
+                <attr name="driverMotorControllerTemperature" toFieldName="driver_motorcontroller_temperature"/>
+                <attr name="driverMotorRPM" toFieldName="driver_motor_rpm"/>
+                <attr name="driverMotorSerial" toFieldName="driver_motor_serial"/>
+                <attr name="driverMotorState" toFieldName="driver_motor_state"/>
+                <attr name="driverMotorStateCode" toFieldName="driver_motor_state_code"/>
+                <attr name="driverMotorTemperature" toFieldName="driver_motor_temperature"/>
+                <attr name="driverMotorTorque" toFieldName="driver_motor_torque"/>
+                <attr name="informationType" toFieldName="information_type"/>
+                <attr name="motorControllerInputVoltage" toFieldName="motor_controller_input_voltage"/>
+                <attr name="motorControllerNegativeDCCurrent" toFieldName="motor_controller_negativedccurrent"/>
+            </attrs>
+        </message>
+    </messsage-defs>
+
+</streaming-store-config>

@@ -1,0 +1,73 @@
+<ccv-fuel id="0" name="FuelDataAnalysisFromKafka" interval="30">
+
+    <kafka-input id="1" type="kafka" topics="POSITIONINFORMATION_0200_TOPIC">
+        <params>
+            <param name="auto.offset.reset" value="smallest"/>
+            <!-- <param name="metadata.broker.list" value="172.16.1.121:9092,172.16.1.122:9092,172.16.1.121:9092"/> -->
+            <param name="group.id" value="FuelDataAnalysisFromKafka"/>
+            <param name="refresh.leader.backoff.ms" value="2000"/>
+            <param name="num.consumer.fetchers" value="1"/>
+        </params>
+    </kafka-input>
+
+    <databases>
+       <database id="gp-ccv-fuel"/>
+    </databases>
+
+    <analysis>
+        <analysis-databse id="gp-ccv-fuel" totalfuel="demo_vehicle_total_fuel" fueltrip="demo_vehicle_trip" fuel="demo_vehicle_fuel" abnormaldriving="demo_vehicle_abnormal_driving"/>
+        <analysis-redis master="mymaster" sentinels="172.16.1.201:26379,172.16.1.201:26380" password="112233" dbNum="9" timeout="5000"/>
+        <analysis-fields time="gpsTime"/>
+        <!-- 告警内容对应的标签 -->
+        <analysis-abnormalLabels>
+            <label name="疲劳" value="0"/>
+            <label name="打电话" value="1"/>
+            <label name="抽烟" value="2"/>
+            <label name="未系安全带" value="3"/>
+        </analysis-abnormalLabels>
+
+        <!-- 数据过滤相关 -->
+        <analysis-filters>
+            <filter field="gpsTime" type="range" min="1483200000000"  nullable="true"/>
+            <!-- 方向 -->
+            <filter field="direction" type="range" min="0" max="360" nullable="true"/>
+            <filter field="lon" type="range" min="-180" max="180" nullable="false"/>
+            <filter field="lat" type="range" min="-90" max="90" nullable="false"/>
+        </analysis-filters>
+
+        <analysis-trip>
+            <!-- 有效时间范围，即两条数据的时间间隔在此范围内，就一定可以认为是同一行程 -->
+            <time-valid value="1m"/>
+            <!-- 可接受时间范围，即两条数据时间间隔在此范围内，在一定前提上可以认为是同一行程 -->
+            <time-acceptable value="5m"/>
+            <!-- 无效时间范围，即两条数据时间间隔超过此范围，则一定可以认为不是同一行程 -->
+            <time-refuse value="15m"/>
+            <!-- 可接受的距离范围，两条数据的在一定前提上可以认为是同一行程 单位是km -->
+            <mile-acceptable value="1"/>
+        </analysis-trip>
+
+        <analysis-es index="ccv_alarm_detail" type="ccv_alarm_detail" createRule="month">
+            <settings>
+                <setting  name="index.analysis.analyzer.default.type" value="keyword"/>
+                <setting  name="index.number_of_shards" value="1"/>
+                <setting  name="index.refresh_interval" value="30s"/>
+                <setting  name="index.translog.durability" value="ASYNC"/>
+                <setting  name="index.translog.flush_threshold_size" value="2g"/>
+                <setting  name="index.translog.sync_interval" value="120s"/>
+            </settings>
+            <params>
+                <param name="es.nodes" value="172.16.1.221,172.16.1.222,172.16.1.223"/>
+                <param name="es.port" value="9200"/>
+                <param name="es.clustername" value="elk"/>
+                <param name="es.mapping.id" value="id"/>
+                <param name="es.batch.size.entries" value="5000"/>
+            </params>
+        </analysis-es>
+    </analysis>
+
+    <condition>
+        <condition-hive database="prod_analysis" terminal0200="terminal_0200" terminal0705="terminal_0705"/>
+        <condition-database id="gp-ccv-fuel"  conditionfuel="vehicle_workcondition_fuel" area="vehicle_area_fuel"/>
+    </condition>
+
+</ccv-fuel>

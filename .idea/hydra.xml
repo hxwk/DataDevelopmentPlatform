@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="HydraSettings">
+    <option name="hydraStorePath" value="E:\ssiwork\BigDataNew\SSIDataPlatform\05-Implement\SourceCode\trunk\SSIDataPlatform\DataDevelopmentPlatform\.hydra\idea" />
+    <option name="noOfCores" value="3" />
+    <option name="projectRoot" value="E:\ssiwork\BigDataNew\SSIDataPlatform\05-Implement\SourceCode\trunk\SSIDataPlatform\DataDevelopmentPlatform" />
+    <option name="sourcePartitioner" value="auto" />
+  </component>
+</project>

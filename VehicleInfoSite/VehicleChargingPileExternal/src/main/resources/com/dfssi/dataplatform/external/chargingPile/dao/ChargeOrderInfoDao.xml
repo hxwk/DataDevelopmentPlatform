@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.external.chargingPile.dao.ChargeOrderInfoDao">
+
+    <sql id="orderColumns">
+        operator_id,connector_id,start_charge_seq,
+        user_charge_type,mobile_number,money,
+        elect_money,service_money,elect,
+        cusp_elect,cusp_elect_price,cusp_service_price,
+        cusp_money,cusp_elect_money,cusp_service_money,
+        peak_elect,peak_elect_price,peak_service_price,
+        peak_money,peak_elect_money,peak_service_money,
+        plat_elect,flat_elect_price,flat_service_price,
+        flat_money,flat_elect_money,flat_service_money,
+        valley_elect,valley_elect_price,valley_service_price,
+        valley_money,valley_elect_money,valley_service_money,
+        start_time,end_time,payment_amount,
+        pay_time,pay_channel,discount_info,
+        total_power,total_elec_money,total_service_money,
+        total_money,stop_reason,sum_period
+    </sql>
+
+    <delete id="delete">
+        delete from charge_order_info where start_charge_seq=#{id}
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO charge_order_info(operator_id, connector_id, start_charge_seq,user_charge_type,
+        mobile_number,money,elect_money,service_money,elect,cusp_elect,cusp_elect_price,
+        cusp_service_price,cusp_money,cusp_elect_money,cusp_service_money,peak_elect,peak_elect_price,
+        peak_service_price,peak_money,peak_elect_money,peak_service_money,plat_elect,flat_elect_price,
+        flat_service_price,flat_money,flat_elect_money,flat_service_money,valley_elect,valley_elect_price,
+        valley_service_price,valley_money,valley_elect_money,valley_service_money,start_time,end_time,payment_amount,
+        pay_time,pay_channel,discount_info,total_power,total_elec_money,total_service_money,total_money,
+        stop_reason,sum_period
+        )
+        values
+        (#{OperatorID},#{ConnectorID},#{StartChargeSeq},#{UserChargeType},#{MobileNumber},
+        #{money},#{ElectMoney},#{ServiceMoney},#{Elect},#{CuspElect},#{CuspElectPrice},
+        #{CuspServicePrice},#{CuspMoney},#{CuspElectMoney},#{CuspServiceMoney},#{PeakElect},
+        #{PeakElectPrice},#{PeakServicePrice},#{PeakMoney},#{PeakElectMoney},#{PeakServiceMoney},
+        #{FlatElect},#{FlatElectPrice},#{FlatServicePrice},#{FlatMoney},#{FlatElectMoney},
+        #{FlatServiceMoney},#{ValleyElect},#{ValleyElectPrice},#{ValleyServicePrice},#{ValleyMoney},
+        #{ValleyElectMoney},#{ValleyServiceMoney},#{StartTime},#{EndTime},#{PaymentAmount},
+        #{PayTime},#{PayChannel},#{DiscountInfo},#{TotalPower},#{TotalElecMoney},#{TotalServiceMoney},
+        #{TotalMoney},#{StopReason},#{SumPeriod}
+        )
+    </insert>
+
+    <select id="listOrderInfo" resultType="com.dfssi.dataplatform.external.chargingPile.entity.ChargeOrderInfoEntity">
+        SELECT
+        <include refid="orderColumns"/>
+        FROM charge_order_info
+    </select>
+
+    <resultMap id="chargeMap" type="com.dfssi.dataplatform.external.chargingPile.entity.TwoValueResultEntity">
+        <result column="endTimeMonth" property="time"></result>
+        <result column="totalNum" property="value"></result>
+    </resultMap>
+
+    <select id="chargeElecMonth" resultMap="chargeMap">
+        select substr(end_time, 1, 7) as endTimeMonth, sum(elect) as totalNum from charge_order_info where substr(end_time, 1, 7) = to_char(now(), 'yyyy-mm') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeElecYear" resultMap="chargeMap">
+        select substr(end_time, 1, 4) as endTimeMonth, sum(elect) as totalNum from charge_order_info where substr(end_time, 1, 4) = to_char(now(), 'yyyy') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeElecTotal" resultType="java.lang.Long">
+        select sum(elect) as totalNum from charge_order_info
+    </select>
+
+    <select id="chargeElecDay" resultMap="chargeMap">
+        select substr(end_time, 1, 13) as endTimeMonth, sum(elect) as totalNum from charge_order_info where substr(end_time, 1, 10) = to_char(now(), 'yyyy-mm-dd') GROUP BY endTimeMonth
+        UNION
+        select substr(end_time, 1, 13) as endTimeMonth, sum(elect) as totalNum from charge_order_info where substr(end_time, 1, 10) = to_char(now()-interval '1 day', 'yyyy-mm-dd') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeElecTwelveMonth" resultMap="chargeMap">
+        select substr(end_time, 1, 7) as endTimeMonth, sum(elect) as totalNum from charge_order_info where substr(end_time, 1, 7) >= to_char(now()-interval '11 month', 'yyyy-mm') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeElecTwelveDay" resultMap="chargeMap">
+        select substr(end_time, 1, 10) as endTimeMonth, sum(elect) as totalNum from charge_order_info where substr(end_time, 1, 10) >= to_char(now()-interval '11 day', 'yyyy-mm-dd') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeAmountMonth" resultMap="chargeMap">
+        select substr(end_time, 1, 7) as endTimeMonth, sum(money) as totalNum from charge_order_info where substr(end_time, 1, 7) = to_char(now(), 'yyyy-mm') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeAmountYear" resultMap="chargeMap">
+        select substr(end_time, 1, 4) as endTimeMonth, sum(money) as totalNum from charge_order_info where substr(end_time, 1, 4) = to_char(now(), 'yyyy') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeAmountTotal" resultType="java.lang.Long">
+        select sum(money) as totalNum from charge_order_info
+    </select>
+
+    <select id="chargeAmountDay" resultMap="chargeMap">
+        select substr(end_time, 1, 13) as endTimeMonth, sum(money) as totalNum from charge_order_info where substr(end_time, 1, 10) = to_char(now(), 'yyyy-mm-dd') GROUP BY endTimeMonth
+        UNION
+        select substr(end_time, 1, 13) as endTimeMonth, sum(money) as totalNum from charge_order_info where substr(end_time, 1, 10) = to_char(now()-interval '1 day', 'yyyy-mm-dd') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeAmountTwelveMonth" resultMap="chargeMap">
+        select substr(end_time, 1, 7) as endTimeMonth, sum(money) as totalNum from charge_order_info where substr(end_time, 1, 7) >= to_char(now()-interval '11 month', 'yyyy-mm') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeAmountTwelveDay" resultMap="chargeMap">
+        select substr(end_time, 1, 10) as endTimeMonth, sum(money) as totalNum from charge_order_info where substr(end_time, 1, 10) >= to_char(now()-interval '11 day', 'yyyy-mm-dd') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeFrequencyMonth" resultMap="chargeMap">
+        select substr(end_time, 1, 7) as endTimeMonth, count(start_charge_seq) as totalNum from charge_order_info where substr(end_time, 1, 7) = to_char(now(), 'yyyy-mm') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeFrequencyYear" resultMap="chargeMap">
+        select substr(end_time, 1, 4) as endTimeMonth, count(start_charge_seq) as totalNum from charge_order_info where substr(end_time, 1, 4) = to_char(now(), 'yyyy') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeFrequencyTotal" resultType="java.lang.Long">
+        select count(start_charge_seq) as totalNum from charge_order_info
+    </select>
+
+    <select id="chargeFrequencyDay" resultMap="chargeMap" >
+        select substr(end_time, 1, 13) as endTimeMonth, count(start_charge_seq) as totalNum from charge_order_info where substr(end_time, 1, 10) = to_char(now(), 'yyyy-mm-dd') GROUP BY endTimeMonth
+        UNION
+        select substr(end_time, 1, 13) as endTimeMonth, count(start_charge_seq) as totalNum from charge_order_info where substr(end_time, 1, 10) = to_char(now()-interval '1 day', 'yyyy-mm-dd') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeFrequencyTwelveMonth" resultMap="chargeMap">
+        select substr(end_time, 1, 7) as endTimeMonth, count(start_charge_seq) as totalNum from charge_order_info where substr(end_time, 1, 7) >= to_char(now()-interval '11 month', 'yyyy-mm') GROUP BY endTimeMonth
+    </select>
+
+    <select id="chargeFrequencyTwelveDay" resultMap="chargeMap">
+        select substr(end_time, 1, 10) as endTimeMonth, count(start_charge_seq) as totalNum from charge_order_info where substr(end_time, 1, 10) >= to_char(now()-interval '11 day', 'yyyy-mm-dd') GROUP BY endTimeMonth
+    </select>
+</mapper>

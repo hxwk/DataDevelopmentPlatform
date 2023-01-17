@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.analysis.workflow.mapper.MonitorCoordinatorDao">
+
+    <select id="getOozieIdByModelId" resultType="java.lang.String">
+        SELECT oozie_task_id
+        FROM monitor_workflow_job
+        WHERE model_id = #{modelId}
+    </select>
+
+</mapper>

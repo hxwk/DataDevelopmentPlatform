@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.devmanager.analysistask.mvc.dao.AnalysisApplicationFormDao">
+
+    <resultMap id="resourceMap" type="analysisApplicationFormEntity">
+        <id property="id" column="id"/>
+        <result property="dataresId" column="datares_id"/>
+        <result property="verifyStatus" column="verify_status"/>
+        <result property="applicator" column="applicator"/>
+        <result property="applicationDate" column="application_date"/>
+        <result property="applicationReason" column="application_reason"/>
+        <result property="cpuUsage" column="cpu_usage"/>
+        <result property="memoryUsage" column="memory_usage"/>
+        <result property="diskUsage" column="disk_usage"/>
+        <result property="approver" column="approver"/>
+        <result property="approveTime" column="approve_time"/>
+        <result property="approveOppinion" column="approve_oppinion"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <delete id="delete">
+        DELETE FROM analysis_application_form WHERE id=#{id}
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO analysis_application_form(
+          datares_id,
+          verify_status,
+          applicator,
+          application_date,
+          application_reason,
+          cpu_usage,
+          memory_usage,
+          disk_usage,
+          approver,
+          approve_time,
+          approve_oppinion,
+          is_valid,
+          create_date,
+          create_user,
+          update_date,
+          update_user
+        )
+        VALUES
+        (
+          #{dataresId,jdbcType=VARCHAR},
+          #{verifyStatus,jdbcType=VARCHAR},
+          #{dataresDesc,jdbcType=VARCHAR},
+          #{applicator,jdbcType=VARCHAR},
+          STR_TO_DATE(#{applicationDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{applicationReason,jdbcType=VARCHAR},
+          #{cpuUsage,jdbcType=NUMERIC},
+          #{memoryUsage,jdbcType=NUMERIC},
+          #{diskUsage,jdbcType=NUMERIC},
+          #{approver,jdbcType=VARCHAR},
+          STR_TO_DATE(#{approveTime,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{approveOppinion,jdbcType=VARCHAR},
+          #{isValid,jdbcType=NUMERIC},
+          STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{createUser,jdbcType=VARCHAR},
+          STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+          #{updateUser,jdbcType=VARCHAR}
+        )
+
+    </insert>
+
+    <select id="findList" resultMap="resourceMap" parameterType="com.dfssi.dataplatform.devmanager.analysistask.mvc.entity.AnalysisApplicationFormEntity">
+        SELECT
+        id,
+        datares_id,
+        verify_status,
+        applicator,
+        application_date,
+        application_reason,
+        cpu_usage,
+        memory_usage,
+        disk_usage,
+        approver,
+        approve_time,
+        approve_oppinion,
+        is_valid,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        FROM
+        analysis_application_form
+          where is_valid = 1
+        <if test="applicator != null">
+            and create_user LIKE '%${applicator}%'
+        </if>
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="createUser != null">
+            and create_user LIKE '%${createUser}%'
+        </if>
+
+    </select>
+
+    <select id="getById" resultMap="resourceMap" parameterType="java.lang.String">
+        SELECT
+        id,
+        datares_id,
+        verify_status,
+        applicator,
+        application_date,
+        application_reason,
+        cpu_usage,
+        memory_usage,
+        disk_usage,
+        approver,
+        approve_time,
+        approve_oppinion,
+        is_valid,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        FROM
+        analysis_application_form
+        where is_valid = 1 and id = #{id}
+        limit 1
+    </select>
+
+</mapper>

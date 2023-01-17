@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.access.mvc.dao.TaskAccessStepInfoDao">
+
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.ide.access.mvc.entity.TaskAccessStepInfoEntity">
+        <id property="id" column="pk_id"/>
+        <result property="taskId" column="task_id"/>
+        <result property="pluginId" column="plugin_id"/>
+        <result property="cleantransformId" column="cleantransform_id"/>
+        <result property="leftnodeId" column="leftnode_id"/>
+        <result property="stepName" column="step_name"/>
+        <result property="guiX" column="gui_x"/>
+        <result property="guiY" column="gui_y"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <delete id="deleteByTaskIdBackup">
+        UPDATE dv_accesstask_stepinfo set is_deleted = 1 WHERE task_id=#{taskId} and is_deleted = 0
+    </delete>
+
+    <delete id="deleteByTaskId">
+        delete from dv_accesstask_stepinfo where task_id=#{taskId} and is_deleted = 0
+    </delete>
+
+    <delete id="deleteByTaskAccessStepInfoMap" parameterType="Map">
+        UPDATE dv_accesstask_stepinfo
+        set
+        pk_id = #{newId},
+        is_deleted = 1
+        WHERE pk_id =#{oldId} and task_id=#{taskId} and is_deleted = 0
+    </delete>
+
+    <insert id="insertMutil" parameterType="java.util.List">
+        INSERT INTO dv_accesstask_stepinfo(
+        pk_id,
+        task_id,
+        plugin_id,
+        step_name,
+        gui_x,
+        gui_y,
+        cleantransform_id,
+        leftnode_id,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.taskId,jdbcType=VARCHAR},
+            #{item.pluginId,jdbcType=VARCHAR},
+            #{item.stepName,jdbcType=VARCHAR},
+            #{item.guiX,jdbcType=INTEGER},
+            #{item.guiY,jdbcType=INTEGER},
+            #{item.cleantransformId,jdbcType=VARCHAR},
+            #{item.leftnodeId,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.createUser,jdbcType=VARCHAR},
+            STR_TO_DATE(#{item.updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+            #{item.updateUser,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
+
+    <select id="findListByTaskId" resultMap="resultMap">
+        SELECT
+        pk_id,
+        task_id,
+        plugin_id,
+        step_name,
+        gui_x,
+        gui_y,
+        cleantransform_id,
+        leftnode_id,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user createUser,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        dv_accesstask_stepinfo
+        <trim prefix="WHERE" >
+            is_deleted = 0 and task_id = #{taskId}
+        </trim>
+    </select>
+
+</mapper>

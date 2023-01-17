@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="CONTEXT_BASE">/log/dev/web</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="resourceRollingFile"
+                     fileName="${CONTEXT_BASE}/meta/resource.log"
+                     filePattern="${CONTEXT_BASE}/meta/$${date:yyyy-MM}/resource%d{MM-dd-yyyy}-%i.log">
+            <PatternLayout>
+                <Pattern>%d %p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+        <Console name="consolePrint" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="warn">
+            <AppenderRef ref="resourceRollingFile"/>
+            <AppenderRef ref="consolePrint"/>
+        </Root>
+        <Logger name="resourceRollingFile" level="debug" additivity="false">
+            <AppenderRef ref="resourceRollingFile"/>
+        </Logger>
+        <Logger name="org.springframework" level="info">
+            <AppenderRef ref="resourceRollingFile"/>
+            <AppenderRef ref="consolePrint"/>
+        </Logger>
+        <Logger name="com.dfssi" level="info">
+            <AppenderRef ref="resourceRollingFile"/>
+            <AppenderRef ref="consolePrint"/>
+        </Logger>
+
+        <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
+        <logger name="com.dfssi.dataplatform.userhome.dao" level="DEBUG" additivity="false">
+            <AppenderRef ref="resourceRollingFile"/>
+            <AppenderRef ref="consolePrint"/>
+        </logger>
+    </Loggers>
+</Configuration>

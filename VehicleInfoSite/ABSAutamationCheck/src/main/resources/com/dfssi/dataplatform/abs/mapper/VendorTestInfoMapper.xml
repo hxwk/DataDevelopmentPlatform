@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.abs.mapper.VendorTestInfoMapper">
+
+    <select id="getCurrentVendorInfo" resultType="com.dfssi.dataplatform.abs.entity.VendorTestInfoEntity">
+        select vendor, test_name, status, test_order, test_date, vehicle_number, check_number, total_number, is_valid from vendor_test_info
+        WHERE test_date = #{date} AND is_valid = 1 AND status = 1
+        ORDER BY test_order
+        LIMIT 1
+    </select>
+
+    <select id="getNextVendorName" resultType="java.lang.String">
+        select vendor from vendor_test_info
+        WHERE test_date = #{date} AND is_valid = 1 AND status = 0
+        ORDER BY test_order
+        LIMIT 1
+    </select>
+
+</mapper>

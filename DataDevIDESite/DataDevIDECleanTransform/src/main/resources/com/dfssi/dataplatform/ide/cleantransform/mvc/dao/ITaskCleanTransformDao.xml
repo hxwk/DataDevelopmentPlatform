@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dfssi.dataplatform.ide.cleantransform.mvc.dao.ITaskCleanTransformDao">
+    <resultMap id="resultMap" type="com.dfssi.dataplatform.ide.cleantransform.mvc.entity.TaskCleanTransformEntity">
+        <id property="id" column="pk_id"/>
+        <result property="cleanName" column="clean_name"/>
+        <result property="descr" column="description"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+    <select id="findList" resultMap="resultMap">
+        SELECT
+        pk_id,
+        clean_name,
+        description,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        dv_cleantransform
+        <trim prefix="WHERE" >
+            is_deleted = 0
+            <if test="cleanName!=null and cleanName!=''">
+                and clean_name LIKE '%${cleanName}%'
+            </if>
+            <if test="field!=null and field!=''">
+                order by ${field}  ${orderType}
+            </if>
+        </trim>
+    </select>
+
+    <select id="get" resultMap="resultMap">
+        SELECT
+        pk_id,
+        clean_name,
+        description,
+        is_deleted,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        create_user,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,
+        update_user
+        FROM
+        dv_cleantransform
+        WHERE is_deleted = 0 and pk_id = #{id}
+    </select>
+
+
+    <update id="update">
+        UPDATE dv_cleantransform
+        SET clean_name = #{cleanName},
+        description = #{descr},
+        update_date = #{updateDate},
+        update_user = #{updateUser}
+        WHERE pk_id = #{id}
+    </update>
+
+    <!--主表新增一条数据-->
+    <insert id="insert">
+        INSERT INTO dv_cleantransform(
+        pk_id,
+        clean_name,
+        description,
+        create_date,
+        create_user,
+        update_date,
+        update_user
+        )
+        VALUES
+        (
+        #{id,jdbcType=VARCHAR},
+        #{cleanName,jdbcType=VARCHAR},
+        #{descr,jdbcType=VARCHAR},
+        STR_TO_DATE(#{createDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+        #{createUser,jdbcType=VARCHAR},
+        STR_TO_DATE(#{updateDate,jdbcType=TIMESTAMP},'%Y-%m-%d %T'),
+        #{updateUser,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--删除主表单条数据-->
+     <update id="delete">
+        UPDATE dv_cleantransform set is_deleted = 1 WHERE pk_id = #{id} and is_deleted = 0
+    </update>
+
+    <!--获取清洗转换主表数据-->
+    <select id="getAllCleanTranses" resultMap="resultMap">
+        SELECT
+        pk_id,
+        clean_name,
+        description,
+        is_deleted,
+        create_user,
+        update_user,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date
+        FROM dv_cleantransform
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="queryRepeatName" resultMap="resultMap">
+        SELECT
+        pk_id,
+        clean_name,
+        description,
+        is_deleted,
+        create_user,
+        update_user,
+        DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,
+        DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date
+        FROM dv_cleantransform
+        <trim prefix="WHERE" >
+            is_deleted = 0 AND clean_name = #{cleanName}
+            <if test="id != null and id != ''">
+                AND pk_id != #{id}
+            </if>
+        </trim>
+
+    </select>
+</mapper>

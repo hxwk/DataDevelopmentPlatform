@@ -1,0 +1,128 @@
+<spark-task-def id="">
+    <!--先手动训练一个回归模型-->
+    <!--<algorithms>-->
+    <!--<algorithm id="0" name="name" type="AlgorithmLR" action="MANU_TRAINING|TEST" inputIds="6">-->
+    <!--<params>-->
+    <!--<param name="intercept" value="100"></param>-->
+    <!--<param name="coefficients" value="-0.2,-0.2,-0.2,-0.2,-0.2"></param>-->
+    <!--<param name="saveTo" value="model/lr"></param>-->
+    <!--<param name="action" value="MANU_TRAINING"></param>-->
+    <!--</params>-->
+    <!--</algorithm>-->
+    <!--</algorithms>-->
+    <!--然后对数据进行预处理-->
+    <inputs>
+        <input id="1" type="InputCsvFile" inputIds="">
+            <params>
+                <param name="schema" value="default"></param>
+                <param name="header" value="true"></param>
+                <param name="filePath" value="C:\Users\Administrator\PyProject\autoloan\data\*.csv"></param>
+            </params>
+        </input>
+    </inputs>
+    <preprocess>
+        <process id="2" type="PreprocessSelect" inputIds="1">
+            <params>
+                <param name="colNames" value="SIM,GPS_TIME,ALARM,SPEED1,MILE,DIR"></param>
+                <!--<param colNames="SIM,GPS_TIME,ALARM,SPEED1,MILE" value=""></param>-->
+            </params>
+        </process>
+        <process id="3" type="PreprocessConvert" inputIds="2">
+            <params>
+                <param colName="GPS_TIME" toType="timestamp"></param>
+                <param colName="SPEED1" toType="int"></param>
+                <param colName="MILE" toType="int"></param>
+                <param colName="DIR" toType="int"></param>
+                <param colName="ALARM" toType="int"></param>
+            </params>
+        </process>
+        <process id="4" type="PreprocessSpeedTurn" inputIds="3">
+            <params>
+                <param name="idCol" value="SIM"></param>
+                <param name="speedCol" value="SPEED1"></param>
+                <param name="timestampCol" value="GPS_TIME"></param>
+                <param name="turnCol" value="DIR"></param>
+                <param name="mileCol" value="MILE"></param>
+            </params>
+        </process>
+        <process id="5" type="PreprocessNightDrive" inputIds="3">
+            <params>
+                <param name="idCol" value="SIM"></param>
+                <param name="speedCol" value="SPEED1"></param>
+                <param name="timestampCol" value="GPS_TIME"></param>
+                <param name="mileCol" value="MILE"></param>
+            </params>
+        </process>
+        <process id="6" type="PreprocessJoin" inputIds="">
+            <params>
+                <param name="left" value="4"></param>
+                <param name="right" value="5"></param>
+                <param name="leftColName" value="SIM"></param>
+                <param name="rightColName" value="SIM"></param>
+                <param name="joinType" value="inner"></param>
+            </params>
+        </process>
+        <process id="7" type="PreprocessSelect" inputIds="6">
+            <params>
+                <param name="colNames"
+                       value="SIM,harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"></param>
+            </params>
+        </process>
+    </preprocess>
+
+    <!--调用刚才的回归模型进行评分-->
+    <algorithms>
+        <!--<algorithm id="0" name="name" type="AlgorithmLR" action="MANU_TRAINING|TEST" inputIds="6">-->
+        <!--<params>-->
+        <!--<param name="intercept" value="100"></param>-->
+        <!--<param name="coefficients" value="-0.2,-0.2,-0.2,-0.2,-0.2"></param>-->
+        <!--<param name="saveTo" value="model/lr"></param>-->
+        <!--<param name="action" value="MANU_TRAINING"></param>-->
+        <!--</params>-->
+        <!--</algorithm>-->
+        <!--<algorithm name="name" type="AlgorithmLR" action="TRAINING|TEST" inputIds="6">-->
+        <!--<params>-->
+        <!--<param name="saveTo" value="DataMiningSite/DataMiningPreProcess/src/main/resources/model/lr"></param>-->
+        <!--<param name="action" value="PREDICTING"></param>-->
+        <!--<param name="idCol" value="SIM"></param>-->
+        <!--<param name="featureCols"-->
+        <!--value="harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"></param>-->
+        <!--</params>-->
+        <!--</algorithm>-->
+        <!--<algorithm name="name" type="AlgorithmKMeans" action="TRAINING|TEST" inputIds="6">-->
+            <!--<params>-->
+                <!--<param name="k" value="2"></param>-->
+                <!--<param name="numIterations" value="10"></param>-->
+                <!--<param name="saveTo" value="model/kmeans"></param>-->
+                <!--<param name="action" value="AUTO_TRAINING"></param>-->
+                <!--<param name="idCol" value="SIM"></param>-->
+                <!--<param name="featureCols"-->
+                       <!--value="harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"></param>-->
+            <!--</params>-->
+        <!--</algorithm>-->
+        <algorithm id="7" name="name" type="AlgorithmKMeans" action="TRAINING|TEST" inputIds="6">
+            <params>
+                <param name="k" value="2"></param>
+                <param name="numIterations" value="10"></param>
+                <param name="saveTo" value="model/kmeans"></param>
+                <param name="action" value="PREDICTING"></param>
+                <param name="idCol" value="SIM"></param>
+                <param name="featureCols"
+                       value="harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"></param>
+            </params>
+        </algorithm>
+        <algorithm name="name" type="AlgorithmRF" action="TRAINING|TEST" inputIds="7">
+            <params>
+                <param name="numIterations" value="10"></param>
+                <param name="saveTo" value="model/randomForest"></param>
+                <param name="action" value="AUTO_TRAINING"></param>
+                <param name="labelCol" value="prediction"></param>
+                <param name=" s" value ="features"></param>
+                       <!--value="harshAccPerKm,rapidDccPerKm,harshTurnPerKm,MileAtNightRatio,TimeAtNightRatio"></param>-->
+            </params>
+        </algorithm>
+    </algorithms>
+    <!--<outputs>-->
+    <!--<output id="" type="" inputIds=""></output>-->
+    <!--</outputs>-->
+</spark-task-def>

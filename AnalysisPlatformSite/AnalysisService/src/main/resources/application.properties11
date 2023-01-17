@@ -1,0 +1,12 @@
+spring.profiles.active=dev
+spring.application.name=IDE-SERVICE
+server.port=8015
+
+info.appname=\u5206\u6790\u7BA1\u7406
+info.version=1.0
+info.author=\u5357\u6597\u516D\u661F\u4E91\u5E73\u53F0\u4E8B\u4E1A\u90E8
+
+#\u65F6\u95F4\u683C\u5F0F\u5316
+spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+#\u65F6\u533A\u8BBE\u7F6E
+spring.jackson.time-zone=Asia/Shanghai
